@@ -1,0 +1,1 @@
+{"resource":"https://ai.zywave.com/mcp/v1","authorization_servers":["https://auth.zywave.com/"],"bearer_methods_supported":["header"],"scopes_supported":["mcp","api.accounts","api.content","api.companies","api.lossData"]}

@@ -1,0 +1,1960 @@
+{
+  "x-generator": "NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Accounts API 2.0",
+    "version": "v2.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.zywave.com"
+    }
+  ],
+  "paths": {
+    "/accounts/v2.0/accountcontact/{id}": {
+      "get": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Gets a specific account contact by id.",
+        "operationId": "AccountContact_GetContact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account contact id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountContact"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Updates an account contact.",
+        "operationId": "AccountContact_PutContact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account contact id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "contactInfo",
+          "description": "An object representing the account contact information. All fields will be updated.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountContactInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Delete an account contact.",
+        "operationId": "AccountContact_DeleteContact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account contact id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/v2.0/accountcontact": {
+      "get": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Search for account contacts.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties that can be used when filtering and ordering the response.\n  *  id\n  *  accountId\n  *  firstName\n  *  lastName\n  *  isPrimaryContact\n  *  isActive\n\n The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.\n \n | Operation | Example Request | Returns |\n | ------- | -------- | -------- |\n | endswith   | endswith(lastName,'tact')    | Returns all account contacts where the last name ends with 'tact'    |\n | startswith   | startswith(lastName,'Cont')    | Returns all account contacts where the last name starts with 'Cont'    |\n | contains   | contains(lastName,'tact')    | Returns all account contacts where the name contains 'tact'    |\n | Equals   | accountId eq 2726742    | Returns all account contacts for the Zywave account with this unique id    |\n | Not Equals   | isActive ne false    | Returns all account contacts that are active    |\n | In   | lastName in ('Cont', 'act')    | Returns all account contacts where the last name is 'Cont' or 'act'    |\n | Not   | not startswith(lastName, 'Cont')    | Returns all account contacts where the last name does not start with 'Cont'    |\n      \n The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all active account contacts for the given account;\n      \n      \n   *accountId eq 726742 and isActive ne false*\n     \n         \n The orderby operation also supports multiple levels of ordering. For example, to order the results by accountId then lastName the following can be used;\n     \n \n   *accountId asc, lastName asc*",
+        "operationId": "AccountContact_SearchContacts",
+        "parameters": [
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "description": "The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "description": "Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "description": "The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$top",
+            "x-originalName": "top",
+            "in": "query",
+            "description": "The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccountContact"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Creates an account contact.",
+        "operationId": "AccountContact_PostContact",
+        "requestBody": {
+          "x-name": "contactInfo",
+          "description": "An object representing the account contact information.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountContactInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/v2.0/account/{id}": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Gets a specific business or personal account by id.",
+        "operationId": "Account_GetAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Updates a business or personal account.",
+        "operationId": "Account_PutAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "accountInfo",
+          "description": "An object representing the account information. All fields will be updated.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Delete a business or personal account.",
+        "operationId": "Account_DeleteAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/v2.0/account/matches": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Finds existing accounts using specified criteria and our standard matching algorithm",
+        "description": "The Zywave API duplicate search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response. At least one criteria marked with double asterisks is required\n  *  msid (miEdge system ID) **\n  *  name **\n  *  addressLine1 **\n  *  addressLine2\n  *  state\n  *  postalCode\n  *  phoneNumber **\n  *  classification\n  *  updatedDateTime\n  *  industryId \n\n See the Zywave API search documentation for more details about using OData search.",
+        "operationId": "Account_FindAccountMatches",
+        "parameters": [
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "description": "The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "description": "Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "includeArchived",
+            "in": "query",
+            "description": "Include archived accounts when finding matches",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccount"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/v2.0/account": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Search for business and personal accounts.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  id\n  *  classification\n  *  name\n  *  phoneNumber\n  *  state\n  *  updatedDateTime\n  *  isActive\n  *  isArchived\n\n See the Zywave API search documentation for more details about using OData search.",
+        "operationId": "Account_SearchAccounts",
+        "parameters": [
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "description": "The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "description": "Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "description": "The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$top",
+            "x-originalName": "top",
+            "in": "query",
+            "description": "The total number of records returned in the response. In order to avoid an error please ensure that the $skip is divisible by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccount"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Creates a business or personal account.",
+        "operationId": "Account_PostAccount",
+        "requestBody": {
+          "x-name": "accountInfo",
+          "description": "An object representing the account information.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/v2.0/accountexternalreference": {
+      "get": {
+        "tags": [
+          "AccountExternalReference"
+        ],
+        "summary": "Search for external account reference.",
+        "description": "An external reference is a relationship that links a Zywave account to an external account stored outside of Zywave. External references are often used to link a Zywave account to another system's account for integration purposes.\n\n The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  AccountId\n  *  ExternalId\n  *  SourceName\n\n See the Zywave API search documentation for more details about using OData search.",
+        "operationId": "AccountExternalReference_SearchAccountExternalReferences",
+        "parameters": [
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "description": "The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "description": "Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "description": "The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$top",
+            "x-originalName": "top",
+            "in": "query",
+            "description": "The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccountExternalReference"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/v2.0/industry": {
+      "get": {
+        "tags": [
+          "Industry"
+        ],
+        "summary": "Search for business and personal industries.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  id\n  *  name\n  *  naicsCode\n\n The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.\n \n | Operation | Example Request | Returns |\n | ------- | -------- | -------- |\n | startswith   | startswith(Name,'Zyw')    | Returns all industries where the name starts with 'Zyw'    |\n | endswith | endswith(Name,'wave') | Returns all industries where the name ends with 'wave' |\n | contains   | contains(Name,'wave')    | Returns all industries where the name contains 'wave'    |\n | Equals   | Name eq 'Zywave'    | Returns all industries named Zywave    |\n | Not Equals   | Name ne 'Zywave'    | Returns all industries not named Zywave    |\n | Greater Than   | naicsCode gt 22      | Returns all industries with a nacisCode greater than 22    |\n | Greater Than or equal   | naicsCode ge 22    | Returns all industries with a nacisCode greater than or equal to 22    |\n | Less Than   | naicsCode lt 22       | Returns all industries with a nacisCode less than or equal to 22    |\n | Less Than or equal     | naicsCode le 22       | Returns all industries with a nacisCode less than or equal to 22    |\n | In   | Name in ('Zyw', 'ave')    | Returns all industries with the names 'Zyw' or 'ave'.    |\n | Not   | not startswith(Name,'Zyw')    | Returns all industries with a name that doesn't start with ‘Zyw’    |\n The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all industries with a name that incldes ‘I’ and a naicsCode greater than 22\n \n   *Contains(Name, 'I') and naicsCode gt 22*\n \n The orderby operation also supports multiple levels of ordering. For example, to order the results by name and then by naicsCode, the following can be used;\n \n\n   *Name asc, naicsCode desc*",
+        "operationId": "Industry_SearchIndustries",
+        "parameters": [
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$take",
+            "x-originalName": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfIndustry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountContact": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AccountContactInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "The unique Zywave identifier for the account contact.",
+                "format": "int32"
+              },
+              "createdDateTime": {
+                "type": "string",
+                "description": "The date in which the account contact was created.",
+                "format": "date-time"
+              },
+              "updatedDateTime": {
+                "type": "string",
+                "description": "The date in which the account contact was updated.",
+                "format": "date-time"
+              }
+            }
+          }
+        ]
+      },
+      "AccountContactInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "type": "integer",
+            "description": "The unique Zywave identifier for the account the contact is associated with.",
+            "format": "int32"
+          },
+          "addressLine1": {
+            "type": "string",
+            "description": "Line 1 of the primary address for the account contact.",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "addressLine2": {
+            "type": "string",
+            "description": "Line 2 of the primary address for the account contact.",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "addressLine3": {
+            "type": "string",
+            "description": "Line 3 of the primary address for the account contact.",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "The birth date of the account contact.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "The city of the primary address for the account contact.",
+            "maxLength": 75,
+            "nullable": true
+          },
+          "contactConsentExpirationDateTime": {
+            "type": "string",
+            "description": "The expiration of consent, used primarily in regions where consent is required to send email to the contact.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "contactConsentSource": {
+            "type": "string",
+            "description": "The source through which the contact consented to receive email, used primarily in regions where consent is required to send email to the contact.",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "description": "The country of the primary address for the account contact.",
+            "maxLength": 2,
+            "nullable": true
+          },
+          "county": {
+            "type": "string",
+            "description": "The county of the primary address for the account contact.",
+            "maxLength": 150,
+            "nullable": true
+          },
+          "emailAddress": {
+            "type": "string",
+            "description": "The email address for the account contact.",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "faxNumber": {
+            "type": "string",
+            "description": "The fax number for the account contact.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name for the account contact.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Specifies whether or not the account contact appears in Zywave applications not used to manage accounts and account contacts."
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Specifies whether an account has been deleted from view in Zywave applications including applications used to manage accounts and contacts."
+          },
+          "isEmailAllowed": {
+            "type": "boolean",
+            "description": "Specifies whether the account contact will receive email notifications related to distributions sent from zywave applications."
+          },
+          "isPrimaryContact": {
+            "type": "boolean",
+            "description": "Specifies whether or not the contact is a primary contact for the account. More than one primary contact can exist per account. Primary contacts will appear on the account information screen in applications used to manage accounts and contacts."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name for the account contact.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "mobilePhoneNumber": {
+            "type": "string",
+            "description": "The mobile phone number for the account contact.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The phone number for the account contact.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "phoneNumberExtension": {
+            "type": "string",
+            "description": "The phone number extension for the account contact.",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "The zip code or postal code of the primary address for the account contact.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "salutation": {
+            "type": "string",
+            "description": "The proper salutation for the account contact.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "description": "The state of the primary address for the account contact.",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "description": "The business title for the account contact.",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "linesOfBusiness": {
+            "type": "array",
+            "description": "The line of businesses associated with the account contact.",
+            "maxItems": 50,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/LineOfBusiness"
+            }
+          },
+          "addresses": {
+            "type": "array",
+            "description": "The list of addresses for the account contact.",
+            "maxItems": 10,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Address"
+            }
+          },
+          "phones": {
+            "type": "array",
+            "description": "The list of phones for the account contact.",
+            "maxItems": 10,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Phone"
+            }
+          }
+        }
+      },
+      "LineOfBusiness": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Benefits",
+          "PC",
+          "PersonalLines"
+        ],
+        "enum": [
+          "Benefits",
+          "PC",
+          "PersonalLines"
+        ]
+      },
+      "Address": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AddressInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "AddressInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountContactId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "addressLine1": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "addressLine2": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "addressLine3": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 75,
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 2,
+            "nullable": true
+          },
+          "county": {
+            "type": "string",
+            "maxLength": 150,
+            "nullable": true
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "postalCode": {
+            "type": "string",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/AddressType"
+          }
+        }
+      },
+      "AddressType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Home",
+          "Mailing",
+          "Office",
+          "Billing",
+          "Business"
+        ],
+        "enum": [
+          "None",
+          "Home",
+          "Mailing",
+          "Office",
+          "Billing",
+          "Business"
+        ]
+      },
+      "Phone": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PhoneInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "PhoneInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountContactId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extension": {
+            "type": "string",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "number": {
+            "type": "string",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/PhoneType"
+          }
+        }
+      },
+      "PhoneType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Mobile",
+          "Work",
+          "Home",
+          "Fax"
+        ],
+        "enum": [
+          "None",
+          "Mobile",
+          "Work",
+          "Home",
+          "Fax"
+        ]
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PagedResultOfAccountContact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountContact"
+            }
+          }
+        }
+      },
+      "ValidationProblemDetails": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/HttpValidationProblemDetails"
+          },
+          {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "properties": {
+              "errors": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "HttpValidationProblemDetails": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemDetails"
+          },
+          {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "properties": {
+              "errors": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Account": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AccountInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "The unique Zywave identifier for the account.",
+                "format": "int32"
+              },
+              "createdDateTime": {
+                "type": "string",
+                "description": "The date in which the account was created.",
+                "format": "date-time"
+              },
+              "updatedDateTime": {
+                "type": "string",
+                "description": "The date in which the account was last updated.",
+                "format": "date-time"
+              },
+              "msid": {
+                "type": "string",
+                "description": "The MiEdge MSID for this account.",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "AccountInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "isArchived": {
+            "type": "boolean",
+            "description": "Indicates whether the account is archived.",
+            "default": false
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the account.",
+            "maxLength": 255,
+            "minLength": 1
+          },
+          "addressLine1": {
+            "type": "string",
+            "description": "Line 1 of the primary address for the account.",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "addressLine2": {
+            "type": "string",
+            "description": "Line 2 of the primary address for the account.",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "addressLine3": {
+            "type": "string",
+            "description": "Line 3 of the primary address for the account.",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "The city of the primary address for the account.",
+            "maxLength": 75,
+            "nullable": true
+          },
+          "county": {
+            "type": "string",
+            "description": "The county of the primary address for the account.",
+            "maxLength": 150,
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "description": "The state of the primary address for the account.",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "description": "The country of the primary address for the account.",
+            "maxLength": 2,
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "The zip code or postal code of the primary address for the account.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The phone number for a business account.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "faxNumber": {
+            "type": "string",
+            "description": "The fax number for the account.",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "description": "The website for a business account.",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "numberOfEmployees": {
+            "type": "integer",
+            "description": "The number of employees for a business account.",
+            "format": "int32",
+            "nullable": true
+          },
+          "numberOfRetirees": {
+            "type": "integer",
+            "description": "The number of retirees for a business account.",
+            "format": "int32",
+            "nullable": true
+          },
+          "yearFounded": {
+            "type": "integer",
+            "description": "The year in which a business account was founded.",
+            "format": "int32",
+            "nullable": true
+          },
+          "sicCode": {
+            "type": "string",
+            "description": "The standard industry classification code for a business account. This code is used to classify the industry area of a business.",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "naicsCodes": {
+            "type": "array",
+            "description": "A list of North American Classification Systems codes applicable to a business account. This code is used to classify a business for the purposes of collecting, analyzing and publishing data related to the US business economy. The code must be a 2- to 6-digit code. If a NAICS code isn't applicable to the most recent set of codes, you may optionally indicate the year it was applicable followed by a \"|\" before the standard 2- to 6-digit code. For example, 2012|212234 can be sent to represent the industry \"Copper Ore and Nickel Ore Mining\", although this code is not applicable to the 2017 set. The year must be a valid NAICS versioning year (e.g. 1997, or 2002, or 2007, etc.). For a list of all standardized NAICS codes, see https://www.census.gov/eos/www/naics/.",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "classification": {
+            "description": "Specifies whether the account is a business account or personal account.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AccountClassification"
+              }
+            ]
+          },
+          "relationships": {
+            "type": "array",
+            "description": "A list of relationships a broker has with a client distinguishing whether the account is a current client or prospect for both the employee benefits and property and casualty units within the broker.",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AccountRelationship"
+            }
+          },
+          "clientSize": {
+            "description": "Specifies a client size range for business accounts.",
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ClientSize"
+              }
+            ]
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether the account is active throughout the Zywave product suite. If this is set to false the contacts for the account will also be marked as inactive and the account will not appear throughout the Zywave product suite. If not sent in the request isActive will be set to true.",
+            "default": true
+          },
+          "industryId": {
+            "type": "integer",
+            "description": "The unique Zywave identifier for the industry associated with the account.",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "AccountClassification": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Personal",
+          "Commercial"
+        ],
+        "enum": [
+          "Personal",
+          "Commercial"
+        ]
+      },
+      "AccountRelationship": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "BenefitProspect",
+          "BenefitClient",
+          "PcProspect",
+          "PcClient"
+        ],
+        "enum": [
+          "BenefitProspect",
+          "BenefitClient",
+          "PcProspect",
+          "PcClient"
+        ]
+      },
+      "ClientSize": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "From0To25",
+          "From26To50",
+          "From51To99",
+          "From100To499",
+          "From500To999",
+          "From1000To2499",
+          "From2500To4999",
+          "MoreThan4999"
+        ],
+        "enum": [
+          "From0To25",
+          "From26To50",
+          "From51To99",
+          "From100To499",
+          "From500To999",
+          "From1000To2499",
+          "From2500To4999",
+          "MoreThan4999"
+        ]
+      },
+      "PagedResultOfAccount": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            }
+          }
+        }
+      },
+      "PagedResultOfAccountExternalReference": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountExternalReference"
+            }
+          }
+        }
+      },
+      "AccountExternalReference": {
+        "type": "object",
+        "description": "An external reference is a relationship that links a Zywave account to an external account stored outside of Zywave. External references are often used to link a Zywave account to another system's account for integration purposes.",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The unique Zywave identifier for the external reference.",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "description": "The unique Zywave identifier for the account.",
+            "format": "int32"
+          },
+          "externalId": {
+            "type": "string",
+            "description": "The unique account identifier of the external system.",
+            "nullable": true
+          },
+          "sourceName": {
+            "type": "string",
+            "description": "The name of the external system the external identifier is associated with.",
+            "nullable": true
+          }
+        }
+      },
+      "PagedResultOfIndustry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Industry"
+            }
+          }
+        }
+      },
+      "Industry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The unique Zywave identifier for the industry.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name for the industry.",
+            "nullable": true
+          },
+          "naicsCode": {
+            "type": "integer",
+            "description": "The two-digit NAICS code for the industry.",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oidc": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "https://auth.zywave.com/.well-known/openid-configuration"
+      }
+    }
+  },
+  "security": [
+    {
+      "oidc": [
+        "api.accounts",
+        "api.accounts:read"
+      ]
+    }
+  ]
+}

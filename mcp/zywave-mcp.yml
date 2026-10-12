@@ -1,0 +1,13 @@
+generated: '2026-10-13'
+method: searched
+source: https://www.zywave.dev/apis/mcp/introduction/
+name: Zywave MCP Server
+url: https://ai.zywave.com/mcp/v1
+transport: streamable-http
+protocolVersion: '2025-03-26'
+authentication: OAuth 2 with PKCE (authorization server https://auth.zywave.com/)
+toolsExposed: 22
+protectedResourceMetadata: https://ai.zywave.com/mcp/v1/.well-known/oauth-protected-resource
+probe:
+  status: 401
+  note: Unauthenticated request answers 401; tool list not enumerated (requires a licensed Zywave user).

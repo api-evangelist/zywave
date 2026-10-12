@@ -1,0 +1,1875 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Lead Insights API",
+    "version": "v3.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.zywave.com"
+    }
+  ],
+  "paths": {
+    "/v3/companies/v1.0/company/{id}": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Company summary",
+        "description": "Summary information about the company.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/companies/v1.0/company/{id}/contacts": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Company contacts",
+        "description": "Get a list of contacts associated with the given company ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyContacts"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/companies/v1.0/company/{id}/details": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Company details",
+        "description": "Detailed information about the company including lists of DBA names, locations, phone numbers, eins, and industry classifications (NAICS).",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/companies/v1.0/company/{id}/commercial/details": {
+      "get": {
+        "tags": [
+          "Commercial"
+        ],
+        "summary": "Commercial Details",
+        "description": "Get details for commercial companies",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommercialDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/companies/v1.0/company/{id}/commercial/summary": {
+      "get": {
+        "tags": [
+          "Commercial"
+        ],
+        "summary": "Commercial Summary",
+        "description": "Get a summary for commercial companies",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommercialSummary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/companies/v1.0/company/match": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "operationId": "CompanyMatch_GetCompanyMatches",
+        "summary": "Matches a company given a set of parameters.",
+        "description": "A minimum set of parameters must be provided to find a match, which are described by the following sets of acceptable minimal match criteria: \n * ein and one of (name, address, or phone) \n * name and address \n\n An address must consist of the following fields to be valid: addressLine1, city and state (abbreviation) or postal code. \n\n Providing phone, email, or website with any of the above minimum criteria sets can significantly improve the likelihood of a match. \n\n If the company you are requesting was acquired, you will get the parent company information.",
+        "parameters": [
+          {
+            "name": "ein",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "addressLine1",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "addressLine2",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 6
+          },
+          {
+            "name": "postalCode",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 7
+          },
+          {
+            "name": "phoneNumber",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 8
+          },
+          {
+            "name": "websiteUrl",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 9
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyMatch"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/companies/v1.0/company/{id}/welfare/details": {
+      "get": {
+        "tags": [
+          "Health & Welfare"
+        ],
+        "summary": "Welfare details",
+        "description": "The welfare details endpoint returns health and welfare data at a plan level for the given company. The ID parameter must be provided to retrieve detail data.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The welfare details corresponding to the provided `ID`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WelfareDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/companies/v1.0/company/{id}/welfare/summary": {
+      "get": {
+        "summary": "Welfare summary",
+        "description": "The welfare endpoint returns the welfare summary for a corresponding ID.",
+        "tags": [
+          "Health & Welfare"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The welfare summary corresponding to the provided `ID`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WelfareSummary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Company": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description of the company",
+            "example": "Zywave's insurance agency software is used by more than 5,000 insurance agencies, including 95 of the Top 100 U.S. insurance firms. Schedule a demo today."
+          },
+          "ein": {
+            "type": "string",
+            "description": "Federal employer identification number",
+            "example": "815126936"
+          },
+          "employeeCount": {
+            "type": "integer",
+            "description": "Total count of employees",
+            "example": 1291
+          },
+          "employeeRange": {
+            "type": "string",
+            "description": "Employees range for the company",
+            "example": "1,000 - 4,999"
+          },
+          "facebookUrl": {
+            "type": "string",
+            "description": "URL to the company's facebook profile",
+            "example": "http://www.facebook.com/zywave/"
+          },
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "linkedinUrl": {
+            "type": "string",
+            "description": "URL to the company's linkedin profile",
+            "example": "http://www.linkedin.com/company/zywave"
+          },
+          "naicsCode": {
+            "type": "string",
+            "description": "North American Industry Classification System number",
+            "example": "541990"
+          },
+          "name": {
+            "type": "string",
+            "description": "The normalized company name",
+            "example": "ZYWAVE"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The company's phone number",
+            "example": "14144546100"
+          },
+          "primaryAddress": {
+            "type": "object",
+            "properties": {
+              "addressLine1": {
+                "type": "string",
+                "description": "The first line of the company's physical address",
+                "example": "10100 W INNOVATION DR STE 300"
+              },
+              "addressLine2": {
+                "type": "string",
+                "description": "Additional address information of the company Ex. apt number, building name, or floor number",
+                "example": ""
+              },
+              "city": {
+                "type": "string",
+                "description": "City name",
+                "example": "MILWAUKEE"
+              },
+              "state": {
+                "type": "string",
+                "description": "Abbreviated state name",
+                "example": "WI"
+              },
+              "county": {
+                "type": "string",
+                "description": "County name",
+                "example": "MILWAUKEE"
+              },
+              "postalCode": {
+                "type": "string",
+                "description": "Zip code",
+                "example": "53226"
+              },
+              "country": {
+                "type": "string",
+                "description": "Country name",
+                "example": "UNITED STATES"
+              }
+            }
+          },
+          "revenueRange": {
+            "type": "string",
+            "description": "Revenue range for the company",
+            "example": "50M - 100M"
+          },
+          "twitterUrl": {
+            "type": "string",
+            "description": "URL to the company's twitter profile",
+            "example": "https://twitter.com/zywave"
+          },
+          "websiteUrl": {
+            "type": "string",
+            "description": "URL to the company's website",
+            "example": "http://zywave.com"
+          }
+        }
+      },
+      "CompanyContacts": {
+        "type": "object",
+        "description": "A list of contacts for the provided company ID.",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "contacts": {
+            "type": "array",
+            "description": "A list of contacts for the given ID.",
+            "items": {
+              "properties": {
+                "companyName": {
+                  "type": "string",
+                  "description": "The contact's company name. Note it may be different than the parent company name in the case of a merger/acquisition.",
+                  "example": "WALMART INC"
+                },
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "addressLine1": {
+                      "type": "string",
+                      "description": "Standardized and normalized address one",
+                      "example": "4565 PAYSPHERE CIRCLE"
+                    },
+                    "addressLine2": {
+                      "type": "string",
+                      "description": "Standardized and normalized address two",
+                      "example": null
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Standardized and normalized city",
+                      "example": "CHICAGO"
+                    },
+                    "state": {
+                      "type": "string",
+                      "description": "Standardized and normalized state (2 letter abbreviation)",
+                      "example": "IL"
+                    },
+                    "postalCode": {
+                      "type": "string",
+                      "description": "Standardized address postal code",
+                      "example": 60674
+                    }
+                  }
+                },
+                "fullName": {
+                  "type": "string",
+                  "description": "The contact's full name",
+                  "example": "MR Christopher Daniel Nicholas"
+                },
+                "namePrefix": {
+                  "type": "string",
+                  "description": "The name prefix",
+                  "example": "Mr"
+                },
+                "firstName": {
+                  "type": "string",
+                  "description": "The contact's first name",
+                  "example": "Christopher"
+                },
+                "middleName": {
+                  "type": "string",
+                  "description": "The contact's middle name",
+                  "example": "Daniel"
+                },
+                "lastName": {
+                  "type": "string",
+                  "description": "The contact's last name",
+                  "example": "Nicholas"
+                },
+                "nameSuffix": {
+                  "type": "string",
+                  "description": "The name suffix",
+                  "example": null
+                },
+                "jobTitle": {
+                  "type": "string",
+                  "description": "The contacts job title",
+                  "example": "Chief Operating Officer"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The contact's email",
+                  "example": "christopher@wal-mar.com"
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "description": "The contact's phone number",
+                  "example": "4792734000"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CompanyDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "name": {
+            "type": "string",
+            "description": "The normalized company name",
+            "example": "ZYWAVE"
+          },
+          "alternateEins": {
+            "type": "array",
+            "description": "List of known EINs and the date it was last reported",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ein": {
+                  "type": "string",
+                  "example": "123123123"
+                },
+                "asOfDate": {
+                  "type": "string",
+                  "example": "2022-09-09"
+                }
+              }
+            }
+          },
+          "alternateAddresses": {
+            "type": "array",
+            "description": "List of known addresses and the date it was last reported",
+            "items": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "$ref": "#/components/schemas/Address"
+                },
+                "asOfDate": {
+                  "type": "string",
+                  "example": "2022-09-15"
+                }
+              }
+            }
+          },
+          "alternateNaicsCodes": {
+            "type": "array",
+            "description": "List of known NAICS for the business and the date it was last reported",
+            "items": {
+              "type": "object",
+              "properties": {
+                "naics": {
+                  "type": "string",
+                  "example": "645646456"
+                },
+                "asOfDate": {
+                  "type": "string",
+                  "example": "2022-09-15"
+                }
+              }
+            }
+          },
+          "alternateNames": {
+            "type": "array",
+            "description": "List of known business names and the date it was last reported",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Zywave"
+                },
+                "asOfDate": {
+                  "type": "string",
+                  "example": "2022-09-15"
+                }
+              }
+            }
+          },
+          "alternatePhoneNumbers": {
+            "type": "array",
+            "description": "List of known phone numbers and the date it was last reported",
+            "items": {
+              "type": "object",
+              "properties": {
+                "phoneNumber": {
+                  "type": "string",
+                  "example": "2133456789"
+                },
+                "asOfDate": {
+                  "type": "string",
+                  "example": "2022-09-15"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CompanyMatch": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Company"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "score": {
+                "type": "integer",
+                "description": "Score derived from the match algorithm. A score above 8 is considered a adequate match. A score above 12 is considered a exceptional.",
+                "example": 19
+              }
+            }
+          }
+        ]
+      },
+      "id": {
+        "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+        "type": "string",
+        "example": "M84000053215022"
+      },
+      "WelfareSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "eligibleEmployees": {
+            "type": "integer",
+            "description": "The number of eligible eligible Employees",
+            "example": 2205900
+          },
+          "renewalDate": {
+            "type": "string",
+            "description": "Benefits plan primary renewal date",
+            "example": "01/01/2022"
+          },
+          "primaryBroker": {
+            "$ref": "#/components/schemas/PrimaryBroker"
+          },
+          "secondaryBroker": {
+            "$ref": "#/components/schemas/SecondaryBroker"
+          },
+          "totalRevenue": {
+            "type": "integer",
+            "description": "Sum of all plans revenue for the sponsor",
+            "example": 57518
+          },
+          "totalCommission": {
+            "type": "integer",
+            "description": "Sum of all plans commissions for the sponsor",
+            "example": 36260
+          },
+          "totalFees": {
+            "type": "integer",
+            "description": "Sum of all plans fees for the sponsor",
+            "example": 21258
+          },
+          "totalPremium": {
+            "type": "integer",
+            "description": "Sum of all plans premiums for the sponsor",
+            "example": 738593958
+          },
+          "administrator": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the administrator who filed the Form 5500",
+                "example": "HOGANTAYLOR LLP PREPARER"
+              },
+              "phoneNumber": {
+                "type": "string",
+                "description": "Phone number of the administrator who filed the Form 5500",
+                "example": "8004211362"
+              }
+            }
+          },
+          "accountingFirm": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the accounting firm",
+                "example": "ERNST & YOUNG, LLP"
+              }
+            }
+          },
+          "largestLineOfBusiness": {
+            "type": "string",
+            "description": "Text description of the plan which is the largest benefit line of business, by revenue",
+            "example": "BUSINESS TRAVEL ACCIDENT"
+          },
+          "largestCarrier": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Lead insurance carrier, by revenue",
+                "example": "KAISER FOUNDATION HEALTH PLAN OF CALIFORNIA"
+              },
+              "parent": {
+                "type": "string",
+                "description": "The parent or normalized lead insurance carrier, normally due to acquisition or corporate ownership",
+                "example": "KAISER"
+              }
+            }
+          },
+          "largestServiceProvider": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The largest service provider for the benefit plans",
+                "example": "ARKANSAS BLUE CROSS AND BLUE SHIELD"
+              },
+              "service": {
+                "type": "string",
+                "description": "Description of the service provided by the largest service providers (e.g. Claims Administration)",
+                "example": "Claims processing"
+              },
+              "totalRevenue": {
+                "type": "number",
+                "format": "float",
+                "description": "Revenue associated with the largest service provider",
+                "example": 205186220.0
+              }
+            }
+          },
+          "serviceProviders": {
+            "type": "object",
+            "properties": {
+              "directCompensation": {
+                "type": "number",
+                "format": "float",
+                "description": "Service provider direct compensation",
+                "example": 339056525.0
+              },
+              "indirectCompensation": {
+                "type": "number",
+                "format": "float",
+                "description": "Service provider indirect compensation",
+                "example": 0
+              },
+              "totalCompensation": {
+                "type": "number",
+                "format": "float",
+                "description": "Service provider total compensation",
+                "example": 339056525.0
+              }
+            }
+          },
+          "currentRetireesReceivingBenefits": {
+            "type": "integer",
+            "description": "Number of current retirees receiving benefits",
+            "example": 6488
+          },
+          "futureRetireesReceivingBenefits": {
+            "type": "integer",
+            "description": "Number of future retirees receiving benefits",
+            "example": 0
+          },
+          "isSelfFunded": {
+            "type": "boolean",
+            "description": "True/False indicator if the benefit plan is self-funded",
+            "example": true
+          },
+          "isCollectiveBargained": {
+            "type": "boolean",
+            "description": "True/False indicator if the benefit plans are collectively bargained",
+            "example": false
+          },
+          "isMegaWrap": {
+            "type": "boolean",
+            "description": "True/False indicator if the company uses a mega-wrap to combine benefits under one plan",
+            "example": false
+          },
+          "isFirstFiling": {
+            "type": "boolean",
+            "description": "True/False indicator if this is the first filing for this company",
+            "example": false
+          },
+          "isDelinquentFiling": {
+            "type": "boolean",
+            "description": "True/False indicator if this is a delinquent filing",
+            "example": false
+          },
+          "isFinalFiling": {
+            "type": "boolean",
+            "description": "True/False indicator if this is the final filing for this organization",
+            "example": false
+          },
+          "isExtensionFiled": {
+            "type": "boolean",
+            "description": "True/False indicator if this organization filed an extension",
+            "example": true
+          },
+          "preparerName": {
+            "type": "string",
+            "description": "Text field containing the name of the preparer, if any",
+            "example": ""
+          },
+          "hasMultipleEmployer": {
+            "type": "boolean",
+            "description": "True/False indicator if this organization filed as a multiemployer/multiple employer benefit plan",
+            "example": false
+          },
+          "hasScheduleA": {
+            "type": "boolean",
+            "description": "True/False indicator if a filing has no schedule A, but has a 5500",
+            "example": false
+          },
+          "thirdPartyAdmin": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of third party admin",
+                "example": "ARKANSAS BLUE CROSS AND BLUE SHIELD"
+              },
+              "compensation": {
+                "type": "integer",
+                "description": "Third party admin total compensation",
+                "example": 205186220
+              }
+            }
+          }
+        }
+      },
+      "WelfareDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "linesOfBusiness": {
+            "type": "array",
+            "description": "A list of all lines of business",
+            "items": {
+              "$ref": "#/components/schemas/LineOfBusiness"
+            }
+          }
+        }
+      },
+      "CommercialSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "broker": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "USA INC."
+              },
+              "normalizedName": {
+                "type": "string",
+                "example": "USA INC."
+              },
+              "city": {
+                "type": "string",
+                "example": "NEW YORK"
+              },
+              "state": {
+                "type": "string",
+                "example": "NY"
+              }
+            }
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "carrier": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "AIU Ins"
+                    },
+                    "normalizedName": {
+                      "type": "string",
+                      "example": "AIG"
+                    }
+                  }
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-01-01"
+                },
+                "governingCode": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "example": "8037"
+                    },
+                    "description": {
+                      "type": "array",
+                      "items": {
+                        "example": "Store, Superstores and Warehouse Clubs"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "experienceMod": {
+            "type": "object",
+            "properties": {
+              "exMod": {
+                "type": "number",
+                "format": "float",
+                "example": 1.13
+              }
+            }
+          },
+          "leadPeo": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "AIU Ins"
+              },
+              "normalizedName": {
+                "type": "string",
+                "example": "AIU Ins"
+              }
+            }
+          },
+          "dotSummary": {
+            "type": "object",
+            "properties": {
+              "accidents": {
+                "type": "integer",
+                "example": 1255
+              },
+              "cargo": {
+                "type": "string",
+                "example": "chemicals"
+              },
+              "classifications": {
+                "type": "string",
+                "example": "private property"
+              },
+              "drivers": {
+                "type": "integer",
+                "example": 90999
+              },
+              "inspections": {
+                "type": "integer",
+                "example": 24926
+              },
+              "lastFatality": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-06-03"
+              },
+              "lastIncident": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-06-03"
+              },
+              "mileage": {
+                "type": "integer",
+                "example": 1080549047
+              },
+              "numbers": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "example": [
+                  1802579,
+                  63585,
+                  2912719
+                ]
+              },
+              "oosPercent": {
+                "type": "integer",
+                "example": 2
+              },
+              "operation": {
+                "type": "string",
+                "example": "private property"
+              },
+              "vehicles": {
+                "type": "integer",
+                "example": 6621
+              },
+              "violations": {
+                "type": "integer",
+                "example": 3793
+              }
+            }
+          },
+          "oshaSummary": {
+            "type": "object",
+            "properties": {
+              "fiveYearAccident": {
+                "type": "integer",
+                "example": 33
+              },
+              "fiveYearInspections": {
+                "type": "integer",
+                "example": 344
+              },
+              "fiveYearViolations": {
+                "type": "integer",
+                "example": 276
+              },
+              "lastAccidentDate": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-07-05"
+              },
+              "lastInspectionDate": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-07-05"
+              },
+              "lastViolation": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-07-05"
+              },
+              "lastFatalityDate": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-07-05"
+              }
+            }
+          },
+          "whdSummary": {
+            "type": "object",
+            "properties": {
+              "actions": {
+                "type": "integer",
+                "example": 85
+              },
+              "lastIncident": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-07-05"
+              },
+              "lastPenalty": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-07-05"
+              }
+            }
+          }
+        }
+      },
+      "CommercialDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "workerCompPolicies": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "policyNumber": {
+                  "type": "string",
+                  "example": "WXM045886790"
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2021-01-01"
+                },
+                "state": {
+                  "type": "string",
+                  "example": "NY"
+                },
+                "carrier": {
+                  "$ref": "#/components/schemas/CommercialCarrierPolicies"
+                },
+                "broker": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "MARSH USA INC"
+                    },
+                    "nameNormalized": {
+                      "type": "string",
+                      "example": "MARSH USA INC"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "NEW YORK"
+                    },
+                    "state": {
+                      "type": "string",
+                      "example": "NY"
+                    }
+                  }
+                },
+                "estimateAnnualPremium": {
+                  "type": "integer",
+                  "example": 898
+                },
+                "selfFunded": {
+                  "type": "boolean",
+                  "example": "false"
+                },
+                "governingClassCode": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "example": "8037"
+                    },
+                    "description": {
+                      "type": "array",
+                      "items": {
+                        "example": "Store, Superstores and Warehouse Clubs"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "assignedRisk": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "peos": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "ADP TOTALSOURCE FL INC"
+                },
+                "normalizedName": {
+                  "type": "string",
+                  "example": "ADP TOTAL SOURCE"
+                }
+              }
+            }
+          },
+          "bipdPolicies": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "carrier": {
+                  "$ref": "#/components/schemas/CommercialCarrierPolicies"
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-01-01"
+                }
+              }
+            }
+          },
+          "bipdExcessPolicies": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "carrier": {
+                  "$ref": "#/components/schemas/CommercialCarrierPolicies"
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-01-01"
+                }
+              }
+            }
+          },
+          "cargoPolicies": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "carrier": {
+                  "$ref": "#/components/schemas/CommercialCarrierPolicies"
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-01-01"
+                }
+              }
+            }
+          },
+          "bondPolicies": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "carrier": {
+                  "$ref": "#/components/schemas/CommercialCarrierPolicies"
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-01-01"
+                }
+              }
+            }
+          },
+          "businessTravelPolicies": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "carrier": {
+                  "$ref": "#/components/schemas/CommercialCarrierPolicies"
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-01-01"
+                }
+              }
+            }
+          },
+          "dotNumbers": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "example": [
+              123123,
+              123123,
+              123123,
+              132312
+            ]
+          },
+          "experienceMods": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "state": {
+                  "type": "string",
+                  "example": "NJ"
+                },
+                "bureauNumber": {
+                  "type": "string",
+                  "example": "8797987"
+                },
+                "exModDetails": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "experienceMod": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 0.788
+                      },
+                      "experienceModChange": {
+                        "type": "string",
+                        "example": "R"
+                      },
+                      "year": {
+                        "type": "integer",
+                        "example": 2023
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LineOfBusiness": {
+        "type": "object",
+        "properties": {
+          "renewalDate": {
+            "type": "string",
+            "description": "Benefits plan primary renewal date",
+            "example": "01/01/2022"
+          },
+          "PrimaryBroker": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PrimaryBroker"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "revenue": {
+                    "type": "integer",
+                    "description": "Total revenue for this broker from this plan",
+                    "example": 18772
+                  },
+                  "commission": {
+                    "type": "integer",
+                    "description": "Total commission for this broker from this plan",
+                    "example": 15643
+                  },
+                  "fees": {
+                    "type": "integer",
+                    "description": "Total fees for this broker from this plan",
+                    "example": 3129
+                  }
+                }
+              }
+            ]
+          },
+          "SecondaryBroker": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SecondaryBroker"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "revenue": {
+                    "type": "integer",
+                    "description": "Total revenue for this broker from this plan",
+                    "example": 18772
+                  },
+                  "commission": {
+                    "type": "integer",
+                    "description": "Total commission for this broker from this plan",
+                    "example": 15643
+                  },
+                  "fees": {
+                    "type": "integer",
+                    "description": "Total fees for this broker from this plan",
+                    "example": 3129
+                  }
+                }
+              }
+            ]
+          },
+          "carrier": {
+            "$ref": "#/components/schemas/Carrier"
+          },
+          "planType": {
+            "type": "array",
+            "description": "Array of plan types.",
+            "example": [
+              "Health",
+              "Dental",
+              "Vision"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "peopleCovered": {
+            "type": "integer",
+            "description": "Number of people covered on the plan",
+            "example": 367209
+          },
+          "otherPlanTypeDescription": {
+            "type": "string",
+            "description": "Text Description of the other contract type",
+            "example": "BUSINESS TRAVEL ACCIDENT"
+          },
+          "contractNumber": {
+            "type": "string",
+            "description": "The contract number",
+            "example": "4EL641721"
+          },
+          "premiumToRevenuePercent": {
+            "type": "number",
+            "format": "float",
+            "description": "Percent of revenue compared to premium",
+            "example": 0.62
+          },
+          "premiumToCommissionPercent": {
+            "type": "number",
+            "format": "float",
+            "description": "Percent of revenue compared to premium",
+            "example": 0.0
+          },
+          "type": {
+            "type": "string",
+            "description": "Describes the related product or services a company offers",
+            "example": "ACCIDENT, CRITICAL ILLNESS"
+          },
+          "revenue": {
+            "type": "integer",
+            "description": "The total revenue for this plan",
+            "example": 400000
+          },
+          "commission": {
+            "type": "integer",
+            "description": "The total commission for this plan",
+            "example": 0
+          },
+          "premium": {
+            "type": "integer",
+            "description": "The total premium for this plan"
+          },
+          "fees": {
+            "type": "integer",
+            "description": "The fees for this plan",
+            "example": 400000
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "addressLine1": {
+            "type": "string",
+            "description": "Standardized and normalized address one",
+            "example": "4565 PAYSPHERE CIRCLE"
+          },
+          "addressLine2": {
+            "type": "string",
+            "description": "Standardized and normalized address two",
+            "example": null
+          },
+          "city": {
+            "type": "string",
+            "description": "Standardized and normalized city",
+            "example": "CHICAGO"
+          },
+          "state": {
+            "type": "string",
+            "description": "Standardized and normalized state (2 letter abbreviation)",
+            "example": "IL"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Standardized address postal code",
+            "example": 60674
+          },
+          "county": {
+            "type": "string",
+            "description": "The county name of the broker address",
+            "example": "Cook"
+          }
+        }
+      },
+      "PrimaryBroker": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The lead broker for employee benefits plans by revenue amount",
+            "example": "MERCER HEALTH AND BENEFITS LLC"
+          },
+          "parent": {
+            "type": "string",
+            "description": "The parent or normalized name of the lead broker, normally due to acquisition",
+            "example": "MERCER HEALTH AND BENEFITS"
+          },
+          "affiliation": {
+            "type": "array",
+            "description": "Affiliation name broker belongs to",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          },
+          "address": {
+            "type": "object",
+            "$ref": "#/components/schemas/Address"
+          }
+        }
+      },
+      "SecondaryBroker": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The secondary broker for employee benefits plans by revenue amount",
+            "example": "SAMMONS COMPANY LP"
+          },
+          "address": {
+            "type": "object",
+            "$ref": "#/components/schemas/Address"
+          }
+        }
+      },
+      "Carrier": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The carrier name",
+            "example": "AMERICAN HERITAGE LIFE INSURANCE COMPANY"
+          },
+          "parent": {
+            "type": "string",
+            "description": "The parent or normalized name",
+            "example": "ALLSTATE"
+          },
+          "ein": {
+            "type": "string",
+            "description": "Federal employer identification number",
+            "example": "590781901"
+          }
+        }
+      },
+      "CommercialCarrierPolicies": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Insurance of USA"
+          },
+          "normalizedName": {
+            "type": "string",
+            "example": "Insurance of USA"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "extensions": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          },
+          "errors": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          },
+          "exceptionSource": {
+            "type": "string",
+            "nullable": true
+          },
+          "additionalInfo": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter your token in the text input below"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

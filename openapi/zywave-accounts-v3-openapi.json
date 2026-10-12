@@ -1,0 +1,4986 @@
+{
+  "x-generator": "NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Accounts API - 3.0",
+    "version": "v3.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.zywave.com"
+    }
+  ],
+  "paths": {
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountcontact/{id}": {
+      "get": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Gets a specific account contact by id.",
+        "operationId": "AccountContact_GetContact",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account contact id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountContact"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Updates an account contact.",
+        "operationId": "AccountContact_PutContact",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account contact id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "contactInfo",
+          "description": "An object representing the account contact information. All fields will be updated.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountContactInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 4
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Partially updates an account contact.",
+        "operationId": "AccountContact_PatchContact",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account contact id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "patch",
+          "description": "A JSON Patch document (RFC 6902) describing the fields to update.",
+          "content": {
+            "application/merge-patch+json": {
+              "schema": {
+                "type": "object"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 4
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Delete an account contact.",
+        "operationId": "AccountContact_DeleteContact",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account contact id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountcontact": {
+      "get": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Search for account contacts.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties that can be used when filtering and ordering the response.\n  *  id\n  *  accountId\n  *  firstName\n  *  lastName\n  *  emailAddress\n  *  isPrimaryContact\n  *  isActive\n\n The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.\n \n | Operation | Example Request | Returns |\n | ------- | -------- | -------- |\n | endswith   | endswith(lastName,'tact')    | Returns all account contacts where the last name ends with 'tact'    |\n | startswith   | startswith(lastName,'Cont')    | Returns all account contacts where the last name starts with 'Cont'    |\n | contains   | contains(lastName,'tact')    | Returns all account contacts where the name contains 'tact'    |\n | Equals   | accountId eq 2726742    | Returns all account contacts for the Zywave account with this unique id    |\n | Not Equals   | isActive ne false    | Returns all account contacts that are active    |\n | In   | lastName in ('Cont', 'act')    | Returns all account contacts where the last name is 'Cont' or 'act'    |\n | Not   | not startswith(lastName, 'Cont')    | Returns all account contacts where the last name does not start with 'Cont'    |\n      \n The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all active account contacts for the given account;\n      \n      \n   *accountId eq 726742 and isActive ne false*\n     \n         \n The orderby operation also supports multiple levels of ordering. For example, to order the results by accountId then lastName the following can be used;\n     \n \n   *accountId asc, lastName asc*",
+        "operationId": "AccountContact_SearchContacts",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "description": "The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "description": "Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "description": "The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "$top",
+            "x-originalName": "top",
+            "in": "query",
+            "description": "The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 6
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccountContact"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AccountContact"
+        ],
+        "summary": "Creates an account contact.",
+        "operationId": "AccountContact_PostContact",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "contactInfo",
+          "description": "An object representing the account contact information.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountContactInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 3
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountcontact/{accountContactId}/driverinfo": {
+      "get": {
+        "tags": [
+          "AccountContactDriver"
+        ],
+        "summary": "Gets driver information for a specific account contact.",
+        "operationId": "AccountContactDriver_GetDriver",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "accountContactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountContactDriver"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AccountContactDriver"
+        ],
+        "summary": "Creates driver information for a specific account contact.\nDriver info has a 1:1 relationship with an account contact, so only\none record can exist per contact.",
+        "operationId": "AccountContactDriver_CreateDriver",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "accountContactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "driverInfo",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountContactDriverInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 4
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AccountContactDriver"
+        ],
+        "summary": "Updates driver information for a specific account contact.",
+        "operationId": "AccountContactDriver_UpdateDriver",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "accountContactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "driverInfo",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountContactDriverInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 4
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AccountContactDriver"
+        ],
+        "summary": "Deletes driver information for a specific account contact.",
+        "operationId": "AccountContactDriver_DeleteDriver",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "accountContactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountcontact/{accountContactId}/driverinfo/search": {
+      "get": {
+        "tags": [
+          "AccountContactDriver"
+        ],
+        "summary": "Search for driver information records.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  accountContactId\n  *  driverLicenseNumber\n  *  driverLicenseState\n  *  dateLicensed\n  *  licenseExpirationDate\n  *  licenseStatus\n\n See the Zywave API search documentation for more details about using OData search.",
+        "operationId": "AccountContactDriver_SearchDrivers",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "accountContactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 6
+          },
+          {
+            "name": "$top",
+            "x-originalName": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 7
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccountContactDriver"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/account/{id}": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Gets a specific business or personal account by id.",
+        "operationId": "Account_GetAccount",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Updates a business or personal account.",
+        "operationId": "Account_PutAccount",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "accountInfo",
+          "description": "An object representing the account information. All fields will be updated.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 4
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Partially updates a business or personal account.",
+        "operationId": "Account_PatchAccount",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "patch",
+          "description": "A JSON Patch document (RFC 6902) describing the fields to update.",
+          "content": {
+            "application/merge-patch+json": {
+              "schema": {
+                "type": "object"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 4
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Delete a business or personal account.",
+        "operationId": "Account_DeleteAccount",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/account": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Search for business and personal accounts.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  id\n  *  name\n  *  addressLine1\n  *  addressLine2\n  *  state\n  *  postalCode\n  *  city\n  *  classification\n  *  updatedDateTime\n  *  phoneNumber\n  *  isActive\n  *  isArchived\n\n See the Zywave API search documentation for more details about using OData search.",
+        "operationId": "Account_SearchAccounts",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "description": "The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "description": "Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "description": "The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "$top",
+            "x-originalName": "top",
+            "in": "query",
+            "description": "The total number of records returned in the response. In order to avoid an error please ensure that the $skip is divisible by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 6
+          },
+          {
+            "name": "$search",
+            "x-originalName": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 7
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccount"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Creates a business or personal account.",
+        "operationId": "Account_PostAccount",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "batchId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 200,
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "requestBody": {
+          "x-name": "accountInfo",
+          "description": "An object representing the account information.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountInfo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountexternalreference": {
+      "get": {
+        "tags": [
+          "AccountExternalReference"
+        ],
+        "summary": "Search for external account reference.",
+        "description": "An external reference is a relationship that links a Zywave account to an external account stored outside of Zywave. External references are often used to link a Zywave account to another system's account for integration purposes.\n\n The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  AccountId\n  *  ExternalId\n  *  SourceName\n  *  SourceId\n  *  SourceType\n\n See the Zywave API search documentation for more details about using OData search.",
+        "operationId": "AccountExternalReference_SearchAccountExternalReferences",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "description": "The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "description": "Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "description": "The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "$top",
+            "x-originalName": "top",
+            "in": "query",
+            "description": "The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 6
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccountExternalReference"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/industry/sic": {
+      "get": {
+        "tags": [
+          "Industry"
+        ],
+        "summary": "Search for business and personal industry (SIC classification) information.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  id\n  *  name\n  *  code\n  *  year\n  *  length\n\n The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.\n \n | Operation | Example Request | Returns |\n | ------- | -------- | -------- |\n | startswith   | startswith(Name,'Zyw')    | Returns all industries where the name starts with 'Zyw'    |\n | endswith | endswith(Name,'wave') | Returns all industries where the name ends with 'wave' |\n | contains   | contains(Name,'wave')    | Returns all industries where the name contains 'wave'    |\n | Equals   | Name eq 'Zywave'    | Returns all industries named Zywave    |\n | Not Equals   | Name ne 'Zywave'    | Returns all industries not named Zywave    |\n | Greater Than   | year gt 2012      | Returns all industries with a sicCode year greater than 2012    |\n | Greater Than or equal   | length ge 2    | Returns all industries with a sicCode length greater than or equal to 2    |\n | Less Than   | year lt 2012       | Returns all industries with a sicCode year less than or equal to 2012    |\n | Less Than or equal     | length le 22       | Returns all industries with a sicCode length less than or equal to 22    |\n | In   | Name in ('Zyw', 'ave')    | Returns all industries with the names 'Zyw' or 'ave'.    |\n | Not   | not startswith(Name,'Zyw')    | Returns all industries with a name that doesn't start with ‘Zyw’    |\n The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all industries with a name that includes ‘I’ and a sicCode greater than 22\n \n   *Contains(Name, 'I') and naicsCode gt 22*\n \n The orderby operation also supports multiple levels of ordering. For example, to order the results by name and then by sicCode, the following can be used;\n \n\n   *Name asc, sicCode desc*",
+        "operationId": "Industry_SearchSic",
+        "parameters": [
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$top",
+            "x-originalName": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfIndustry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/industry/naics": {
+      "get": {
+        "tags": [
+          "Industry"
+        ],
+        "summary": "Search for business and personal industry (NAICS classification) information.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  id\n  *  name\n  *  code\n  *  year\n  *  length\n\n The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.\n \n | Operation | Example Request | Returns |\n | ------- | -------- | -------- |\n | startswith   | startswith(Name,'Zyw')    | Returns all NAICS codes where the name starts with 'Zyw'    |\n | endswith | endswith(Name,'wave') | Returns all NAICS codes where the name ends with 'wave' |\n | contains   | contains(Name,'wave')    | Returns all NAICS codes where the name contains 'wave'    |\n | Equals   | Name eq 'Zywave'    | Returns all NAICS codes named Zywave    |\n | Not Equals   | Name ne 'Zywave'    | Returns all NAICS codes not named Zywave    |\n | Greater Than   | year gt 2017      | Returns all NAICS codes with a NAICS code year greater than 2017    |\n | Greater Than or equal   | length ge 2    | Returns all NAICS codes with a naicsCode length greater than or equal to 2    |\n | Less Than   | year lt 22       | Returns all NAICS codes with a naicsCode less than or equal to 22    |\n | Less Than or equal     | length le 2       | Returns all NAICS codes with a naicsCode length less than or equal to 2    |\n | In   | Name in ('Zyw', 'ave')    | Returns all NAICS codes with the names 'Zyw' or 'ave'.    |\n | Not   | not startswith(Name,'Zyw')    | Returns all NAICS codes with a name that doesn't start with ‘Zyw’    |\n The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all industries with a name that includes ‘I’ and a naicsCode greater than 22\n \n   *Contains(Name, 'I') and naicsCode gt 22*\n \n The orderby operation also supports multiple levels of ordering. For example, to order the results by name and then by naicsCode, the following can be used;\n \n\n   *Name asc, naicsCode desc*",
+        "operationId": "Industry_SearchNaics",
+        "parameters": [
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$top",
+            "x-originalName": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfIndustry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/label/{id}": {
+      "get": {
+        "tags": [
+          "Label"
+        ],
+        "summary": "Gets a specific account label by id.",
+        "operationId": "Label_GetLabel",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The account label id.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountLabel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/label": {
+      "get": {
+        "tags": [
+          "Label"
+        ],
+        "summary": "Search for account labels.",
+        "description": "The Zywave API search is implemented using [OData Version 4.0.1](https://www.odata.org/documentation/). Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.\n The following properties can be used when filtering and ordering the response.\n  *  id\n  *  name\n  *  description\n\n See the Zywave API search documentation for more details about using OData search.",
+        "operationId": "Label_SearchLabels",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "agencyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "$filter",
+            "x-originalName": "filter",
+            "in": "query",
+            "description": "The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "$orderBy",
+            "x-originalName": "orderBy",
+            "in": "query",
+            "description": "Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "$skip",
+            "x-originalName": "skip",
+            "in": "query",
+            "description": "The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "$top",
+            "x-originalName": "top",
+            "in": "query",
+            "description": "The total number of records returned in the response. In order to avoid an error please ensure that the $skip is divisible by the $top.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 6
+          },
+          {
+            "name": "$search",
+            "x-originalName": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 7
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfAccountLabel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/relationshiptype/account": {
+      "get": {
+        "tags": [
+          "RelationshipType"
+        ],
+        "summary": "Get the list of available relationships for accounts",
+        "operationId": "RelationshipType_GetAccountLinesOfBusiness",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RelationshipType"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/accounts/v3.0/relationshiptype/contact": {
+      "get": {
+        "tags": [
+          "RelationshipType"
+        ],
+        "summary": "Get the list of available relationships for contacts",
+        "operationId": "RelationshipType_GetContactLinesOfBusiness",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RelationshipType"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CorrelatedBulkOperationResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rootCorrelationId": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "ValidationProblemDetails": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/HttpValidationProblemDetails"
+          },
+          {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "properties": {
+              "errors": {
+                "type": "object",
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      },
+      "HttpValidationProblemDetails": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemDetails"
+          },
+          {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "properties": {
+              "errors": {
+                "type": "object",
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BulkEntityChangeRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "entities": {
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "AccountContact": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AccountContactInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "createdDateTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "AccountContactInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "gender": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Gender"
+              }
+            ]
+          },
+          "maritalStatus": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MaritalStatus"
+              }
+            ]
+          },
+          "contactConsentExpirationDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "contactConsentStartDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "contactConsentOrigin": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactConsentSource": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "emailAddress": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isArchived": {
+            "type": "boolean"
+          },
+          "isEmailAllowed": {
+            "type": "boolean"
+          },
+          "isPrimaryContact": {
+            "type": "boolean"
+          },
+          "lastName": {
+            "type": "string",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "salutation": {
+            "type": "string",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "linesOfBusiness": {
+            "type": "array",
+            "maxItems": 50,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/LineOfBusiness"
+            }
+          },
+          "addresses": {
+            "type": "array",
+            "maxItems": 10,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AccountContactAddress"
+            }
+          },
+          "phones": {
+            "type": "array",
+            "maxItems": 10,
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AccountContactPhone"
+            }
+          }
+        }
+      },
+      "Gender": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Male",
+          "Female"
+        ],
+        "enum": [
+          "Male",
+          "Female"
+        ]
+      },
+      "MaritalStatus": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Single",
+          "Married",
+          "Separated",
+          "Divorced",
+          "Widowed",
+          "DomesticPartner",
+          "CivilUnion",
+          "Fiancee",
+          "Other"
+        ],
+        "enum": [
+          "Single",
+          "Married",
+          "Separated",
+          "Divorced",
+          "Widowed",
+          "DomesticPartner",
+          "CivilUnion",
+          "Fiancee",
+          "Other"
+        ]
+      },
+      "LineOfBusiness": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Benefits",
+          "PC",
+          "PersonalLines"
+        ],
+        "enum": [
+          "Benefits",
+          "PC",
+          "PersonalLines"
+        ]
+      },
+      "AccountContactAddress": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AddressInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "accountContactId": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "AddressInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "addressLine1": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "addressLine2": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "addressLine3": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 75,
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 2,
+            "nullable": true
+          },
+          "county": {
+            "type": "string",
+            "maxLength": 150,
+            "nullable": true
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "postalCode": {
+            "type": "string",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/AddressType"
+          }
+        }
+      },
+      "AddressType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Home",
+          "Mailing",
+          "Office",
+          "Billing",
+          "Business"
+        ],
+        "enum": [
+          "None",
+          "Home",
+          "Mailing",
+          "Office",
+          "Billing",
+          "Business"
+        ]
+      },
+      "AccountContactPhone": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PhoneInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "accountContactId": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "PhoneInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "extension": {
+            "type": "string",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "number": {
+            "type": "string",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/PhoneType"
+          }
+        }
+      },
+      "PhoneType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Mobile",
+          "Work",
+          "Home",
+          "Fax"
+        ],
+        "enum": [
+          "None",
+          "Mobile",
+          "Work",
+          "Home",
+          "Fax"
+        ]
+      },
+      "PagedResultOfAccountContact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountContact"
+            }
+          }
+        }
+      },
+      "JsonPatchDocumentOfAccountContact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/OperationOfAccountContact"
+            }
+          }
+        }
+      },
+      "OperationOfAccountContact": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Operation"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "Operation": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OperationBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "OperationBase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "op": {
+            "type": "string",
+            "nullable": true
+          },
+          "from": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AccountContactSearchRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SearchRequestOfInternalAccountContactSearchCriteriaAndAccountContactSearchOrder"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "SearchRequestOfInternalAccountContactSearchCriteriaAndAccountContactSearchOrder": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SearchRequestOfInternalAccountContactSearchCriteria"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "order": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/AccountContactSearchOrder"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "AccountContactSearchOrder": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          },
+          "accountId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          },
+          "firstName": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          },
+          "lastName": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          },
+          "emailAddress": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          },
+          "isEmailAllowed": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          },
+          "isPrimaryContact": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          },
+          "isActive": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          },
+          "isArchived": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Sort"
+              }
+            ]
+          }
+        }
+      },
+      "Sort": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "direction": {
+            "$ref": "#/components/schemas/SortDirection"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nullLast": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "SortDirection": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Ascending",
+          "Descending"
+        ],
+        "enum": [
+          "Ascending",
+          "Descending"
+        ]
+      },
+      "SearchRequestOfInternalAccountContactSearchCriteria": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SearchRequest"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "criteria": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/InternalAccountContactSearchCriteria"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "InternalAccountContactSearchCriteria": {
+        "type": "object",
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "additionalProperties": false
+      },
+      "InternalSearchEntitiesCriterionGroup": {
+        "type": "object",
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "additionalProperties": false
+      },
+      "InternalSearchEntityCriterion": {
+        "type": "object",
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "additionalProperties": false
+      },
+      "InternalSearchEntityCriterionDetail": {
+        "type": "object",
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "additionalProperties": false
+      },
+      "ICriterion": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "LogicalOperator": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "And",
+          "Or"
+        ],
+        "enum": [
+          "And",
+          "Or"
+        ]
+      },
+      "BooleanOperation": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Equals",
+          "NotEquals"
+        ],
+        "enum": [
+          "None",
+          "Equals",
+          "NotEquals"
+        ]
+      },
+      "BooleanAggregateFunction": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Any",
+          "All",
+          "Count"
+        ],
+        "enum": [
+          "Any",
+          "All",
+          "Count"
+        ]
+      },
+      "IdOperation": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Equals",
+          "NotEquals",
+          "In",
+          "NotIn"
+        ],
+        "enum": [
+          "None",
+          "Equals",
+          "NotEquals",
+          "In",
+          "NotIn"
+        ]
+      },
+      "IdAggregateFunction": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Any",
+          "All",
+          "Count"
+        ],
+        "enum": [
+          "Any",
+          "All",
+          "Count"
+        ]
+      },
+      "ValueOperation": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Equals",
+          "NotEquals",
+          "GreaterThan",
+          "GreaterThanEquals",
+          "LessThan",
+          "LessThanEquals",
+          "Between",
+          "NotBetween",
+          "In",
+          "NotIn"
+        ],
+        "enum": [
+          "None",
+          "Equals",
+          "NotEquals",
+          "GreaterThan",
+          "GreaterThanEquals",
+          "LessThan",
+          "LessThanEquals",
+          "Between",
+          "NotBetween",
+          "In",
+          "NotIn"
+        ]
+      },
+      "ValueAggregateFunction": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Any",
+          "All",
+          "Count",
+          "Sum",
+          "Average",
+          "Min",
+          "Max"
+        ],
+        "enum": [
+          "Any",
+          "All",
+          "Count",
+          "Sum",
+          "Average",
+          "Min",
+          "Max"
+        ]
+      },
+      "StringOperation": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Equals",
+          "NotEquals",
+          "Contains",
+          "NotContains",
+          "IsNullOrEmpty",
+          "IsNotNullOrEmpty",
+          "IsNullOrWhitespace",
+          "IsNotNullOrWhitespace",
+          "StartsWith",
+          "NotStartsWith",
+          "EndsWith",
+          "NotEndsWith",
+          "In",
+          "NotIn"
+        ],
+        "enum": [
+          "None",
+          "Equals",
+          "NotEquals",
+          "Contains",
+          "NotContains",
+          "IsNullOrEmpty",
+          "IsNotNullOrEmpty",
+          "IsNullOrWhitespace",
+          "IsNotNullOrWhitespace",
+          "StartsWith",
+          "NotStartsWith",
+          "EndsWith",
+          "NotEndsWith",
+          "In",
+          "NotIn"
+        ]
+      },
+      "StringAggregateFunction": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Any",
+          "All",
+          "Count"
+        ],
+        "enum": [
+          "Any",
+          "All",
+          "Count"
+        ]
+      },
+      "ValueCriterionOfInteger": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfChar": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfByte": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "integer",
+            "format": "byte",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "byte",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "integer",
+            "format": "byte",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "integer",
+            "format": "byte",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "integer",
+            "format": "byte",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfUInt16": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "integer",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "integer",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "integer",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "integer",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfUInt64": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "integer",
+            "format": "uint64",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "uint64",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "integer",
+            "format": "uint64",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "integer",
+            "format": "uint64",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "integer",
+            "format": "uint64",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfUInt32": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "integer",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "integer",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "integer",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "integer",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfShort": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "integer",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "integer",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "integer",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "integer",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfLong": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfDecimal": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "number",
+              "format": "decimal",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfSingle": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "number",
+              "format": "float",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfDouble": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfDateTime": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "ValueCriterionOfDateTimeOffset": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/ValueOperation"
+          },
+          "value": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "AggregateCriterionGroup": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CriterionGroup"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "groupAggregateFunction": {
+                "$ref": "#/components/schemas/AggregateFunction"
+              }
+            }
+          }
+        ]
+      },
+      "AggregateFunction": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Any",
+          "All",
+          "Count"
+        ],
+        "enum": [
+          "Any",
+          "All",
+          "Count"
+        ]
+      },
+      "CriterionGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CriterionGroup"
+            }
+          },
+          "operator": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/LogicalOperator"
+              }
+            ]
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "booleanOperation": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BooleanOperation"
+              }
+            ]
+          },
+          "booleanAggregateFunction": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BooleanAggregateFunction"
+              }
+            ]
+          },
+          "idOperation": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IdOperation"
+              }
+            ]
+          },
+          "idAggregateFunction": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IdAggregateFunction"
+              }
+            ]
+          },
+          "valueOperation": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ValueOperation"
+              }
+            ]
+          },
+          "valueAggregateFunction": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ValueAggregateFunction"
+              }
+            ]
+          },
+          "stringOperation": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/StringOperation"
+              }
+            ]
+          },
+          "stringAggregateFunction": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/StringAggregateFunction"
+              }
+            ]
+          },
+          "value": {
+            "nullable": true
+          },
+          "values": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "nullable": true
+            }
+          },
+          "rangeEndValue": {
+            "nullable": true
+          },
+          "rangeStartValue": {
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "nullable": true
+          },
+          "count": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ValueCriterionOfInteger"
+              }
+            ]
+          }
+        }
+      },
+      "BooleanCriterion": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/BooleanOperation"
+          },
+          "value": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "nullReplacementValue": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "SearchRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/SearchOptions"
+          }
+        }
+      },
+      "SearchOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 2147483647.0,
+            "minimum": 0.0,
+            "nullable": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 2147483647.0,
+            "minimum": 0.0,
+            "nullable": true
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0,
+            "maximum": 2147483647.0,
+            "minimum": 0.0
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32",
+            "default": 100,
+            "maximum": 2147483647.0,
+            "minimum": 0.0
+          }
+        }
+      },
+      "AccountContactDeduplicationResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sourceContact": {
+            "$ref": "#/components/schemas/AccountContact"
+          },
+          "matchedContacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountContact"
+            }
+          },
+          "decision": {
+            "$ref": "#/components/schemas/Decision"
+          },
+          "evidence": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Decision": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "NoConfidenceMatch",
+          "LowConfidenceMatch",
+          "MediumConfidenceMatch",
+          "HighConfidenceMatch"
+        ],
+        "enum": [
+          "NoConfidenceMatch",
+          "LowConfidenceMatch",
+          "MediumConfidenceMatch",
+          "HighConfidenceMatch"
+        ]
+      },
+      "AccountContactDriver": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AccountContactDriverInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "accountContactId": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "createdDateTimeOffset": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedDateTimeOffset": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "AccountContactDriverInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "driverLicenseNumber": {
+            "type": "string",
+            "maxLength": 25,
+            "nullable": true
+          },
+          "driverLicenseState": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateLicensed": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "licenseExpirationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "licenseStatus": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/LicenseStatus"
+              }
+            ]
+          }
+        }
+      },
+      "LicenseStatus": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Valid",
+          "Unlicensed",
+          "Permit",
+          "Suspended"
+        ],
+        "enum": [
+          "Valid",
+          "Unlicensed",
+          "Permit",
+          "Suspended"
+        ]
+      },
+      "PagedResultOfAccountContactDriver": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountContactDriver"
+            }
+          }
+        }
+      },
+      "Account": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AccountInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "msid": {
+                "type": "string",
+                "nullable": true
+              },
+              "createdDateTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "AccountInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "isArchived": {
+            "type": "boolean",
+            "default": false
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "numberOfEmployees": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "numberOfRetirees": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "yearFounded": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "industryData": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/IndustryData"
+            }
+          },
+          "classification": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AccountClassification"
+              }
+            ]
+          },
+          "relationships": {
+            "type": "array",
+            "deprecated": true,
+            "x-deprecatedMessage": "Use LinesOfBusiness instead",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AccountRelationship"
+            }
+          },
+          "clientSize": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ClientSize"
+              }
+            ]
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
+          },
+          "addresses": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AccountAddress"
+            }
+          },
+          "phones": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AccountPhone"
+            }
+          },
+          "groups": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "labels": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "linesOfBusiness": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/RelationshipType"
+            }
+          }
+        }
+      },
+      "IndustryData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "classification": {
+            "$ref": "#/components/schemas/IndustryClassification"
+          },
+          "code": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "IndustryClassification": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Unknown",
+          "NAICS",
+          "SIC",
+          "UKSIC",
+          "ISO",
+          "WCCode"
+        ],
+        "enum": [
+          "Unknown",
+          "NAICS",
+          "SIC",
+          "UKSIC",
+          "ISO",
+          "WCCode"
+        ]
+      },
+      "AccountClassification": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Personal",
+          "Commercial"
+        ],
+        "enum": [
+          "Personal",
+          "Commercial"
+        ]
+      },
+      "AccountRelationship": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "BenefitProspect",
+          "BenefitClient",
+          "PcProspect",
+          "PcClient"
+        ],
+        "enum": [
+          "BenefitProspect",
+          "BenefitClient",
+          "PcProspect",
+          "PcClient"
+        ]
+      },
+      "ClientSize": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "From0To25",
+          "From26To50",
+          "From51To99",
+          "From100To499",
+          "From500To999",
+          "From1000To2499",
+          "From2500To4999",
+          "MoreThan4999"
+        ],
+        "enum": [
+          "From0To25",
+          "From26To50",
+          "From51To99",
+          "From100To499",
+          "From500To999",
+          "From1000To2499",
+          "From2500To4999",
+          "MoreThan4999"
+        ]
+      },
+      "AccountAddress": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AddressInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "accountId": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "AccountPhone": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PhoneInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "accountId": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "RelationshipType": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "relationship"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "relationship": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          }
+        }
+      },
+      "PagedResultOfAccount": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            }
+          }
+        }
+      },
+      "JsonPatchDocumentOfAccount": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/OperationOfAccount"
+            }
+          }
+        }
+      },
+      "OperationOfAccount": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Operation"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "InternalAccount": {
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/InternalAccountInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "agencyId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "createdDateTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "batchId": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "InternalAccountInfo": {
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AccountInfo"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "msid": {
+                "type": "string",
+                "nullable": true
+              },
+              "owners": {
+                "type": "array",
+                "nullable": true,
+                "items": {
+                  "$ref": "#/components/schemas/AccountOwner"
+                }
+              },
+              "description": {
+                "type": "string",
+                "nullable": true
+              },
+              "revenue": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/RevenueRange"
+                  }
+                ]
+              },
+              "status": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/AccountStatus"
+                  }
+                ]
+              },
+              "ein": {
+                "type": "string",
+                "nullable": true
+              },
+              "contacts": {
+                "type": "array",
+                "nullable": true,
+                "items": {
+                  "$ref": "#/components/schemas/AccountContact"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "AccountOwner": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ownerType"
+        ],
+        "properties": {
+          "ownerId": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 2147483647.0,
+            "minimum": 1.0
+          },
+          "ownerType": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          }
+        }
+      },
+      "RevenueRange": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "From0To1M",
+          "From1MTo10M",
+          "From10MTo50M",
+          "From50MTo100M",
+          "From100MTo200M",
+          "From200MTo1B",
+          "MoreThan1B"
+        ],
+        "enum": [
+          "None",
+          "From0To1M",
+          "From1MTo10M",
+          "From10MTo50M",
+          "From50MTo100M",
+          "From100MTo200M",
+          "From200MTo1B",
+          "MoreThan1B"
+        ]
+      },
+      "AccountStatus": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Unknown",
+          "Active",
+          "Inactive",
+          "Dead",
+          "Test"
+        ],
+        "enum": [
+          "Unknown",
+          "Active",
+          "Inactive",
+          "Dead",
+          "Test"
+        ]
+      },
+      "DeduplicationResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sourceAccount": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/InternalAccount"
+              }
+            ]
+          },
+          "targetAccount": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/InternalAccount"
+              }
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DeduplicationReason"
+            }
+          },
+          "decision": {
+            "$ref": "#/components/schemas/Decision"
+          }
+        }
+      },
+      "DeduplicationReason": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rule": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "PagedResultOfInternalAccount": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InternalAccount"
+            }
+          }
+        }
+      },
+      "InternalAccountsSearchRequest": {
+        "type": "object",
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "additionalProperties": false
+      },
+      "InternalAccountsSearchCriteria": {
+        "type": "object",
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "additionalProperties": false
+      },
+      "InternalAccountsSearchOrder": {
+        "type": "object",
+        "description": "Internal model excluded from public docs",
+        "nullable": true,
+        "additionalProperties": false
+      },
+      "JsonPatchDocumentOfInternalAccount": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/OperationOfInternalAccount"
+            }
+          }
+        }
+      },
+      "OperationOfInternalAccount": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Operation"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "AccessResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "canView": {
+            "type": "boolean"
+          },
+          "canEdit": {
+            "type": "boolean"
+          },
+          "canDelete": {
+            "type": "boolean"
+          },
+          "canCreate": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PagedResultOfAccountExternalReference": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountExternalReference"
+            }
+          }
+        }
+      },
+      "AccountExternalReference": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "accountId",
+          "externalId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "externalId": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1
+          },
+          "sourceName": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "sourceId": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "sourceType": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          }
+        }
+      },
+      "PagedResultOfIndustry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Industry"
+            }
+          }
+        }
+      },
+      "Industry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string"
+          },
+          "replacementIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "AccountLabel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PagedResultOfAccountLabel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasMoreResults": {
+            "type": "boolean"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skip": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "take": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountLabel"
+            }
+          }
+        }
+      },
+      "SearchTokenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oidc": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "https://auth.zywave.com/.well-known/openid-configuration",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://auth.zywave.com/connect/authorize",
+            "tokenUrl": "https://auth.zywave.com/connect/token",
+            "scopes": {
+              "api.accounts": "Full access to all operations",
+              "api.accounts:read": "Read-only access"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oidc": [
+        "api.accounts",
+        "api.accounts:read"
+      ]
+    }
+  ]
+}

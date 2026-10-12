@@ -1,0 +1,185 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "industries/v1.0/oas.json"
+  },
+  "paths": {
+    "/v3/industries/v1.0/naics/{code}": {
+      "get": {
+        "description": "Get industry information for a given NAICS code",
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "2xx": {
+            "description": null,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "year": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4xx": {
+            "description": null,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Type": {
+                      "type": "string"
+                    },
+                    "Title": {
+                      "type": "string"
+                    },
+                    "Status": {
+                      "type": "integer"
+                    },
+                    "Detail": {
+                      "type": "string"
+                    },
+                    "Instance": {
+                      "type": "string"
+                    },
+                    "Extensions": {
+                      "type": "object"
+                    },
+                    "Errors": {
+                      "type": "object"
+                    },
+                    "ExceptionSource": {
+                      "type": "string"
+                    },
+                    "AdditionalInfo": null
+                  }
+                }
+              }
+            }
+          },
+          "5xx": {
+            "description": null,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Type": {
+                      "type": "string"
+                    },
+                    "Title": {
+                      "type": "string"
+                    },
+                    "Status": {
+                      "type": "integer"
+                    },
+                    "Detail": {
+                      "type": "string"
+                    },
+                    "Instance": {
+                      "type": "string"
+                    },
+                    "Extensions": {
+                      "type": "object"
+                    },
+                    "Errors": {
+                      "type": "object"
+                    },
+                    "ExceptionSource": {
+                      "type": "string"
+                    },
+                    "AdditionalInfo": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "code",
+          "in": "path"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "NaicsMappingProfile": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "year": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "ErrorDetails": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "integer"
+          },
+          "Detail": {
+            "type": "string"
+          },
+          "Instance": {
+            "type": "string"
+          },
+          "Extensions": {
+            "type": "object"
+          },
+          "Errors": {
+            "type": "object"
+          },
+          "ExceptionSource": {
+            "type": "string"
+          },
+          "AdditionalInfo": null
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

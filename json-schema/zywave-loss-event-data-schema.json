@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-loss-event-data-schema.json",
+  "title": "LossEventData",
+  "description": "LossEventData class.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-commercial-policy-benchmark-v2-openapi.json#/components/schemas/LossEventData",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "clientLimit": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "ClientLimit property.",
+      "format": "decimal"
+    },
+    "medianLimit": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "MedianLimit property.",
+      "format": "int32"
+    },
+    "percentCovered": {
+      "type": "integer",
+      "description": "PercentCovered property.",
+      "format": "int32"
+    },
+    "maxLoss": {
+      "type": "number",
+      "description": "MaxLoss property.",
+      "format": "decimal"
+    },
+    "averageLoss": {
+      "type": "integer",
+      "description": "AverageLoss property.",
+      "format": "int32"
+    },
+    "listOfCases": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "ListOfCases property.",
+      "items": {
+        "$ref": "#/$defs/ListOfCases"
+      }
+    }
+  },
+  "$defs": {
+    "ListOfCases": {
+      "type": "object",
+      "description": "ListOfCases class.",
+      "additionalProperties": false,
+      "properties": {
+        "lossEventID": {
+          "type": "integer",
+          "description": "LossEventID property.",
+          "format": "int32"
+        },
+        "lossAmount": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "LossAmount property.",
+          "format": "decimal"
+        }
+      }
+    }
+  }
+}

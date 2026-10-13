@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-file-schema.json",
+  "title": "File",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-content-v2-openapi.json#/components/schemas/File",
+  "allOf": [
+    {
+      "$ref": "#/$defs/FileInfo"
+    },
+    {
+      "type": "object",
+      "description": "An file lives underneath a piece of content and represents a single file or body of content.",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the file.",
+          "format": "int32"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "FileInfo": {
+      "type": "object",
+      "description": "File represents the editable properties of a file.",
+      "additionalProperties": false,
+      "properties": {
+        "contentId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The content identifier to add the file under.  Passing in null will create a new piece of content alongside the file",
+          "format": "int32"
+        },
+        "fileId": {
+          "type": "string",
+          "description": "The unique file id that is associated to a file stored in the system. Generate a new guid if creating a new file.",
+          "format": "guid"
+        },
+        "language": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The language code for the file. Defaults to US English \"en-us\". \nThere is no restrictions, but it is recommended that the value be set to the ISO 639-1 Language Code (https://www.andiamo.co.uk/resources/iso-language-codes/)."
+        },
+        "fileData": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The file data.",
+          "format": "binary"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-broker-contact-schema.json",
+  "title": "BrokerContact",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-bkb-v2-openapi.json#/components/schemas/BrokerContact",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "amsCsrid": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "amsProducerID": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "allowAccountAdd": {
+      "type": "boolean"
+    },
+    "allowAccountDelete": {
+      "type": "boolean"
+    },
+    "allowAdminMenuManagement": {
+      "type": "boolean"
+    },
+    "allowCarrierManagement": {
+      "type": "boolean"
+    },
+    "allowDeleteFiles": {
+      "type": "boolean"
+    },
+    "altMailingAddressId": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "brokerId": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "designation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "emailAddress": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "faxNumber": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "firstName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "hasBKBAccess": {
+      "type": "boolean"
+    },
+    "hasGlobalAccess": {
+      "type": "boolean"
+    },
+    "homePageViewID": {
+      "$ref": "#/$defs/HomePageViews"
+    },
+    "id": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "isBuilderAdministrator": {
+      "type": "boolean"
+    },
+    "isDeleted": {
+      "type": "boolean"
+    },
+    "lastName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lineOfBusinessId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32"
+    },
+    "middleInitial": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "numberOfActivitiesShown": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "parentBrokerContactId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32"
+    },
+    "phoneNumber": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reportAccess": {
+      "$ref": "#/$defs/Permission"
+    },
+    "roleId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "guid"
+    },
+    "salutation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "suppressFromClients": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "username": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "viewAgreementDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "HomePageViews": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "NotSet",
+        "Account",
+        "Sales"
+      ],
+      "enum": [
+        "NotSet",
+        "Account",
+        "Sales"
+      ]
+    },
+    "Permission": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "Team",
+        "All"
+      ],
+      "enum": [
+        "None",
+        "Team",
+        "All"
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-license-schema.json",
+  "title": "License",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-licenses-v2-openapi.json#/components/schemas/License",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "endDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The effective end time for the license.",
+      "format": "date-time"
+    },
+    "id": {
+      "type": "integer",
+      "description": "The license identifier.",
+      "format": "int32"
+    },
+    "name": {
+      "type": "string",
+      "description": "The license name."
+    },
+    "quantity": {
+      "type": "integer",
+      "description": "The quantity supplied by the license, if applicable.",
+      "format": "int32"
+    },
+    "startDateTime": {
+      "type": "string",
+      "description": "The effective start time for the license.",
+      "format": "date-time"
+    }
+  }
+}

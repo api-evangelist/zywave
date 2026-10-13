@@ -1,0 +1,41 @@
+generated: '2026-10-13'
+method: derived
+source: openapi/zywave-commercial-policy-benchmark-v2-openapi.json, openapi/zywave-content-v2-openapi.json
+schemes:
+- name: oidc
+  source: openapi/zywave-commercial-policy-benchmark-v2-openapi.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.zywave.com/connect/authorize
+    tokenUrl: https://auth.zywave.com/connect/token
+- name: oidc
+  source: openapi/zywave-content-v2-openapi.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.zywave.com/connect/authorize
+    tokenUrl: https://auth.zywave.com/connect/token
+scopes:
+- scope: api.commercialpolicybenchmark
+  description: Full access to all api operations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/zywave-commercial-policy-benchmark-v2-openapi.json
+- scope: api.commercialpolicybenchmark:read
+  description: Read-only access to api
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/zywave-commercial-policy-benchmark-v2-openapi.json
+- scope: api.content
+  description: Full access to all agency operations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/zywave-content-v2-openapi.json
+- scope: api.content:read
+  description: Read-only access to agencies
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/zywave-content-v2-openapi.json

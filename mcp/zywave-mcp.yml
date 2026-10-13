@@ -4,6 +4,11 @@ source: https://www.zywave.dev/apis/mcp/introduction/
 name: Zywave MCP Server
 url: https://ai.zywave.com/mcp/v1
 transport: streamable-http
+deployment:
+  mode: remote
+  endpoint: https://ai.zywave.com/mcp/v1
+  auth: oauth
+  verified: probed
 protocolVersion: '2025-03-26'
 authentication: OAuth 2 with PKCE (authorization server https://auth.zywave.com/)
 toolsExposed: 22

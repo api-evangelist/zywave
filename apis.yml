@@ -1,17 +1,29 @@
 aid: zywave
+
 name: Zywave
-description: Zywave is an insurance technology company providing agency management, sales, content, benefits and
-  client-engagement software for insurance agencies, brokers and carriers. It publishes a REST API (v2.x and v3.x
-  resources documented at zywave.dev, OpenAPI per resource on api.zywave.com) and a remote MCP server. TurboRater
-  (all/turborater) is a Zywave Sales Cloud product profiled separately.
+
+image: https://www.zywave.com/wp-content/uploads/sites/2/2025/05/thumb-performance-multiplier.jpg
+
+description: Zywave is an insurance technology company providing agency management, sales, content, benefits and client-engagement software for
+  insurance agencies, brokers and carriers. It publishes a REST API (v2.x and v3.x resources documented at zywave.dev, OpenAPI per resource on
+  api.zywave.com) and a remote MCP server. TurboRater (all/turborater) is a Zywave Sales Cloud product profiled separately.
+
 url: https://raw.githubusercontent.com/api-evangelist/zywave/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:market-layer-gap
-x-tier: enriched
+
+x-tier: profiled
+
 x-tier-reason: harvest
+
 specificationVersion: '0.20'
+
 created: '2026-10-13'
+
 modified: '2026-10-13'
+
 tags:
 - Company
 - Insurance
@@ -19,193 +31,42 @@ tags:
 - Brokers
 - Employee Benefits
 - MCP
-apis:
-- aid: zywave:accounts-v2
-  name: Zywave Accounts API 2.0
-  description: Zywave Accounts API 2.0, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-accounts-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:accounts-v3
-  name: Zywave Accounts API - 3.0
-  description: Zywave Accounts API - 3.0, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-accounts-v3-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:agencies-v2
-  name: Zywave Agencies API v2.0
-  description: Zywave Agencies API v2.0, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-agencies-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:bkb-v2
-  name: Zywave BKB API
-  description: Zywave BKB API, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-bkb-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:carriers-v2
-  name: Zywave Carriers API
-  description: Zywave Carriers API, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-carriers-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:client-engagement-v3
-  name: Zywave Client Engagement API v1.0
-  description: Zywave Client Engagement API v1.0, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-client-engagement-v3-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:commercial-policy-benchmark-v2
-  name: Zywave CommercialPolicyBenchmark API
-  description: Zywave CommercialPolicyBenchmark API, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-commercial-policy-benchmark-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:content-v2
-  name: Zywave Content API
-  description: Zywave Content API, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-content-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:industries-v3
-  name: Zywave Industries API v1.0
-  description: Zywave Industries API v1.0, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-industries-v3-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:lead-insights-v3
-  name: Zywave Lead Insights API
-  description: Zywave Lead Insights API, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-lead-insights-v3-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:licenses-v2
-  name: Zywave Licenses API v2.0
-  description: Zywave Licenses API v2.0, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-licenses-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:organizations-v3
-  name: Zywave Organizations API v1.0
-  description: Zywave Organizations API v1.0, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-organizations-v3-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:plans-v2
-  name: Zywave Plans API
-  description: Zywave Plans API, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-plans-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:policies-v2
-  name: Zywave Policies API
-  description: Zywave Policies API, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-policies-v2-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
-- aid: zywave:profiles-v2-1
-  name: Zywave Profiles API v2.1
-  description: Zywave Profiles API v2.1, from the OpenAPI published on api.zywave.com.
-  humanURL: https://www.zywave.dev/apis/
-  baseURL: https://api.zywave.com
-  tags:
-  - Insurance
-  properties:
-  - type: OpenAPI
-    url: openapi/zywave-profiles-v2-1-openapi.json
-  - type: Documentation
-    url: https://www.zywave.dev/apis/
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/zywave-agentic-access.yml
+- type: Spectral
+  url: rules/zywave-rules.yml
+- type: JSONLD
+  url: json-ld/zywave-context.jsonld
+- type: Vocabulary
+  url: vocabulary/zywave-vocabulary.yml
+- type: DataModel
+  url: data-model/zywave-data-model.yml
+- type: Idempotency
+  url: conventions/zywave-conventions.yml
+- type: Conventions
+  url: conventions/zywave-conventions.yml
+- type: ErrorCatalog
+  url: errors/zywave-problem-types.yml
+- type: Conformance
+  url: conformance/zywave-conformance.yml
+- type: WellKnown
+  url: well-known/zywave-well-known.yml
+- type: Hosts
+  url: hosts/zywave-hosts.yml
+- type: Vendors
+  url: vendors/zywave-vendors.yml
+- type: OAuthScopes
+  url: scopes/zywave-scopes.yml
+- type: Authentication
+  url: authentication/zywave-authentication.yml
 - type: DomainSecurity
   url: security/zywave-domain-security.yml
 - type: Website
@@ -242,3 +103,333 @@ common:
   url: https://github.com/zywave
 - type: RelatedProvider
   url: https://github.com/api-evangelist/turborater
+
+apis:
+- aid: zywave:accounts-v2
+  name: Zywave Accounts API 2.0
+  description: Zywave Accounts API 2.0, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-accounts-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-account-contact-info-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-account-info-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-account-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-account-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-account-external-reference-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-account-contact-schema.json
+- aid: zywave:accounts-v3
+  name: Zywave Accounts API - 3.0
+  description: Zywave Accounts API - 3.0, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-accounts-v3-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-account-contact-info-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-account-info-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-account-contact-driver-info-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-account-external-reference-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-account-contact-driver-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-account-contact-schema.json
+- aid: zywave:agencies-v2
+  name: Zywave Agencies API v2.0
+  description: Zywave Agencies API v2.0, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-agencies-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-agency-user-info-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-agency-user-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-agency-user-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-agency-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-agency-collection-schema.json
+- aid: zywave:bkb-v2
+  name: Zywave BKB API
+  description: Zywave BKB API, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-bkb-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-activity-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-carrier-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-commission-schedule-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-broker-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-plan-rate-metadata-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-file-response-schema.json
+- aid: zywave:carriers-v2
+  name: Zywave Carriers API
+  description: Zywave Carriers API, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-carriers-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-carrier-company-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-carrier-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-carrier-company-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-carrier-schema.json
+- aid: zywave:client-engagement-v3
+  name: Zywave Client Engagement API v1.0
+  description: Zywave Client Engagement API v1.0, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-client-engagement-v3-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-invite-request-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-employee-response-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-tool-package-response-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-employee-request-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-tool-package-request-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-employee-group-response-schema.json
+- aid: zywave:commercial-policy-benchmark-v2
+  name: Zywave CommercialPolicyBenchmark API
+  description: Zywave CommercialPolicyBenchmark API, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-commercial-policy-benchmark-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-company-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-loss-event-details-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-company-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-program-assessment-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-loss-event-data-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-rpm-data-schema.json
+- aid: zywave:content-v2
+  name: Zywave Content API
+  description: Zywave Content API, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-content-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-download-request-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-content-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-content-aggregation-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-content-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-recommended-content-info-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-file-schema.json
+- aid: zywave:industries-v3
+  name: Zywave Industries API v1.0
+  description: Zywave Industries API v1.0, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-industries-v3-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+- aid: zywave:lead-insights-v3
+  name: Zywave Lead Insights API
+  description: Zywave Lead Insights API, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-lead-insights-v3-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-welfare-summary-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-commercial-details-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-commercial-summary-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-company-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-company-contacts-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-company-details-schema.json
+- aid: zywave:licenses-v2
+  name: Zywave Licenses API v2.0
+  description: Zywave Licenses API v2.0, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-licenses-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-feature-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-license-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-feature-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-license-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-feature-license-schema.json
+- aid: zywave:organizations-v3
+  name: Zywave Organizations API v1.0
+  description: Zywave Organizations API v1.0, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-organizations-v3-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-user-principal-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-paged-result-of-user-principal-schema.json
+- aid: zywave:plans-v2
+  name: Zywave Plans API
+  description: Zywave Plans API, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-plans-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-quote-info-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-refresh-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-plan-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-search-result-of-quoted-plan-with-member-rates-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-search-result-of-coverage-group-quoted-plan-schema.json
+  - type: JSONSchema
+    url: json-schema/zywave-search-result-of-plan-with-rates-schema.json
+- aid: zywave:policies-v2
+  name: Zywave Policies API
+  description: Zywave Policies API, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-policies-v2-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+  - type: JSONSchema
+    url: json-schema/zywave-policy-info-schema.json
+- aid: zywave:profiles-v2-1
+  name: Zywave Profiles API v2.1
+  description: Zywave Profiles API v2.1, from the OpenAPI published on api.zywave.com.
+  humanURL: https://www.zywave.dev/apis/
+  baseURL: https://api.zywave.com
+  tags:
+  - Insurance
+  properties:
+  - type: OpenAPI
+    url: openapi/zywave-profiles-v2-1-openapi.json
+  - type: Documentation
+    url: https://www.zywave.dev/apis/
+
+x-coverage:
+  state: none
+  reason: no-developer-program
+  method: derived
+  generated: '2026-10-13'
+  generator: derive-coverage.py (pre-flight evidence)
+  detail: >-
+    the company publishes no developer documentation host and no machine-readable contract on its own domain
+  evidence:
+  - url: https://support.zywave.com/mcp/v1
+    status: 401
+  - url: https://www.zywave.com
+    status: 200
+x-enrichment:
+  status: enriched
+  pass: local-v5
+  date: '2026-10-13'

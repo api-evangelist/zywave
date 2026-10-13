@@ -1,0 +1,133 @@
+generated: '2026-10-13'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 9
+  own: 7
+  other_domain: 1
+  platform: 1
+  roles:
+  - api
+  - docs
+  - identity
+  - other
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: ai.zywave.com
+  found_by:
+  - pointer
+  types:
+  - MCPServer
+  serves: []
+  registrable_domain: zywave.com
+  role: other
+  relation: own
+- host: api.zywave.com
+  found_by:
+  - apis[]
+  - probed
+  - site-links
+  - namespace-probe
+  - well-known
+  types: []
+  serves:
+  - api
+  title: Zywave Developer Documentation
+  status: 200
+  registrable_domain: zywave.com
+  role: api
+  relation: own
+- host: auth.zywave.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - OpenIDConfiguration
+  serves: []
+  registrable_domain: zywave.com
+  role: identity
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  - RelatedProvider
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: go.zywave.com
+  found_by:
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: zywave.com
+  role: other
+  relation: own
+- host: status.zywave.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: zywave.com
+  role: status
+  relation: own
+- host: support.zywave.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - Support
+  serves: []
+  registrable_domain: zywave.com
+  role: support
+  relation: own
+- host: www.zywave.com
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  types:
+  - Website
+  - Blog
+  - Newsroom
+  - PrivacyPolicy
+  - TermsOfService
+  - SignUp
+  serves: []
+  registrable_domain: zywave.com
+  role: website
+  relation: own
+- host: www.zywave.dev
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Documentation
+  - Authentication
+  - GettingStarted
+  serves:
+  - docs
+  registrable_domain: zywave.dev
+  role: docs
+  relation: other-domain

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-paged-result-of-account-external-reference-schema.json",
+  "title": "PagedResultOfAccountExternalReference",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-accounts-v2-openapi.json#/components/schemas/PagedResultOfAccountExternalReference",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasMoreResults": {
+      "type": "boolean"
+    },
+    "pageIndex": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "pageSize": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "skip": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "take": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCount": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AccountExternalReference"
+      }
+    }
+  },
+  "$defs": {
+    "AccountExternalReference": {
+      "type": "object",
+      "description": "An external reference is a relationship that links a Zywave account to an external account stored outside of Zywave. External references are often used to link a Zywave account to another system's account for integration purposes.",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the external reference.",
+          "format": "int32"
+        },
+        "accountId": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the account.",
+          "format": "int32"
+        },
+        "externalId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The unique account identifier of the external system."
+        },
+        "sourceName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The name of the external system the external identifier is associated with."
+        }
+      }
+    }
+  }
+}

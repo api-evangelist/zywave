@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-carrier-contact-schema.json",
+  "title": "CarrierContact",
+  "description": "Carrier Contact",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-bkb-v2-openapi.json#/components/schemas/CarrierContact",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Gets the unique ID for this carrier contact.",
+      "format": "int32"
+    },
+    "carrierId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets the unique ID for this carrier.",
+      "format": "int32"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "Gets the first name of the carrier contact."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "Gets the last name of the carrier contact."
+    },
+    "department": {
+      "type": "string",
+      "description": "Gets the department this carrier contact is a part of."
+    },
+    "jobDesc": {
+      "type": "string",
+      "description": "Gets the job description for this carrier contact."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Gets the phone number for this carrier contact."
+    },
+    "phone2": {
+      "type": "string",
+      "description": "Gets the phone number for this carrier contact."
+    },
+    "phoneExtension": {
+      "type": "string",
+      "description": "Gets the phone extension for this carrier contact."
+    },
+    "phoneExtension2": {
+      "type": "string",
+      "description": "Gets the phone extension for this carrier contact."
+    },
+    "fax": {
+      "type": "string",
+      "description": "Gets the fax number for this carrier contact."
+    },
+    "email": {
+      "type": "string",
+      "description": "Gets the e-mail address for this carrier contact."
+    },
+    "defaultContact": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Gets a value that indicates if the contact is the default contact."
+    },
+    "address": {
+      "type": "string",
+      "description": "Gets the street address for this carrier contact."
+    },
+    "address2": {
+      "type": "string",
+      "description": "Gets the second address line for this carrier contact."
+    },
+    "city": {
+      "type": "string",
+      "description": "Gets the city for this carrier contact location."
+    },
+    "state": {
+      "type": "string",
+      "description": "Gets the two-letter abbreviation for U.S. state/territory, Canadian, Carribbean or Mexican province."
+    },
+    "zip": {
+      "type": "string",
+      "description": "Gets the ZIP for this carrier contact location."
+    },
+    "isDeleted": {
+      "type": "boolean",
+      "description": "Gets a value indicating whether this carrier contact has been deleted."
+    },
+    "roleId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets the unique role ID for this carrier contact.",
+      "format": "int32"
+    },
+    "lastUpdateDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets the date on which this carrier contact was last updated.",
+      "format": "date-time"
+    }
+  }
+}

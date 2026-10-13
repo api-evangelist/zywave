@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-search-result-of-coverage-group-quoted-plan-schema.json",
+  "title": "SearchResultOfCoverageGroupQuotedPlan",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-plans-v2-openapi.json#/components/schemas/SearchResultOfCoverageGroupQuotedPlan",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasMoreResults": {
+      "type": "boolean",
+      "description": "Indicates whether the search has more results than returned in the response."
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total records that meet the search criteria specified.",
+      "format": "int32"
+    },
+    "items": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "A list of business and personal accounts matching the search criteria.",
+      "items": {
+        "$ref": "#/$defs/CoverageGroupQuotedPlan"
+      }
+    }
+  },
+  "$defs": {
+    "Classification": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Alternative",
+        "Current",
+        "Renewal"
+      ],
+      "enum": [
+        "Alternative",
+        "Current",
+        "Renewal"
+      ]
+    },
+    "CoverageGroupQuotedPlan": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/CoverageGroupQuotedPlanInfo"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "coverageGroupName"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The unique Zywave identifier for the quoted plan. This id is specific to the combination of a quote and plan and is different than the general planId.",
+              "format": "int32"
+            },
+            "quoteId": {
+              "type": "integer",
+              "description": "The unique Zywave identifier for the quote.",
+              "format": "int32"
+            },
+            "planId": {
+              "type": "integer",
+              "description": "The unique Zywave identifier for the plan.",
+              "format": "int32"
+            },
+            "planName": {
+              "type": "string",
+              "description": "Plan name is available on the plan record.",
+              "maxLength": 100,
+              "deprecated": true,
+              "x-deprecatedMessage": "Plan name is available on the plan record."
+            },
+            "coverageGroupName": {
+              "type": "string",
+              "description": "A coverage group represents a collection of employees in the quote who are assumed to be enrolled in the plan for the purposes of calculating costs. The field indicates the name of the coverage group. ",
+              "maxLength": 150,
+              "minLength": 1
+            },
+            "insuranceType": {
+              "description": "Insurance type is available as an attribute on the plan object.",
+              "deprecated": true,
+              "x-deprecatedMessage": "Insurance type is available on the plan record.",
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/InsuranceType"
+                }
+              ]
+            },
+            "ageBandedPremium": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "description": "The age banded premium for the coverage group.",
+              "format": "decimal"
+            },
+            "compositePremium": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "description": "The composite premium for the coverage group.",
+              "format": "decimal"
+            },
+            "classification": {
+              "description": "The classification of the quoted plan.",
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/Classification"
+                }
+              ]
+            },
+            "planPackages": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Any packages that the plan is available in.",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CoverageGroupQuotedPlanInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isSoldFinal": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Indicates whether the plan was marked sold/final. Sold/final plan represent the client's plan selection for the quote. "
+        }
+      }
+    },
+    "InsuranceType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "PPO",
+        "EPO",
+        "HMO",
+        "Indemnity",
+        "POS",
+        "INO"
+      ],
+      "enum": [
+        "PPO",
+        "EPO",
+        "HMO",
+        "Indemnity",
+        "POS",
+        "INO"
+      ]
+    }
+  }
+}

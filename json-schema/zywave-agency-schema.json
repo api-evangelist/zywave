@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-agency-schema.json",
+  "title": "Agency",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-agencies-v2-openapi.json#/components/schemas/Agency",
+  "allOf": [
+    {
+      "$ref": "#/$defs/AgencyInfo"
+    },
+    {
+      "type": "object",
+      "description": "An agency is a standard tenant type within the Zywave platform and represents an insurance agency or related entity.",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the agency.",
+          "format": "int32"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "AgencyInfo": {
+      "type": "object",
+      "description": "AgencyInfo represents the editable properties of an agency.",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "address": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The primary address for the agency.",
+          "maxLength": 500
+        },
+        "alias": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "An abbreviated or informal name of the agency.",
+          "maxLength": 255
+        },
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The city of the primary address for the agency.",
+          "maxLength": 255
+        },
+        "countryCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The country of the primary address for the agency.",
+          "maxLength": 2
+        },
+        "isEnabled": {
+          "type": "boolean",
+          "description": "Determines whether the agency is an active agency. If the agency is not active they will not have access to functionality throughout the Zywave platform."
+        },
+        "faxNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The fax number for the agency.",
+          "format": "phone",
+          "maxLength": 15
+        },
+        "name": {
+          "type": "string",
+          "description": "The primary name that is used to identify the agency.",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "organizationalUnitId": {
+          "type": "string",
+          "description": "The unique Zywave identifier for the organization unit that the agency belongs to.",
+          "format": "guid"
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "The unique Zywave identifier for the organization that the agency belongs to.",
+          "format": "guid"
+        },
+        "parentId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The unique Zywave identifier for a parent agency if this is a child agency.",
+          "format": "int32"
+        },
+        "phoneNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The primary phone number for the agency.",
+          "format": "phone",
+          "maxLength": 15
+        },
+        "postalCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The zip code or postal code of the primary address for the agency.",
+          "maxLength": 10
+        },
+        "subdivisionCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The state or province of the primary address for the agency.",
+          "maxLength": 4
+        },
+        "website": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The website for the agency.",
+          "maxLength": 255
+        }
+      }
+    }
+  }
+}

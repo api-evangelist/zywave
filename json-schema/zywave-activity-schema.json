@@ -1,0 +1,389 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-activity-schema.json",
+  "title": "Activity",
+  "description": "Represents a full activity object used for adding, editing and viewing a single item.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-bkb-v2-openapi.json#/components/schemas/Activity",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Gets or sets the activity id.\nThis field is ready-only.  Any data modified in this field will not be saved.",
+      "format": "int32"
+    },
+    "activityTypeId": {
+      "type": "integer",
+      "description": "Gets or sets the activity type id.",
+      "format": "int32"
+    },
+    "timeSpent": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the time spent completing the activity.  Time is represented in minutes.",
+      "format": "int32"
+    },
+    "dueDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the due date of the activity.",
+      "format": "date-time"
+    },
+    "isOpen": {
+      "type": "boolean",
+      "description": "Gets or sets a value indicating whether this activity is open or closed."
+    },
+    "subject": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the activity subject."
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the saved activity notes.\nThis field is ready-only.  Any data modified in this field will not be saved."
+    },
+    "first25Notes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the first 25 characters of the activity notes.\nThis field is ready-only.  Any data modified in this field will not be saved."
+    },
+    "createdById": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the id of the user who created the activity.\nThis field is ready-only.  Any data modified in this field will not be saved.",
+      "format": "int32"
+    },
+    "createDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the create date.\nThis field is ready-only.  Any data modified in this field will not be saved.",
+      "format": "date-time"
+    },
+    "createdByType": {
+      "description": "Gets or sets the type of the created by.",
+      "nullable": true,
+      "oneOf": [
+        {
+          "$ref": "#/$defs/UserType"
+        }
+      ]
+    },
+    "lastUpdatedById": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the id of the user who last updated information on the activity.\nThis field is ready-only.  Any data modified in this field will not be saved.",
+      "format": "int32"
+    },
+    "lastUpdateDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the last update date.\nThis field is ready-only.  Any data modified in this field will not be saved.",
+      "format": "date-time"
+    },
+    "lastUpdatedByType": {
+      "description": "Gets or sets the last type of the updated by.",
+      "nullable": true,
+      "oneOf": [
+        {
+          "$ref": "#/$defs/UserType"
+        }
+      ]
+    },
+    "closedDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the date the activity was closed.\nThis field is ready-only.  Any data modified in this field will not be saved.",
+      "format": "date-time"
+    },
+    "assignedUsers": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Gets or sets the list of users who are assigned to the activity.   List contains brokercontact ids.",
+      "items": {
+        "$ref": "#/$defs/ActivityUsers"
+      }
+    },
+    "notifiedUsers": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Gets or sets the list of users who get notified on activity updates.   List contains brokercontact ids.",
+      "items": {
+        "$ref": "#/$defs/ActivityUsers"
+      }
+    },
+    "accountId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the account id.",
+      "format": "int32"
+    },
+    "businessEntityId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the related business entity id.",
+      "format": "int32"
+    },
+    "planId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the related plan id.",
+      "format": "int32"
+    },
+    "opportunityId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the related opportunity id.",
+      "format": "int32"
+    },
+    "accountContactId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the id of the related account contact.",
+      "format": "int32"
+    },
+    "censusId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the related census id. This can also be refered to as the EmployeeId.",
+      "format": "int32"
+    },
+    "employeeName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the name of the related employee."
+    },
+    "accountLocationId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the related account location id.",
+      "format": "int32"
+    },
+    "rfpId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the related RFP id.",
+      "format": "int32"
+    },
+    "proposalId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the related proposal id.",
+      "format": "int32"
+    },
+    "recurrenceId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the recurrence id.",
+      "format": "int32"
+    },
+    "recurrenceType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets or sets the text describing the recurrence."
+    },
+    "massAddId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the id indicating which mass add process created the activity.",
+      "format": "int32"
+    },
+    "brokerCarrierLinkId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets or sets the broker carrier link id.",
+      "format": "int32"
+    },
+    "activityBaseType": {
+      "description": "Gets or sets the base type.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/BaseType"
+        }
+      ]
+    },
+    "hasWorkflowItems": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Gets or sets a value indicating whether this instance has workflow items."
+    },
+    "customFields": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Gets or sets the custom fields.",
+      "items": {
+        "$ref": "#/$defs/CustomFieldValue"
+      }
+    },
+    "recreate": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Gets or sets a value indicating whether this Activity should be recreated when it is closed. \nThis field is used only by mass activities created by plantypes."
+    }
+  },
+  "$defs": {
+    "ActivityUsers": {
+      "type": "object",
+      "description": "Users class for Notified and Assigned users",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Gets or sets the id.",
+          "format": "int32"
+        },
+        "brokerContactId": {
+          "type": "integer",
+          "description": "Gets or sets the broker contact id.",
+          "format": "int32"
+        },
+        "activityId": {
+          "type": "integer",
+          "description": "Gets or sets the activity id.",
+          "format": "int32"
+        }
+      }
+    },
+    "BaseType": {
+      "type": "string",
+      "description": "Indicates the base type of an activity",
+      "x-enumNames": [
+        "Account",
+        "Carrier",
+        "Basic"
+      ],
+      "enum": [
+        "Account",
+        "Carrier",
+        "Basic"
+      ]
+    },
+    "CustomFieldValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "brokerId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "customFieldId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "itemId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "UserType": {
+      "type": "string",
+      "description": "UserType Enumeration",
+      "x-enumNames": [
+        "ClientContact",
+        "BrokerContact",
+        "ZywaveUser",
+        "HRCEmployee",
+        "HRCDivision",
+        "HRCClient",
+        "HRCClientAdmin",
+        "HRCDemo",
+        "BKBCarrierContact",
+        "BKBSync",
+        "Automated",
+        "Employee",
+        "ProspectContact",
+        "Unknown",
+        "Broker"
+      ],
+      "enum": [
+        "ClientContact",
+        "BrokerContact",
+        "ZywaveUser",
+        "HRCEmployee",
+        "HRCDivision",
+        "HRCClient",
+        "HRCClientAdmin",
+        "HRCDemo",
+        "BKBCarrierContact",
+        "BKBSync",
+        "Automated",
+        "Employee",
+        "ProspectContact",
+        "Unknown",
+        "Broker"
+      ]
+    }
+  }
+}

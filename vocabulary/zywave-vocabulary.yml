@@ -1,0 +1,429 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/zywave-accounts-v2-openapi.json
+- openapi/zywave-accounts-v3-openapi.json
+- openapi/zywave-agencies-v2-openapi.json
+- openapi/zywave-bkb-v2-openapi.json
+- openapi/zywave-carriers-v2-openapi.json
+vocabulary:
+  name: Zywave Domain Vocabulary
+  description: 'Terms declared by Zywave''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-13'
+  terms:
+  - term: Agency Data
+    definition: Agency data, not tied to a specific policy.
+    tags:
+    - Resource Group
+    source: openapi/zywave-policies-v2-openapi.json
+  - term: ETL after COBRA Strategy
+    definition: When importing data via the API, these operations should be performed after the referenced policy's COBRA strategy has been created.
+    tags:
+    - Resource Group
+    source: openapi/zywave-policies-v2-openapi.json
+  - term: ETL after Commission Period
+    definition: 'When importing data via the API, these operations should be performed after the referenced policy''s commission periods have
+      been created. NOTE: each policy has a default commission period -- so if there is only one period for the policy, you can either skip importing
+      it (preferred) -OR- make its start date one(1) day AFTER the effective date of the policy.'
+    tags:
+    - Resource Group
+    source: openapi/zywave-policies-v2-openapi.json
+  - term: ETL after Contribution Strategy
+    definition: When importing data via the API, these operations should be performed after the referenced policy's contribution strategy has
+      been created.
+    tags:
+    - Resource Group
+    source: openapi/zywave-policies-v2-openapi.json
+  - term: ETL after Policy
+    definition: When importing data via the API, these operations should be performed after the referenced policy has been created.
+    tags:
+    - Resource Group
+    source: openapi/zywave-policies-v2-openapi.json
+  - term: PolicyAction
+    definition: 'Operations that can be performed on a policy: e.g. renew, cancel.'
+    tags:
+    - Resource Group
+    source: openapi/zywave-policies-v2-openapi.json
+  - term: AccountContactInfo
+    definition: 'Object declared by the contract with fields: accountId, addressLine1, addressLine2, addressLine3, birthDate, city, contactConsentExpirationDateTime,
+      contactConsentSource, country, county, emailAddress, faxNumber. (16 more)'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/AccountContactInfo
+  - term: LineOfBusiness
+    definition: 'Enumeration declared by the contract with values: Benefits, PC, PersonalLines.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/LineOfBusiness
+  - term: AddressInfo
+    definition: 'Object declared by the contract with fields: accountContactId, addressLine1, addressLine2, addressLine3, city, country, county,
+      isPrimary, postalCode, state, type.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/AddressInfo
+  - term: AddressType
+    definition: 'Enumeration declared by the contract with values: None, Home, Mailing, Office, Billing, Business.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/AddressType
+  - term: PhoneInfo
+    definition: 'Object declared by the contract with fields: accountContactId, extension, isPrimary, number, type.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/PhoneInfo
+  - term: PhoneType
+    definition: 'Enumeration declared by the contract with values: None, Mobile, Work, Home, Fax.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/PhoneType
+  - term: ProblemDetails
+    definition: 'Object declared by the contract with fields: type, title, status, detail, instance.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/ProblemDetails
+  - term: PagedResultOfAccountContact
+    definition: 'Object declared by the contract with fields: hasMoreResults, pageIndex, pageSize, skip, take, totalCount, items.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/PagedResultOfAccountContact
+  - term: AccountInfo
+    definition: 'Object declared by the contract with fields: isArchived, name, addressLine1, addressLine2, addressLine3, city, county, state,
+      country, postalCode, phoneNumber, faxNumber. (11 more)'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/AccountInfo
+  - term: AccountClassification
+    definition: 'Enumeration declared by the contract with values: Personal, Commercial.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/AccountClassification
+  - term: AccountRelationship
+    definition: 'Enumeration declared by the contract with values: BenefitProspect, BenefitClient, PcProspect, PcClient.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/AccountRelationship
+  - term: ClientSize
+    definition: 'Enumeration declared by the contract with values: From0To25, From26To50, From51To99, From100To499, From500To999, From1000To2499,
+      From2500To4999, MoreThan4999.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/ClientSize
+  - term: PagedResultOfAccount
+    definition: 'Object declared by the contract with fields: hasMoreResults, pageIndex, pageSize, skip, take, totalCount, items.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/PagedResultOfAccount
+  - term: PagedResultOfAccountExternalReference
+    definition: 'Object declared by the contract with fields: hasMoreResults, pageIndex, pageSize, skip, take, totalCount, items.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/PagedResultOfAccountExternalReference
+  - term: AccountExternalReference
+    definition: An external reference is a relationship that links a Zywave account to an external account stored outside of Zywave. External
+      references are often used to link a Zywave account to another system's account for integration purposes.
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/AccountExternalReference
+  - term: PagedResultOfIndustry
+    definition: 'Object declared by the contract with fields: hasMoreResults, pageIndex, pageSize, skip, take, totalCount, items.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/PagedResultOfIndustry
+  - term: Industry
+    definition: 'Object declared by the contract with fields: id, name, naicsCode.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v2-openapi.json#/components/schemas/Industry
+  - term: CorrelatedBulkOperationResult
+    definition: 'Object declared by the contract with fields: rootCorrelationId.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/CorrelatedBulkOperationResult
+  - term: BulkEntityChangeRequest
+    definition: 'Object declared by the contract with fields: entities.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/BulkEntityChangeRequest
+  - term: Gender
+    definition: 'Enumeration declared by the contract with values: Male, Female.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/Gender
+  - term: MaritalStatus
+    definition: 'Enumeration declared by the contract with values: Single, Married, Separated, Divorced, Widowed, DomesticPartner, CivilUnion,
+      Fiancee, Other.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/MaritalStatus
+  - term: JsonPatchDocumentOfAccountContact
+    definition: 'Object declared by the contract with fields: operations.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/JsonPatchDocumentOfAccountContact
+  - term: OperationBase
+    definition: 'Object declared by the contract with fields: path, op, from.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/OperationBase
+  - term: AccountContactSearchOrder
+    definition: 'Object declared by the contract with fields: id, accountId, firstName, lastName, emailAddress, isEmailAllowed, isPrimaryContact,
+      isActive, isArchived.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/AccountContactSearchOrder
+  - term: Sort
+    definition: 'Object declared by the contract with fields: direction, priority, nullLast.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/Sort
+  - term: SortDirection
+    definition: 'Enumeration declared by the contract with values: Ascending, Descending.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/SortDirection
+  - term: InternalAccountContactSearchCriteria
+    definition: Internal model excluded from public docs
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/InternalAccountContactSearchCriteria
+  - term: InternalSearchEntitiesCriterionGroup
+    definition: Internal model excluded from public docs
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/InternalSearchEntitiesCriterionGroup
+  - term: InternalSearchEntityCriterion
+    definition: Internal model excluded from public docs
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/InternalSearchEntityCriterion
+  - term: InternalSearchEntityCriterionDetail
+    definition: Internal model excluded from public docs
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/InternalSearchEntityCriterionDetail
+  - term: LogicalOperator
+    definition: 'Enumeration declared by the contract with values: And, Or.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/LogicalOperator
+  - term: BooleanOperation
+    definition: 'Enumeration declared by the contract with values: None, Equals, NotEquals.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/BooleanOperation
+  - term: BooleanAggregateFunction
+    definition: 'Enumeration declared by the contract with values: Any, All, Count.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/BooleanAggregateFunction
+  - term: IdOperation
+    definition: 'Enumeration declared by the contract with values: None, Equals, NotEquals, In, NotIn.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/IdOperation
+  - term: IdAggregateFunction
+    definition: 'Enumeration declared by the contract with values: Any, All, Count.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/IdAggregateFunction
+  - term: ValueOperation
+    definition: 'Enumeration declared by the contract with values: None, Equals, NotEquals, GreaterThan, GreaterThanEquals, LessThan, LessThanEquals,
+      Between, NotBetween, In, NotIn.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueOperation
+  - term: ValueAggregateFunction
+    definition: 'Enumeration declared by the contract with values: Any, All, Count, Sum, Average, Min, Max.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueAggregateFunction
+  - term: StringOperation
+    definition: 'Enumeration declared by the contract with values: None, Equals, NotEquals, Contains, NotContains, IsNullOrEmpty, IsNotNullOrEmpty,
+      IsNullOrWhitespace, IsNotNullOrWhitespace, StartsWith, NotStartsWith, EndsWith. (3 more)'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/StringOperation
+  - term: StringAggregateFunction
+    definition: 'Enumeration declared by the contract with values: Any, All, Count.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/StringAggregateFunction
+  - term: ValueCriterionOfInteger
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfInteger
+  - term: ValueCriterionOfChar
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfChar
+  - term: ValueCriterionOfByte
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfByte
+  - term: ValueCriterionOfUInt16
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfUInt16
+  - term: ValueCriterionOfUInt64
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfUInt64
+  - term: ValueCriterionOfUInt32
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfUInt32
+  - term: ValueCriterionOfShort
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfShort
+  - term: ValueCriterionOfLong
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfLong
+  - term: ValueCriterionOfDecimal
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfDecimal
+  - term: ValueCriterionOfSingle
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfSingle
+  - term: ValueCriterionOfDouble
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfDouble
+  - term: ValueCriterionOfDateTime
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfDateTime
+  - term: ValueCriterionOfDateTimeOffset
+    definition: 'Object declared by the contract with fields: operation, value, values, rangeEndValue, rangeStartValue, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/ValueCriterionOfDateTimeOffset
+  - term: AggregateFunction
+    definition: 'Enumeration declared by the contract with values: Any, All, Count.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/AggregateFunction
+  - term: CriterionGroup
+    definition: 'Object declared by the contract with fields: items, operator, name, booleanOperation, booleanAggregateFunction, idOperation,
+      idAggregateFunction, valueOperation, valueAggregateFunction, stringOperation, stringAggregateFunction, value. (5 more)'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/CriterionGroup
+  - term: BooleanCriterion
+    definition: 'Object declared by the contract with fields: operation, value, nullReplacementValue.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/BooleanCriterion
+  - term: SearchRequest
+    definition: 'Object declared by the contract with fields: options.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/SearchRequest
+  - term: SearchOptions
+    definition: 'Object declared by the contract with fields: pageIndex, pageSize, skip, take.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/SearchOptions
+  - term: AccountContactDeduplicationResult
+    definition: 'Object declared by the contract with fields: sourceContact, matchedContacts, decision, evidence.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/AccountContactDeduplicationResult
+  - term: Decision
+    definition: 'Enumeration declared by the contract with values: NoConfidenceMatch, LowConfidenceMatch, MediumConfidenceMatch, HighConfidenceMatch.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/Decision
+  - term: AccountContactDriverInfo
+    definition: 'Object declared by the contract with fields: driverLicenseNumber, driverLicenseState, dateLicensed, licenseExpirationDate, licenseStatus.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/AccountContactDriverInfo
+  - term: LicenseStatus
+    definition: 'Enumeration declared by the contract with values: Valid, Unlicensed, Permit, Suspended.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/LicenseStatus
+  - term: PagedResultOfAccountContactDriver
+    definition: 'Object declared by the contract with fields: hasMoreResults, pageIndex, pageSize, skip, take, totalCount, items.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/PagedResultOfAccountContactDriver
+  - term: IndustryData
+    definition: 'Object declared by the contract with fields: id, classification, code.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/IndustryData
+  - term: IndustryClassification
+    definition: 'Enumeration declared by the contract with values: Unknown, NAICS, SIC, UKSIC, ISO, WCCode.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/IndustryClassification
+  - term: RelationshipType
+    definition: 'Object declared by the contract with fields: id, relationship.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/RelationshipType
+  - term: JsonPatchDocumentOfAccount
+    definition: 'Object declared by the contract with fields: operations.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/JsonPatchDocumentOfAccount
+  - term: InternalAccount
+    definition: Internal model excluded from public docs
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/InternalAccount
+  - term: InternalAccountInfo
+    definition: Internal model excluded from public docs
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/InternalAccountInfo
+  - term: AccountOwner
+    definition: 'Object declared by the contract with fields: ownerId, ownerType.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/AccountOwner
+  - term: RevenueRange
+    definition: 'Enumeration declared by the contract with values: None, From0To1M, From1MTo10M, From10MTo50M, From50MTo100M, From100MTo200M,
+      From200MTo1B, MoreThan1B.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/RevenueRange
+  - term: AccountStatus
+    definition: 'Enumeration declared by the contract with values: Unknown, Active, Inactive, Dead, Test.'
+    tags:
+    - Enumeration
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/AccountStatus
+  - term: DeduplicationResult
+    definition: 'Object declared by the contract with fields: sourceAccount, targetAccount, evidence, decision.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/DeduplicationResult
+  - term: DeduplicationReason
+    definition: 'Object declared by the contract with fields: rule, description.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/DeduplicationReason
+  - term: PagedResultOfInternalAccount
+    definition: 'Object declared by the contract with fields: hasMoreResults, pageIndex, pageSize, skip, take, totalCount, items.'
+    tags:
+    - Object
+    source: openapi/zywave-accounts-v3-openapi.json#/components/schemas/PagedResultOfInternalAccount

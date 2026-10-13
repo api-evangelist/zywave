@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-commission-schedule-schema.json",
+  "title": "CommissionSchedule",
+  "description": "Gets the carrier commission schedule.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-bkb-v2-openapi.json#/components/schemas/CommissionSchedule",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Gets the unique ID for this commission schedule.",
+      "format": "int32"
+    },
+    "newOrRenewal": {
+      "description": "Gets the renewal type applied to this schedule.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ScheduleRenewalTypes"
+        }
+      ]
+    },
+    "accountId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets the specific account that this commission schedule applies to.",
+      "format": "int32"
+    },
+    "effectiveDate": {
+      "type": "string",
+      "description": "Gets the effective date for this commission schedule.",
+      "format": "date-time"
+    },
+    "expirationDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets the expiration date for this commission schedule.",
+      "format": "date-time"
+    },
+    "planTypeId": {
+      "type": "integer",
+      "description": "Gets the plan type that this commission schedule applies to.",
+      "format": "int32"
+    },
+    "scheduleType": {
+      "description": "Gets or sets the schedule type for this commission schedule.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ScheduleTypes"
+        }
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets the name of this commission schedule."
+    },
+    "carrierId": {
+      "type": "integer",
+      "description": "Gets the ID for the carrier related to this commission schedule.",
+      "format": "int32"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets the description for this commission schedule."
+    },
+    "createdById": {
+      "type": "integer",
+      "description": "Gets the ID for the user who created this commission schedule.",
+      "format": "int32"
+    },
+    "createdDate": {
+      "type": "string",
+      "description": "Gets the date and time on which this commission schedule was created.",
+      "format": "date-time"
+    },
+    "lastUpdatedById": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Gets the date on which this commission schedule last updated by ID.",
+      "format": "int32"
+    },
+    "lastUpdatedDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Gets the date and time on which this commission schedule was last updated.",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "ScheduleRenewalTypes": {
+      "type": "string",
+      "description": "Commission Schedule Renewal Types",
+      "x-enumNames": [
+        "Renewal",
+        "New",
+        "Both"
+      ],
+      "enum": [
+        "Renewal",
+        "New",
+        "Both"
+      ]
+    },
+    "ScheduleTypes": {
+      "type": "string",
+      "description": "Commission Schedule Types.",
+      "x-enumNames": [
+        "Flat",
+        "Graded",
+        "SubscriberBased"
+      ],
+      "enum": [
+        "Flat",
+        "Graded",
+        "SubscriberBased"
+      ]
+    }
+  }
+}

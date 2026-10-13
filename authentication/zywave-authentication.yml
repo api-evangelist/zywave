@@ -1,0 +1,47 @@
+generated: '2026-10-13'
+method: derived
+source: openapi/zywave-accounts-v2-openapi.json, openapi/zywave-accounts-v3-openapi.json, openapi/zywave-agencies-v2-openapi.json,
+  openapi/zywave-bkb-v2-openapi.json, openapi/zywave-carriers-v2-openapi.json, openapi/zywave-commercial-policy-benchmark-v2-openapi.json,
+  openapi/zywave-content-v2-openapi.json, openapi/zywave-industries-v3-openapi.json, openapi/zywave-lead-insights-v3-openapi.json,
+  openapi/zywave-licenses-v2-openapi.json, openapi/zywave-plans-v2-openapi.json, openapi/zywave-policies-v2-openapi.json
+  ...
+summary:
+  types:
+  - http
+  - oauth2
+  - openIdConnect
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: oidc
+  type: openIdConnect
+  openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+  sources:
+  - openapi/zywave-accounts-v2-openapi.json
+  - openapi/zywave-accounts-v3-openapi.json
+  - openapi/zywave-agencies-v2-openapi.json
+  - openapi/zywave-bkb-v2-openapi.json
+  - openapi/zywave-carriers-v2-openapi.json
+  - openapi/zywave-licenses-v2-openapi.json
+  - openapi/zywave-plans-v2-openapi.json
+  - openapi/zywave-policies-v2-openapi.json
+  - openapi/zywave-profiles-v2-1-openapi.json
+- name: bearer
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Enter your JWT access token
+  sources:
+  - openapi/zywave-bkb-v2-openapi.json
+  - openapi/zywave-industries-v3-openapi.json
+  - openapi/zywave-lead-insights-v3-openapi.json
+- name: oidc
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.zywave.com/connect/authorize
+    tokenUrl: https://auth.zywave.com/connect/token
+    scopes: 2
+  sources:
+  - openapi/zywave-commercial-policy-benchmark-v2-openapi.json
+  - openapi/zywave-content-v2-openapi.json

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-account-contact-driver-info-schema.json",
+  "title": "AccountContactDriverInfo",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-accounts-v3-openapi.json#/components/schemas/AccountContactDriverInfo",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "driverLicenseNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 25
+    },
+    "driverLicenseState": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dateLicensed": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "licenseExpirationDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "licenseStatus": {
+      "nullable": true,
+      "oneOf": [
+        {
+          "$ref": "#/$defs/LicenseStatus"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "LicenseStatus": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Valid",
+        "Unlicensed",
+        "Permit",
+        "Suspended"
+      ],
+      "enum": [
+        "Valid",
+        "Unlicensed",
+        "Permit",
+        "Suspended"
+      ]
+    }
+  }
+}

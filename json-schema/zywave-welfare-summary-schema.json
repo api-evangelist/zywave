@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-welfare-summary-schema.json",
+  "title": "WelfareSummary",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-lead-insights-v3-openapi.json#/components/schemas/WelfareSummary",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "eligibleEmployees": {
+      "type": "integer",
+      "description": "The number of eligible eligible Employees"
+    },
+    "renewalDate": {
+      "type": "string",
+      "description": "Benefits plan primary renewal date"
+    },
+    "primaryBroker": {
+      "$ref": "#/$defs/PrimaryBroker"
+    },
+    "secondaryBroker": {
+      "$ref": "#/$defs/SecondaryBroker"
+    },
+    "totalRevenue": {
+      "type": "integer",
+      "description": "Sum of all plans revenue for the sponsor"
+    },
+    "totalCommission": {
+      "type": "integer",
+      "description": "Sum of all plans commissions for the sponsor"
+    },
+    "totalFees": {
+      "type": "integer",
+      "description": "Sum of all plans fees for the sponsor"
+    },
+    "totalPremium": {
+      "type": "integer",
+      "description": "Sum of all plans premiums for the sponsor"
+    },
+    "administrator": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the administrator who filed the Form 5500"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Phone number of the administrator who filed the Form 5500"
+        }
+      }
+    },
+    "accountingFirm": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the accounting firm"
+        }
+      }
+    },
+    "largestLineOfBusiness": {
+      "type": "string",
+      "description": "Text description of the plan which is the largest benefit line of business, by revenue"
+    },
+    "largestCarrier": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Lead insurance carrier, by revenue"
+        },
+        "parent": {
+          "type": "string",
+          "description": "The parent or normalized lead insurance carrier, normally due to acquisition or corporate ownership"
+        }
+      }
+    },
+    "largestServiceProvider": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The largest service provider for the benefit plans"
+        },
+        "service": {
+          "type": "string",
+          "description": "Description of the service provided by the largest service providers (e.g. Claims Administration)"
+        },
+        "totalRevenue": {
+          "type": "number",
+          "format": "float",
+          "description": "Revenue associated with the largest service provider"
+        }
+      }
+    },
+    "serviceProviders": {
+      "type": "object",
+      "properties": {
+        "directCompensation": {
+          "type": "number",
+          "format": "float",
+          "description": "Service provider direct compensation"
+        },
+        "indirectCompensation": {
+          "type": "number",
+          "format": "float",
+          "description": "Service provider indirect compensation"
+        },
+        "totalCompensation": {
+          "type": "number",
+          "format": "float",
+          "description": "Service provider total compensation"
+        }
+      }
+    },
+    "currentRetireesReceivingBenefits": {
+      "type": "integer",
+      "description": "Number of current retirees receiving benefits"
+    },
+    "futureRetireesReceivingBenefits": {
+      "type": "integer",
+      "description": "Number of future retirees receiving benefits"
+    },
+    "isSelfFunded": {
+      "type": "boolean",
+      "description": "True/False indicator if the benefit plan is self-funded"
+    },
+    "isCollectiveBargained": {
+      "type": "boolean",
+      "description": "True/False indicator if the benefit plans are collectively bargained"
+    },
+    "isMegaWrap": {
+      "type": "boolean",
+      "description": "True/False indicator if the company uses a mega-wrap to combine benefits under one plan"
+    },
+    "isFirstFiling": {
+      "type": "boolean",
+      "description": "True/False indicator if this is the first filing for this company"
+    },
+    "isDelinquentFiling": {
+      "type": "boolean",
+      "description": "True/False indicator if this is a delinquent filing"
+    },
+    "isFinalFiling": {
+      "type": "boolean",
+      "description": "True/False indicator if this is the final filing for this organization"
+    },
+    "isExtensionFiled": {
+      "type": "boolean",
+      "description": "True/False indicator if this organization filed an extension"
+    },
+    "preparerName": {
+      "type": "string",
+      "description": "Text field containing the name of the preparer, if any"
+    },
+    "hasMultipleEmployer": {
+      "type": "boolean",
+      "description": "True/False indicator if this organization filed as a multiemployer/multiple employer benefit plan"
+    },
+    "hasScheduleA": {
+      "type": "boolean",
+      "description": "True/False indicator if a filing has no schedule A, but has a 5500"
+    },
+    "thirdPartyAdmin": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of third party admin"
+        },
+        "compensation": {
+          "type": "integer",
+          "description": "Third party admin total compensation"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "description": "Standardized and normalized address one"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "Standardized and normalized address two"
+        },
+        "city": {
+          "type": "string",
+          "description": "Standardized and normalized city"
+        },
+        "state": {
+          "type": "string",
+          "description": "Standardized and normalized state (2 letter abbreviation)"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "Standardized address postal code"
+        },
+        "county": {
+          "type": "string",
+          "description": "The county name of the broker address"
+        }
+      }
+    },
+    "PrimaryBroker": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The lead broker for employee benefits plans by revenue amount"
+        },
+        "parent": {
+          "type": "string",
+          "description": "The parent or normalized name of the lead broker, normally due to acquisition"
+        },
+        "affiliation": {
+          "type": "array",
+          "description": "Affiliation name broker belongs to",
+          "items": {
+            "type": "string"
+          }
+        },
+        "address": {
+          "type": "object",
+          "$ref": "#/$defs/Address"
+        }
+      }
+    },
+    "SecondaryBroker": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The secondary broker for employee benefits plans by revenue amount"
+        },
+        "address": {
+          "type": "object",
+          "$ref": "#/$defs/Address"
+        }
+      }
+    },
+    "id": {
+      "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+      "type": "string"
+    }
+  }
+}

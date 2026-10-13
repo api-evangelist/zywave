@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-paged-result-of-feature-schema.json",
+  "title": "PagedResultOfFeature",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-licenses-v2-openapi.json#/components/schemas/PagedResultOfFeature",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasMoreResults": {
+      "type": "boolean",
+      "description": "A value indicating whether the larger result set has more results."
+    },
+    "skip": {
+      "type": "integer",
+      "description": "A value indicating how many of the previous values in the larger result set were omitted.",
+      "format": "int32"
+    },
+    "take": {
+      "type": "integer",
+      "description": "The number of records retrieved from larger result set.",
+      "format": "int32"
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total number of records in the larger result set.",
+      "format": "int32"
+    },
+    "items": {
+      "type": "array",
+      "description": "The records retrieved from the larger result set.",
+      "items": {
+        "$ref": "#/$defs/Feature"
+      }
+    }
+  },
+  "$defs": {
+    "Feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The feature description."
+        },
+        "id": {
+          "type": "integer",
+          "description": "The feature identifier.",
+          "format": "int32"
+        },
+        "isEnabled": {
+          "type": "boolean",
+          "description": "Specifies whether the feature is enabled."
+        },
+        "key": {
+          "type": "string",
+          "description": "The unique feature key.",
+          "format": "guid"
+        },
+        "name": {
+          "type": "string",
+          "description": "The feature name."
+        },
+        "tags": {
+          "type": "array",
+          "description": "All tags associated with the feature.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

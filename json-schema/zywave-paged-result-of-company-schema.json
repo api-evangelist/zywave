@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-paged-result-of-company-schema.json",
+  "title": "PagedResultOfCompany",
+  "description": "A model containing a collection of Content pieces and metadata about their position in a larger result list.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-commercial-policy-benchmark-v2-openapi.json#/components/schemas/PagedResultOfCompany",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasMoreResults": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "A value indicating whether the larger result set has more results."
+    },
+    "pageIndex": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The index of the page reflected by the collection.",
+      "format": "int32"
+    },
+    "pageSize": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The size of the page relfected by the collection.",
+      "format": "int32"
+    },
+    "skip": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "A value indicating how many of the previous values in the larger result set were omitted.",
+      "format": "int32"
+    },
+    "take": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The number of records retrieved from larger result set.",
+      "format": "int32"
+    },
+    "totalCount": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The total number of records in the larger result set.",
+      "format": "int32"
+    },
+    "items": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "The records retrieved from the larger result set.",
+      "items": {
+        "$ref": "#/$defs/Company"
+      }
+    }
+  },
+  "$defs": {
+    "Company": {
+      "type": "object",
+      "description": "Company class.",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "id property.",
+          "format": "int32"
+        },
+        "companyName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "CompanyName property."
+        },
+        "organizationType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "OrganizationType property."
+        },
+        "naicsCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "NaicsCode property"
+        },
+        "naics2": {
+          "type": "integer",
+          "description": "Naics2 property.",
+          "format": "int32"
+        },
+        "naics3": {
+          "type": "integer",
+          "description": "Naics3 property.",
+          "format": "int32"
+        },
+        "revenues": {
+          "type": "number",
+          "description": "Revenues property.",
+          "format": "decimal"
+        },
+        "numberOfEmployees": {
+          "type": "integer",
+          "description": "NumberOfEmployees property.",
+          "format": "int32"
+        },
+        "marketCap": {
+          "type": "number",
+          "description": "MarketCap property.",
+          "format": "decimal"
+        }
+      }
+    }
+  }
+}

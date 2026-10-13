@@ -1,0 +1,990 @@
+{
+  "@context": {
+    "@vocab": "https://zywave.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "zywave": "https://zywave.com/schema#",
+    "AccountContactInfo": "zywave:AccountContactInfo",
+    "accountId": {
+      "@id": "zywave:accountId",
+      "@type": "xsd:integer"
+    },
+    "addressLine1": {
+      "@id": "zywave:addressLine1",
+      "@type": "xsd:string"
+    },
+    "addressLine2": {
+      "@id": "zywave:addressLine2",
+      "@type": "xsd:string"
+    },
+    "addressLine3": {
+      "@id": "zywave:addressLine3",
+      "@type": "xsd:string"
+    },
+    "birthDate": {
+      "@id": "zywave:birthDate",
+      "@type": "xsd:dateTime"
+    },
+    "city": {
+      "@id": "zywave:city",
+      "@type": "xsd:string"
+    },
+    "contactConsentExpirationDateTime": {
+      "@id": "zywave:contactConsentExpirationDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "contactConsentSource": {
+      "@id": "zywave:contactConsentSource",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "zywave:country",
+      "@type": "xsd:string"
+    },
+    "county": {
+      "@id": "zywave:county",
+      "@type": "xsd:string"
+    },
+    "emailAddress": {
+      "@id": "zywave:emailAddress",
+      "@type": "xsd:string"
+    },
+    "faxNumber": {
+      "@id": "zywave:faxNumber",
+      "@type": "xsd:string"
+    },
+    "firstName": {
+      "@id": "zywave:firstName",
+      "@type": "xsd:string"
+    },
+    "isActive": {
+      "@id": "zywave:isActive",
+      "@type": "xsd:boolean"
+    },
+    "isArchived": {
+      "@id": "zywave:isArchived",
+      "@type": "xsd:boolean"
+    },
+    "isEmailAllowed": {
+      "@id": "zywave:isEmailAllowed",
+      "@type": "xsd:boolean"
+    },
+    "isPrimaryContact": {
+      "@id": "zywave:isPrimaryContact",
+      "@type": "xsd:boolean"
+    },
+    "lastName": {
+      "@id": "zywave:lastName",
+      "@type": "xsd:string"
+    },
+    "mobilePhoneNumber": {
+      "@id": "zywave:mobilePhoneNumber",
+      "@type": "xsd:string"
+    },
+    "phoneNumber": {
+      "@id": "zywave:phoneNumber",
+      "@type": "xsd:string"
+    },
+    "phoneNumberExtension": {
+      "@id": "zywave:phoneNumberExtension",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "zywave:postalCode",
+      "@type": "xsd:string"
+    },
+    "salutation": {
+      "@id": "zywave:salutation",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "zywave:state",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "zywave:title",
+      "@type": "xsd:string"
+    },
+    "linesOfBusiness": {
+      "@id": "zywave:linesOfBusiness",
+      "@container": "@list"
+    },
+    "addresses": {
+      "@id": "zywave:addresses",
+      "@container": "@list"
+    },
+    "phones": {
+      "@id": "zywave:phones",
+      "@container": "@list"
+    },
+    "LineOfBusiness": "zywave:LineOfBusiness",
+    "AddressInfo": "zywave:AddressInfo",
+    "accountContactId": {
+      "@id": "zywave:accountContactId",
+      "@type": "xsd:integer"
+    },
+    "isPrimary": {
+      "@id": "zywave:isPrimary",
+      "@type": "xsd:boolean"
+    },
+    "type": {
+      "@id": "zywave:type",
+      "@type": "@id"
+    },
+    "AddressType": "zywave:AddressType",
+    "PhoneInfo": "zywave:PhoneInfo",
+    "extension": {
+      "@id": "zywave:extension",
+      "@type": "xsd:string"
+    },
+    "number": {
+      "@id": "zywave:number",
+      "@type": "xsd:string"
+    },
+    "PhoneType": "zywave:PhoneType",
+    "ProblemDetails": "zywave:ProblemDetails",
+    "status": {
+      "@id": "zywave:status",
+      "@type": "xsd:integer"
+    },
+    "detail": {
+      "@id": "zywave:detail",
+      "@type": "xsd:string"
+    },
+    "instance": {
+      "@id": "zywave:instance",
+      "@type": "xsd:string"
+    },
+    "PagedResultOfAccountContact": "zywave:PagedResultOfAccountContact",
+    "hasMoreResults": {
+      "@id": "zywave:hasMoreResults",
+      "@type": "xsd:boolean"
+    },
+    "pageIndex": {
+      "@id": "zywave:pageIndex",
+      "@type": "xsd:integer"
+    },
+    "pageSize": {
+      "@id": "zywave:pageSize",
+      "@type": "xsd:integer"
+    },
+    "skip": {
+      "@id": "zywave:skip",
+      "@type": "xsd:integer"
+    },
+    "take": {
+      "@id": "zywave:take",
+      "@type": "xsd:integer"
+    },
+    "totalCount": {
+      "@id": "zywave:totalCount",
+      "@type": "xsd:integer"
+    },
+    "items": {
+      "@id": "zywave:items",
+      "@container": "@list"
+    },
+    "AccountInfo": "zywave:AccountInfo",
+    "name": {
+      "@id": "zywave:name",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "zywave:url",
+      "@type": "xsd:string"
+    },
+    "numberOfEmployees": {
+      "@id": "zywave:numberOfEmployees",
+      "@type": "xsd:integer"
+    },
+    "numberOfRetirees": {
+      "@id": "zywave:numberOfRetirees",
+      "@type": "xsd:integer"
+    },
+    "yearFounded": {
+      "@id": "zywave:yearFounded",
+      "@type": "xsd:integer"
+    },
+    "sicCode": {
+      "@id": "zywave:sicCode",
+      "@type": "xsd:string"
+    },
+    "naicsCodes": {
+      "@id": "zywave:naicsCodes",
+      "@container": "@list"
+    },
+    "classification": {
+      "@id": "zywave:classification"
+    },
+    "relationships": {
+      "@id": "zywave:relationships",
+      "@container": "@list"
+    },
+    "clientSize": {
+      "@id": "zywave:clientSize"
+    },
+    "industryId": {
+      "@id": "zywave:industryId",
+      "@type": "xsd:integer"
+    },
+    "AccountClassification": "zywave:AccountClassification",
+    "AccountRelationship": "zywave:AccountRelationship",
+    "ClientSize": "zywave:ClientSize",
+    "PagedResultOfAccount": "zywave:PagedResultOfAccount",
+    "PagedResultOfAccountExternalReference": "zywave:PagedResultOfAccountExternalReference",
+    "AccountExternalReference": "zywave:AccountExternalReference",
+    "id": {
+      "@id": "zywave:id",
+      "@type": "xsd:integer"
+    },
+    "externalId": {
+      "@id": "zywave:externalId",
+      "@type": "xsd:string"
+    },
+    "sourceName": {
+      "@id": "zywave:sourceName",
+      "@type": "xsd:string"
+    },
+    "PagedResultOfIndustry": "zywave:PagedResultOfIndustry",
+    "Industry": "zywave:Industry",
+    "naicsCode": {
+      "@id": "zywave:naicsCode",
+      "@type": "xsd:integer"
+    },
+    "CorrelatedBulkOperationResult": "zywave:CorrelatedBulkOperationResult",
+    "rootCorrelationId": {
+      "@id": "zywave:rootCorrelationId",
+      "@type": "xsd:string"
+    },
+    "BulkEntityChangeRequest": "zywave:BulkEntityChangeRequest",
+    "entities": {
+      "@id": "zywave:entities",
+      "@container": "@list"
+    },
+    "Gender": "zywave:Gender",
+    "MaritalStatus": "zywave:MaritalStatus",
+    "JsonPatchDocumentOfAccountContact": "zywave:JsonPatchDocumentOfAccountContact",
+    "operations": {
+      "@id": "zywave:operations",
+      "@container": "@list"
+    },
+    "OperationBase": "zywave:OperationBase",
+    "path": {
+      "@id": "zywave:path",
+      "@type": "xsd:string"
+    },
+    "op": {
+      "@id": "zywave:op",
+      "@type": "xsd:string"
+    },
+    "from": {
+      "@id": "zywave:from",
+      "@type": "xsd:string"
+    },
+    "AccountContactSearchOrder": "zywave:AccountContactSearchOrder",
+    "Sort": "zywave:Sort",
+    "direction": {
+      "@id": "zywave:direction",
+      "@type": "@id"
+    },
+    "priority": {
+      "@id": "zywave:priority",
+      "@type": "xsd:integer"
+    },
+    "nullLast": {
+      "@id": "zywave:nullLast",
+      "@type": "xsd:boolean"
+    },
+    "SortDirection": "zywave:SortDirection",
+    "LogicalOperator": "zywave:LogicalOperator",
+    "BooleanOperation": "zywave:BooleanOperation",
+    "BooleanAggregateFunction": "zywave:BooleanAggregateFunction",
+    "IdOperation": "zywave:IdOperation",
+    "IdAggregateFunction": "zywave:IdAggregateFunction",
+    "ValueOperation": "zywave:ValueOperation",
+    "ValueAggregateFunction": "zywave:ValueAggregateFunction",
+    "StringOperation": "zywave:StringOperation",
+    "StringAggregateFunction": "zywave:StringAggregateFunction",
+    "ValueCriterionOfInteger": "zywave:ValueCriterionOfInteger",
+    "operation": {
+      "@id": "zywave:operation",
+      "@type": "@id"
+    },
+    "value": {
+      "@id": "zywave:value",
+      "@type": "xsd:integer"
+    },
+    "values": {
+      "@id": "zywave:values",
+      "@container": "@list"
+    },
+    "rangeEndValue": {
+      "@id": "zywave:rangeEndValue",
+      "@type": "xsd:integer"
+    },
+    "rangeStartValue": {
+      "@id": "zywave:rangeStartValue",
+      "@type": "xsd:integer"
+    },
+    "nullReplacementValue": {
+      "@id": "zywave:nullReplacementValue",
+      "@type": "xsd:integer"
+    },
+    "ValueCriterionOfChar": "zywave:ValueCriterionOfChar",
+    "ValueCriterionOfByte": "zywave:ValueCriterionOfByte",
+    "ValueCriterionOfUInt16": "zywave:ValueCriterionOfUInt16",
+    "ValueCriterionOfUInt64": "zywave:ValueCriterionOfUInt64",
+    "ValueCriterionOfUInt32": "zywave:ValueCriterionOfUInt32",
+    "ValueCriterionOfShort": "zywave:ValueCriterionOfShort",
+    "ValueCriterionOfLong": "zywave:ValueCriterionOfLong",
+    "ValueCriterionOfDecimal": "zywave:ValueCriterionOfDecimal",
+    "ValueCriterionOfSingle": "zywave:ValueCriterionOfSingle",
+    "ValueCriterionOfDouble": "zywave:ValueCriterionOfDouble",
+    "ValueCriterionOfDateTime": "zywave:ValueCriterionOfDateTime",
+    "ValueCriterionOfDateTimeOffset": "zywave:ValueCriterionOfDateTimeOffset",
+    "AggregateFunction": "zywave:AggregateFunction",
+    "CriterionGroup": "zywave:CriterionGroup",
+    "operator": {
+      "@id": "zywave:operator"
+    },
+    "booleanOperation": {
+      "@id": "zywave:booleanOperation"
+    },
+    "booleanAggregateFunction": {
+      "@id": "zywave:booleanAggregateFunction"
+    },
+    "idOperation": {
+      "@id": "zywave:idOperation"
+    },
+    "idAggregateFunction": {
+      "@id": "zywave:idAggregateFunction"
+    },
+    "valueOperation": {
+      "@id": "zywave:valueOperation"
+    },
+    "valueAggregateFunction": {
+      "@id": "zywave:valueAggregateFunction"
+    },
+    "stringOperation": {
+      "@id": "zywave:stringOperation"
+    },
+    "stringAggregateFunction": {
+      "@id": "zywave:stringAggregateFunction"
+    },
+    "count": {
+      "@id": "zywave:count"
+    },
+    "BooleanCriterion": "zywave:BooleanCriterion",
+    "SearchRequest": "zywave:SearchRequest",
+    "options": {
+      "@id": "zywave:options",
+      "@type": "@id"
+    },
+    "SearchOptions": "zywave:SearchOptions",
+    "AccountContactDeduplicationResult": "zywave:AccountContactDeduplicationResult",
+    "sourceContact": {
+      "@id": "zywave:sourceContact",
+      "@type": "@id"
+    },
+    "matchedContacts": {
+      "@id": "zywave:matchedContacts",
+      "@container": "@list"
+    },
+    "decision": {
+      "@id": "zywave:decision",
+      "@type": "@id"
+    },
+    "evidence": {
+      "@id": "zywave:evidence",
+      "@type": "xsd:string"
+    },
+    "Decision": "zywave:Decision",
+    "AccountContactDriverInfo": "zywave:AccountContactDriverInfo",
+    "driverLicenseNumber": {
+      "@id": "zywave:driverLicenseNumber",
+      "@type": "xsd:string"
+    },
+    "driverLicenseState": {
+      "@id": "zywave:driverLicenseState",
+      "@type": "xsd:string"
+    },
+    "dateLicensed": {
+      "@id": "zywave:dateLicensed",
+      "@type": "xsd:dateTime"
+    },
+    "licenseExpirationDate": {
+      "@id": "zywave:licenseExpirationDate",
+      "@type": "xsd:dateTime"
+    },
+    "licenseStatus": {
+      "@id": "zywave:licenseStatus"
+    },
+    "LicenseStatus": "zywave:LicenseStatus",
+    "PagedResultOfAccountContactDriver": "zywave:PagedResultOfAccountContactDriver",
+    "IndustryData": "zywave:IndustryData",
+    "code": {
+      "@id": "zywave:code",
+      "@type": "xsd:string"
+    },
+    "IndustryClassification": "zywave:IndustryClassification",
+    "RelationshipType": "zywave:RelationshipType",
+    "relationship": {
+      "@id": "zywave:relationship",
+      "@type": "xsd:string"
+    },
+    "JsonPatchDocumentOfAccount": "zywave:JsonPatchDocumentOfAccount",
+    "AccountOwner": "zywave:AccountOwner",
+    "ownerId": {
+      "@id": "zywave:ownerId",
+      "@type": "xsd:integer"
+    },
+    "ownerType": {
+      "@id": "zywave:ownerType",
+      "@type": "xsd:string"
+    },
+    "RevenueRange": "zywave:RevenueRange",
+    "AccountStatus": "zywave:AccountStatus",
+    "DeduplicationResult": "zywave:DeduplicationResult",
+    "sourceAccount": {
+      "@id": "zywave:sourceAccount"
+    },
+    "targetAccount": {
+      "@id": "zywave:targetAccount"
+    },
+    "DeduplicationReason": "zywave:DeduplicationReason",
+    "rule": {
+      "@id": "zywave:rule",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "zywave:description",
+      "@type": "xsd:string"
+    },
+    "PagedResultOfInternalAccount": "zywave:PagedResultOfInternalAccount",
+    "JsonPatchDocumentOfInternalAccount": "zywave:JsonPatchDocumentOfInternalAccount",
+    "AccessResult": "zywave:AccessResult",
+    "canView": {
+      "@id": "zywave:canView",
+      "@type": "xsd:boolean"
+    },
+    "canEdit": {
+      "@id": "zywave:canEdit",
+      "@type": "xsd:boolean"
+    },
+    "canDelete": {
+      "@id": "zywave:canDelete",
+      "@type": "xsd:boolean"
+    },
+    "canCreate": {
+      "@id": "zywave:canCreate",
+      "@type": "xsd:boolean"
+    },
+    "AccountLabel": "zywave:AccountLabel",
+    "PagedResultOfAccountLabel": "zywave:PagedResultOfAccountLabel",
+    "SearchTokenResponse": "zywave:SearchTokenResponse",
+    "token": {
+      "@id": "zywave:token",
+      "@type": "xsd:string"
+    },
+    "AgencyCollection": "zywave:AgencyCollection",
+    "AgencyInfo": "zywave:AgencyInfo",
+    "address": {
+      "@id": "zywave:address",
+      "@type": "xsd:string"
+    },
+    "alias": {
+      "@id": "zywave:alias",
+      "@type": "xsd:string"
+    },
+    "countryCode": {
+      "@id": "zywave:countryCode",
+      "@type": "xsd:string"
+    },
+    "isEnabled": {
+      "@id": "zywave:isEnabled",
+      "@type": "xsd:boolean"
+    },
+    "organizationalUnitId": {
+      "@id": "zywave:organizationalUnitId",
+      "@type": "xsd:string"
+    },
+    "organizationId": {
+      "@id": "zywave:organizationId",
+      "@type": "xsd:string"
+    },
+    "parentId": {
+      "@id": "zywave:parentId",
+      "@type": "xsd:integer"
+    },
+    "subdivisionCode": {
+      "@id": "zywave:subdivisionCode",
+      "@type": "xsd:string"
+    },
+    "website": {
+      "@id": "zywave:website",
+      "@type": "xsd:string"
+    },
+    "PagedResultOfAgencyUser": "zywave:PagedResultOfAgencyUser",
+    "AgencyUserInfo": "zywave:AgencyUserInfo",
+    "biography": {
+      "@id": "zywave:biography",
+      "@type": "xsd:string"
+    },
+    "designation": {
+      "@id": "zywave:designation",
+      "@type": "xsd:string"
+    },
+    "externalEmployeeId": {
+      "@id": "zywave:externalEmployeeId",
+      "@type": "xsd:string"
+    },
+    "isAdministrator": {
+      "@id": "zywave:isAdministrator",
+      "@type": "xsd:boolean"
+    },
+    "middleInitial": {
+      "@id": "zywave:middleInitial",
+      "@type": "xsd:string"
+    },
+    "npn": {
+      "@id": "zywave:npn",
+      "@type": "xsd:string"
+    },
+    "primaryRole": {
+      "@id": "zywave:primaryRole"
+    },
+    "AgencyUserRole": "zywave:AgencyUserRole",
+    "ContactStatus": "zywave:ContactStatus",
+    "CustomFieldValue": "zywave:CustomFieldValue",
+    "brokerId": {
+      "@id": "zywave:brokerId",
+      "@type": "xsd:integer"
+    },
+    "customFieldId": {
+      "@id": "zywave:customFieldId",
+      "@type": "xsd:integer"
+    },
+    "itemId": {
+      "@id": "zywave:itemId",
+      "@type": "xsd:integer"
+    },
+    "AccountContactSearchModel": "zywave:AccountContactSearchModel",
+    "searchCriteria": {
+      "@id": "zywave:searchCriteria"
+    },
+    "searchOptions": {
+      "@id": "zywave:searchOptions"
+    },
+    "AccountContactSearchCriteria": "zywave:AccountContactSearchCriteria",
+    "address1": {
+      "@id": "zywave:address1"
+    },
+    "address2": {
+      "@id": "zywave:address2"
+    },
+    "address3": {
+      "@id": "zywave:address3"
+    },
+    "createdDate": {
+      "@id": "zywave:createdDate"
+    },
+    "contactStatus": {
+      "@id": "zywave:contactStatus"
+    },
+    "customFields": {
+      "@id": "zywave:customFields",
+      "@container": "@list"
+    },
+    "fax": {
+      "@id": "zywave:fax"
+    },
+    "mobilePhone": {
+      "@id": "zywave:mobilePhone"
+    },
+    "modifiedDate": {
+      "@id": "zywave:modifiedDate"
+    },
+    "phone": {
+      "@id": "zywave:phone"
+    },
+    "phoneExtension": {
+      "@id": "zywave:phoneExtension"
+    },
+    "stateProvince": {
+      "@id": "zywave:stateProvince"
+    },
+    "zipPostalCode": {
+      "@id": "zywave:zipPostalCode"
+    },
+    "IdListSearchType": "zywave:IdListSearchType",
+    "SearchCriteriaBase": "zywave:SearchCriteriaBase",
+    "sort": {
+      "@id": "zywave:sort",
+      "@type": "@id"
+    },
+    "sortOrder": {
+      "@id": "zywave:sortOrder",
+      "@type": "xsd:integer"
+    },
+    "SortType": "zywave:SortType",
+    "StringSearchType": "zywave:StringSearchType",
+    "ValueSearchType": "zywave:ValueSearchType",
+    "BooleanSearchType": "zywave:BooleanSearchType",
+    "EnumSearchType": "zywave:EnumSearchType",
+    "CustomFieldSearchValue": "zywave:CustomFieldSearchValue",
+    "ProductType": "zywave:ProductType",
+    "BrokerageBuilderStatus": "zywave:BrokerageBuilderStatus",
+    "BenchmarkEmployees": "zywave:BenchmarkEmployees",
+    "BenchmarkIndustry": "zywave:BenchmarkIndustry",
+    "Classifications": "zywave:Classifications",
+    "CustomField": "zywave:CustomField",
+    "fieldType": {
+      "@id": "zywave:fieldType",
+      "@type": "@id"
+    },
+    "includeOnRfp": {
+      "@id": "zywave:includeOnRfp",
+      "@type": "xsd:boolean"
+    },
+    "isDeleted": {
+      "@id": "zywave:isDeleted",
+      "@type": "xsd:boolean"
+    },
+    "isRequired": {
+      "@id": "zywave:isRequired",
+      "@type": "xsd:boolean"
+    },
+    "lookups": {
+      "@id": "zywave:lookups",
+      "@container": "@list"
+    },
+    "showInAmc": {
+      "@id": "zywave:showInAmc",
+      "@type": "xsd:boolean"
+    },
+    "showOnAccountHomePage": {
+      "@id": "zywave:showOnAccountHomePage",
+      "@type": "xsd:boolean"
+    },
+    "FieldType": "zywave:FieldType",
+    "Lookup": "zywave:Lookup",
+    "AccountSearchModel": "zywave:AccountSearchModel",
+    "AccountSearchCriteria": "zywave:AccountSearchCriteria",
+    "accountStatus": {
+      "@id": "zywave:accountStatus"
+    },
+    "clientCode": {
+      "@id": "zywave:clientCode"
+    },
+    "benchmarkEmployees": {
+      "@id": "zywave:benchmarkEmployees"
+    },
+    "benchmarkIndustry": {
+      "@id": "zywave:benchmarkIndustry"
+    },
+    "businessLine": {
+      "@id": "zywave:businessLine"
+    },
+    "isBenefitClient": {
+      "@id": "zywave:isBenefitClient"
+    },
+    "isBenefitProspect": {
+      "@id": "zywave:isBenefitProspect"
+    },
+    "productType": {
+      "@id": "zywave:productType"
+    },
+    "lastUpdatedDate": {
+      "@id": "zywave:lastUpdatedDate"
+    },
+    "producerId": {
+      "@id": "zywave:producerId"
+    },
+    "brokerageBuilderStatus": {
+      "@id": "zywave:brokerageBuilderStatus"
+    },
+    "UpdateAccountModel": "zywave:UpdateAccountModel",
+    "account": {
+      "@id": "zywave:account"
+    },
+    "crudOptions": {
+      "@id": "zywave:crudOptions"
+    },
+    "CrudOptions": "zywave:CrudOptions",
+    "force": {
+      "@id": "zywave:force",
+      "@type": "xsd:boolean"
+    },
+    "validateOnly": {
+      "@id": "zywave:validateOnly",
+      "@type": "xsd:boolean"
+    },
+    "AssignedRole": "zywave:AssignedRole",
+    "roleId": {
+      "@id": "zywave:roleId",
+      "@type": "xsd:integer"
+    },
+    "brokerContactId": {
+      "@id": "zywave:brokerContactId",
+      "@type": "xsd:integer"
+    },
+    "PagedResultOfActivity": "zywave:PagedResultOfActivity",
+    "Activity": "zywave:Activity",
+    "activityTypeId": {
+      "@id": "zywave:activityTypeId",
+      "@type": "xsd:integer"
+    },
+    "timeSpent": {
+      "@id": "zywave:timeSpent",
+      "@type": "xsd:integer"
+    },
+    "dueDate": {
+      "@id": "zywave:dueDate",
+      "@type": "xsd:dateTime"
+    },
+    "isOpen": {
+      "@id": "zywave:isOpen",
+      "@type": "xsd:boolean"
+    },
+    "subject": {
+      "@id": "zywave:subject",
+      "@type": "xsd:string"
+    },
+    "notes": {
+      "@id": "zywave:notes",
+      "@type": "xsd:string"
+    },
+    "first25Notes": {
+      "@id": "zywave:first25Notes",
+      "@type": "xsd:string"
+    },
+    "createdById": {
+      "@id": "zywave:createdById",
+      "@type": "xsd:integer"
+    },
+    "createDate": {
+      "@id": "zywave:createDate",
+      "@type": "xsd:dateTime"
+    },
+    "createdByType": {
+      "@id": "zywave:createdByType"
+    },
+    "lastUpdatedById": {
+      "@id": "zywave:lastUpdatedById",
+      "@type": "xsd:integer"
+    },
+    "lastUpdateDate": {
+      "@id": "zywave:lastUpdateDate",
+      "@type": "xsd:dateTime"
+    },
+    "lastUpdatedByType": {
+      "@id": "zywave:lastUpdatedByType"
+    },
+    "closedDate": {
+      "@id": "zywave:closedDate",
+      "@type": "xsd:dateTime"
+    },
+    "assignedUsers": {
+      "@id": "zywave:assignedUsers",
+      "@container": "@list"
+    },
+    "notifiedUsers": {
+      "@id": "zywave:notifiedUsers",
+      "@container": "@list"
+    },
+    "businessEntityId": {
+      "@id": "zywave:businessEntityId",
+      "@type": "xsd:integer"
+    },
+    "planId": {
+      "@id": "zywave:planId",
+      "@type": "xsd:integer"
+    },
+    "opportunityId": {
+      "@id": "zywave:opportunityId",
+      "@type": "xsd:integer"
+    },
+    "censusId": {
+      "@id": "zywave:censusId",
+      "@type": "xsd:integer"
+    },
+    "employeeName": {
+      "@id": "zywave:employeeName",
+      "@type": "xsd:string"
+    },
+    "accountLocationId": {
+      "@id": "zywave:accountLocationId",
+      "@type": "xsd:integer"
+    },
+    "rfpId": {
+      "@id": "zywave:rfpId",
+      "@type": "xsd:integer"
+    },
+    "proposalId": {
+      "@id": "zywave:proposalId",
+      "@type": "xsd:integer"
+    },
+    "recurrenceId": {
+      "@id": "zywave:recurrenceId",
+      "@type": "xsd:integer"
+    },
+    "recurrenceType": {
+      "@id": "zywave:recurrenceType",
+      "@type": "xsd:string"
+    },
+    "massAddId": {
+      "@id": "zywave:massAddId",
+      "@type": "xsd:integer"
+    },
+    "brokerCarrierLinkId": {
+      "@id": "zywave:brokerCarrierLinkId",
+      "@type": "xsd:integer"
+    },
+    "activityBaseType": {
+      "@id": "zywave:activityBaseType"
+    },
+    "hasWorkflowItems": {
+      "@id": "zywave:hasWorkflowItems",
+      "@type": "xsd:boolean"
+    },
+    "recreate": {
+      "@id": "zywave:recreate",
+      "@type": "xsd:boolean"
+    },
+    "UserType": "zywave:UserType",
+    "ActivityUsers": "zywave:ActivityUsers",
+    "activityId": {
+      "@id": "zywave:activityId",
+      "@type": "xsd:integer"
+    },
+    "BaseType": "zywave:BaseType",
+    "ActivitySearchModel": "zywave:ActivitySearchModel",
+    "ActivitiySearchCriteria": "zywave:ActivitiySearchCriteria",
+    "massActivityId": {
+      "@id": "zywave:massActivityId"
+    },
+    "lastUpdate": {
+      "@id": "zywave:lastUpdate"
+    },
+    "ActivityTypeSearchModel": "zywave:ActivityTypeSearchModel",
+    "ActivityTypeSearchCriteria": "zywave:ActivityTypeSearchCriteria",
+    "followUpDateInterval": {
+      "@id": "zywave:followUpDateInterval"
+    },
+    "allowOverride": {
+      "@id": "zywave:allowOverride"
+    },
+    "isReserved": {
+      "@id": "zywave:isReserved"
+    },
+    "defaultClosed": {
+      "@id": "zywave:defaultClosed"
+    },
+    "showOnBenefitClients": {
+      "@id": "zywave:showOnBenefitClients"
+    },
+    "showOnPCClients": {
+      "@id": "zywave:showOnPCClients"
+    },
+    "showOnBenefitProspects": {
+      "@id": "zywave:showOnBenefitProspects"
+    },
+    "showOnPCProspects": {
+      "@id": "zywave:showOnPCProspects"
+    },
+    "showOnLeads": {
+      "@id": "zywave:showOnLeads"
+    },
+    "ActivityUpdateModel": "zywave:ActivityUpdateModel",
+    "activity": {
+      "@id": "zywave:activity"
+    },
+    "PagedResultOfAuditResponse": "zywave:PagedResultOfAuditResponse",
+    "AuditResponse": "zywave:AuditResponse",
+    "folderId": {
+      "@id": "zywave:folderId",
+      "@type": "xsd:string"
+    },
+    "folderLocation": {
+      "@id": "zywave:folderLocation",
+      "@type": "xsd:string"
+    },
+    "folderName": {
+      "@id": "zywave:folderName",
+      "@type": "xsd:string"
+    },
+    "files": {
+      "@id": "zywave:files",
+      "@container": "@list"
+    },
+    "AuditFileItem": "zywave:AuditFileItem",
+    "fileId": {
+      "@id": "zywave:fileId",
+      "@type": "xsd:string"
+    },
+    "fileName": {
+      "@id": "zywave:fileName",
+      "@type": "xsd:string"
+    },
+    "audits": {
+      "@id": "zywave:audits",
+      "@container": "@list"
+    },
+    "AuditEntry": "zywave:AuditEntry",
+    "actionPerformed": {
+      "@id": "zywave:actionPerformed",
+      "@type": "xsd:string"
+    },
+    "actionPerformedBy": {
+      "@id": "zywave:actionPerformedBy",
+      "@type": "xsd:string"
+    },
+    "actionPerformedDate": {
+      "@id": "zywave:actionPerformedDate",
+      "@type": "xsd:dateTime"
+    },
+    "EntityType2": "zywave:EntityType2",
+    "BulkBenefitItemValueInfo": "zywave:BulkBenefitItemValueInfo",
+    "benefitItemId": {
+      "@id": "zywave:benefitItemId",
+      "@type": "xsd:integer"
+    },
+    "planTypeBenefitItemTierId": {
+      "@id": "zywave:planTypeBenefitItemTierId",
+      "@type": "xsd:integer"
+    },
+    "benefitItemValueTypeId": {
+      "@id": "zywave:benefitItemValueTypeId",
+      "@type": "xsd:integer"
+    },
+    "customText": {
+      "@id": "zywave:customText",
+      "@type": "xsd:string"
+    },
+    "effectiveDate": {
+      "@id": "zywave:effectiveDate",
+      "@type": "xsd:dateTime"
+    },
+    "updatedUserId": {
+      "@id": "zywave:updatedUserId",
+      "@type": "xsd:string"
+    },
+    "updatedDateTime": {
+      "@id": "zywave:updatedDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "BenefitItemValueUpdateInfo": "zywave:BenefitItemValueUpdateInfo"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Zywave API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Zywave's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-13) from openapi/zywave-accounts-v2-openapi.json, openapi/zywave-accounts-v3-openapi.json, openapi/zywave-agencies-v2-openapi.json.",
+  "dcterms:created": "2026-10-13",
+  "dcterms:source": [
+    "openapi/zywave-accounts-v2-openapi.json",
+    "openapi/zywave-accounts-v3-openapi.json",
+    "openapi/zywave-agencies-v2-openapi.json",
+    "openapi/zywave-bkb-v2-openapi.json",
+    "openapi/zywave-carriers-v2-openapi.json"
+  ]
+}

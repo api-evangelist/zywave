@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-account-schema.json",
+  "title": "Account",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-accounts-v2-openapi.json#/components/schemas/Account",
+  "allOf": [
+    {
+      "$ref": "#/$defs/AccountInfo"
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the account.",
+          "format": "int32"
+        },
+        "createdDateTime": {
+          "type": "string",
+          "description": "The date in which the account was created.",
+          "format": "date-time"
+        },
+        "updatedDateTime": {
+          "type": "string",
+          "description": "The date in which the account was last updated.",
+          "format": "date-time"
+        },
+        "msid": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The MiEdge MSID for this account."
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "AccountClassification": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Personal",
+        "Commercial"
+      ],
+      "enum": [
+        "Personal",
+        "Commercial"
+      ]
+    },
+    "AccountInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "isArchived": {
+          "type": "boolean",
+          "description": "Indicates whether the account is archived.",
+          "default": false
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the account.",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "addressLine1": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Line 1 of the primary address for the account.",
+          "maxLength": 255
+        },
+        "addressLine2": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Line 2 of the primary address for the account.",
+          "maxLength": 255
+        },
+        "addressLine3": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Line 3 of the primary address for the account.",
+          "maxLength": 100
+        },
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The city of the primary address for the account.",
+          "maxLength": 75
+        },
+        "county": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The county of the primary address for the account.",
+          "maxLength": 150
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The state of the primary address for the account.",
+          "maxLength": 4
+        },
+        "country": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The country of the primary address for the account.",
+          "maxLength": 2
+        },
+        "postalCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The zip code or postal code of the primary address for the account.",
+          "maxLength": 50
+        },
+        "phoneNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The phone number for a business account.",
+          "maxLength": 50
+        },
+        "faxNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The fax number for the account.",
+          "maxLength": 50
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The website for a business account.",
+          "maxLength": 255
+        },
+        "numberOfEmployees": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The number of employees for a business account.",
+          "format": "int32"
+        },
+        "numberOfRetirees": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The number of retirees for a business account.",
+          "format": "int32"
+        },
+        "yearFounded": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The year in which a business account was founded.",
+          "format": "int32"
+        },
+        "sicCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The standard industry classification code for a business account. This code is used to classify the industry area of a business.",
+          "maxLength": 4
+        },
+        "naicsCodes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "A list of North American Classification Systems codes applicable to a business account. This code is used to classify a business for the purposes of collecting, analyzing and publishing data related to the US business economy. The code must be a 2- to 6-digit code. If a NAICS code isn't applicable to the most recent set of codes, you may optionally indicate the year it was applicable followed by a \"|\" before the standard 2- to 6-digit code. For example, 2012|212234 can be sent to represent the industry \"Copper Ore and Nickel Ore Mining\", although this code is not applicable to the 2017 set. The year must be a valid NAICS versioning year (e.g. 1997, or 2002, or 2007, etc.). For a list of all standardized NAICS codes, see https://www.census.gov/eos/www/naics/.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "classification": {
+          "description": "Specifies whether the account is a business account or personal account.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/AccountClassification"
+            }
+          ]
+        },
+        "relationships": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "A list of relationships a broker has with a client distinguishing whether the account is a current client or prospect for both the employee benefits and property and casualty units within the broker.",
+          "items": {
+            "$ref": "#/$defs/AccountRelationship"
+          }
+        },
+        "clientSize": {
+          "description": "Specifies a client size range for business accounts.",
+          "nullable": true,
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ClientSize"
+            }
+          ]
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Determines whether the account is active throughout the Zywave product suite. If this is set to false the contacts for the account will also be marked as inactive and the account will not appear throughout the Zywave product suite. If not sent in the request isActive will be set to true.",
+          "default": true
+        },
+        "industryId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The unique Zywave identifier for the industry associated with the account.",
+          "format": "int32"
+        }
+      }
+    },
+    "AccountRelationship": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "BenefitProspect",
+        "BenefitClient",
+        "PcProspect",
+        "PcClient"
+      ],
+      "enum": [
+        "BenefitProspect",
+        "BenefitClient",
+        "PcProspect",
+        "PcClient"
+      ]
+    },
+    "ClientSize": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "From0To25",
+        "From26To50",
+        "From51To99",
+        "From100To499",
+        "From500To999",
+        "From1000To2499",
+        "From2500To4999",
+        "MoreThan4999"
+      ],
+      "enum": [
+        "From0To25",
+        "From26To50",
+        "From51To99",
+        "From100To499",
+        "From500To999",
+        "From1000To2499",
+        "From2500To4999",
+        "MoreThan4999"
+      ]
+    }
+  }
+}

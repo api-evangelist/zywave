@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-search-result-of-plan-with-rates-schema.json",
+  "title": "SearchResultOfPlanWithRates",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-plans-v2-openapi.json#/components/schemas/SearchResultOfPlanWithRates",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasMoreResults": {
+      "type": "boolean",
+      "description": "Indicates whether the search has more results than returned in the response."
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "The total records that meet the search criteria specified.",
+      "format": "int32"
+    },
+    "items": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "A list of business and personal accounts matching the search criteria.",
+      "items": {
+        "$ref": "#/$defs/PlanWithRates"
+      }
+    }
+  },
+  "$defs": {
+    "PlanRate": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PlanRateInfo"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The unique Zywave identifier for the rate.",
+              "format": "int32",
+              "deprecated": true
+            },
+            "updatedDateTime": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The date in which the rate was last updated.",
+              "format": "date-time",
+              "deprecated": true
+            }
+          }
+        }
+      ]
+    },
+    "PlanRateInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rate",
+        "tier",
+        "rateType"
+      ],
+      "properties": {
+        "rate": {
+          "type": "number",
+          "description": "The premium rate for the specific tier.",
+          "format": "decimal"
+        },
+        "tier": {
+          "type": "string",
+          "description": "The tier the premium rate is associated with. For more information regarding the tiers supported by this call please review the endpoint documentation.",
+          "minLength": 1
+        },
+        "rateType": {
+          "type": "string",
+          "description": "The tier the premium rate is associated with. For more information regarding the tiers supported by this call please review the endpoint documentation.",
+          "minLength": 1
+        },
+        "rateComponents": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "For Level Funded Rate Types, the carrier may provide a breakdown of how the rate is calculated.",
+          "items": {
+            "$ref": "#/$defs/RateComponent"
+          }
+        }
+      }
+    },
+    "PlanWithRates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "planId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "quotedPlanId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "planRates": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/PlanRate"
+          }
+        }
+      }
+    },
+    "RateComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rate": {
+          "type": "number",
+          "description": "The premium rate for the specific rate component.",
+          "format": "decimal"
+        },
+        "rateAttributes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The plan rate attributes for the specific rate component.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-employee-response-schema.json",
+  "title": "EmployeeResponse",
+  "description": "Client-facing employee response. Exposes only fields accessible to the client â€” internal audit fields are excluded.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-client-engagement-v3-openapi.json#/components/schemas/EmployeeResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "firstName",
+    "lastName"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "The unique identifier of the employee.",
+      "format": "int32"
+    },
+    "accountId": {
+      "type": "integer",
+      "description": "The identifier of the account this employee belongs to.",
+      "format": "int32",
+      "maximum": 2147483647,
+      "minimum": 1
+    },
+    "firstName": {
+      "type": "string",
+      "description": "The employee's first name.",
+      "maxLength": 250,
+      "minLength": 0
+    },
+    "lastName": {
+      "type": "string",
+      "description": "The employee's last name.",
+      "maxLength": 250,
+      "minLength": 0
+    },
+    "prefix": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The employee's name prefix (e.g., Dr.).",
+      "maxLength": 50,
+      "minLength": 0
+    },
+    "suffix": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The employee's name suffix (e.g., Jr.).",
+      "maxLength": 50,
+      "minLength": 0
+    },
+    "emailAddress": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The employee's email address.",
+      "format": "email",
+      "maxLength": 255,
+      "minLength": 0
+    },
+    "externalId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "An external system identifier for the employee.",
+      "maxLength": 255,
+      "minLength": 0
+    },
+    "isArchived": {
+      "type": "boolean",
+      "description": "Whether the employee is archived."
+    },
+    "employerUserProfileId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The employer user profile ID associated with this employee.",
+      "format": "int32"
+    },
+    "employeeGroupIds": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "The IDs of employee groups this employee belongs to.",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    }
+  }
+}

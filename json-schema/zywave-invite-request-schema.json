@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-invite-request-schema.json",
+  "title": "InviteRequest",
+  "description": "Payload describing a set of invitations to send to recipients derived from lists, accounts, contacts, or prior invitations.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-client-engagement-v3-openapi.json#/components/schemas/InviteRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "portalId",
+    "type"
+  ],
+  "properties": {
+    "listIds": {
+      "type": "array",
+      "description": "The IDs of static lists from which recipients should be derived.",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "accountIds": {
+      "type": "array",
+      "description": "The IDs of accounts to invite directly.",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "accountContactIds": {
+      "type": "array",
+      "description": "The IDs of account contacts to invite directly.",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "invitationIds": {
+      "type": "array",
+      "description": "The IDs of existing invitations the send should reference (used for series).",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "toolPackageIds": {
+      "type": "array",
+      "description": "The IDs of tool packages to attach to the invitation.",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "portalId": {
+      "type": "integer",
+      "description": "The ID of the portal the invitation targets. Required.",
+      "format": "int32",
+      "maximum": 2147483647,
+      "minimum": 1
+    },
+    "subject": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The email subject line.",
+      "maxLength": 512,
+      "minLength": 0
+    },
+    "header": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The email header text.",
+      "maxLength": 512,
+      "minLength": 0
+    },
+    "emailBody": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The email body (HTML or text).",
+      "maxLength": 65536,
+      "minLength": 0
+    },
+    "actionText": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The call-to-action text rendered in the email button.",
+      "maxLength": 128,
+      "minLength": 0
+    },
+    "sendFromUser": {
+      "type": "boolean",
+      "description": "Whether the email should be sent from the acting user rather than a shared sender."
+    },
+    "agencyDomainId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The ID of the agency mail domain to send from. Falls back to default if not owned by the agency.",
+      "format": "int32",
+      "maximum": 2147483647,
+      "minimum": 1
+    },
+    "type": {
+      "description": "The type of invitation being sent.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/InviteType"
+        }
+      ]
+    },
+    "bulkReinvite": {
+      "type": "boolean",
+      "description": "Whether this is a bulk reinvite (processed as a background job)."
+    },
+    "bulkInviteNew": {
+      "type": "boolean",
+      "description": "Whether this is a bulk invite for new contacts (processed as a background job)."
+    },
+    "isSeries": {
+      "type": "boolean",
+      "description": "Whether this send represents part of an invitation series."
+    },
+    "scheduledDate": {
+      "type": "string",
+      "description": "The date/time the invitation should be sent (used for scheduled sends).",
+      "format": "date-time"
+    },
+    "fromEmailAddress": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional override for the from-email address. Defaults to the configured notification address.",
+      "format": "email",
+      "maxLength": 255,
+      "minLength": 0
+    }
+  },
+  "$defs": {
+    "InviteType": {
+      "type": "string",
+      "description": "The kind of invitation being sent.",
+      "x-enumNames": [
+        "Unknown",
+        "ClientPortal",
+        "BenefitDocumentBuilder"
+      ],
+      "enum": [
+        "Unknown",
+        "ClientPortal",
+        "BenefitDocumentBuilder"
+      ]
+    }
+  }
+}

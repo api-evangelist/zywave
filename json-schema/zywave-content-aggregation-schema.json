@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-content-aggregation-schema.json",
+  "title": "ContentAggregation",
+  "description": "A group of content with various metadatas",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-content-v2-openapi.json#/components/schemas/ContentAggregation",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The name of the aggregation"
+    },
+    "category": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Category of the aggregation"
+    },
+    "value": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Aggregation value, refers to how the content was aggregated"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "description": "Where the aggregation is sorted, 0 = first",
+      "format": "int32"
+    },
+    "contentLookup": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "A lookup of content ids and the smart content algorithm scores tied to those",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "content": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "The list of content tied to this aggregation",
+      "items": {
+        "$ref": "#/$defs/Content"
+      }
+    }
+  },
+  "$defs": {
+    "Content": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ContentInfo"
+        },
+        {
+          "type": "object",
+          "description": "A piece of content represents a container for files and metadata in the Zywave system. Can be maintained by an agency or Zywave.",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The unique Zywave identifier for the content.",
+              "format": "int32"
+            },
+            "fileId": {
+              "type": "integer",
+              "description": "The unique identifier for the lastest ContentFile for the content.",
+              "format": "int32"
+            },
+            "fileName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The name of the lastest ContentFile for the content."
+            },
+            "thumbnailUrl": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Thumbnail image source for the content."
+            },
+            "tagNames": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "A list of tags that describes what the content is.",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ContentInfo": {
+      "type": "object",
+      "description": "ContentInfo represents the editable properties of a piece of content.",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The title of the piece of content."
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The description of the piece of content."
+        },
+        "clientDescription": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The description clients see for the piece of content."
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Whether the content is active"
+        },
+        "file": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The file that will be associated to the content.",
+          "format": "binary"
+        },
+        "createdDateTime": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The date the content was created",
+          "format": "date-time"
+        },
+        "updatedDateTime": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The date the file was last edited",
+          "format": "date-time"
+        },
+        "metadata": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "Additional dynamic information about the content.",
+          "items": {
+            "$ref": "#/$defs/KeyValuePairOfStringAndString"
+          }
+        }
+      }
+    },
+    "KeyValuePairOfStringAndString": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

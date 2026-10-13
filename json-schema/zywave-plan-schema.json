@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-plan-schema.json",
+  "title": "Plan",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-plans-v2-openapi.json#/components/schemas/Plan",
+  "allOf": [
+    {
+      "$ref": "#/$defs/PlanInfo"
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hasSbc"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the plan.",
+          "format": "int32"
+        },
+        "hasSbc": {
+          "type": "boolean",
+          "description": "Whether the plan has a linked SBC file"
+        },
+        "updatedDateTime": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The date in which the plan was last updated.",
+          "format": "date-time"
+        },
+        "attributes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The list of additional attributes for the plan",
+          "items": {
+            "$ref": "#/$defs/PlanAttribute"
+          }
+        },
+        "benefitItems": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The list of benefit items for the plan",
+          "items": {
+            "$ref": "#/$defs/BenefitItem"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "BenefitItem": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/BenefitItemInfo"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "updatedDateTime"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The unique Zywave identifier for the benefit item.",
+              "format": "int32"
+            },
+            "updatedDateTime": {
+              "type": "string",
+              "description": "The date in which the benefit item information was last updated.",
+              "format": "date-time"
+            }
+          }
+        }
+      ]
+    },
+    "BenefitItemInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "parentBenefitItemId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The unique Zywave identifier of the parent of this benefit item (if applicable).",
+          "format": "int32"
+        },
+        "values": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "A list of values related to this benefit item.",
+          "items": {
+            "$ref": "#/$defs/BenefitItemValue"
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the benefit item.",
+          "maxLength": 150,
+          "minLength": 1
+        }
+      }
+    },
+    "BenefitItemTier": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "InNetwork",
+        "OutOfNetwork",
+        "Managed",
+        "Preferred"
+      ],
+      "enum": [
+        "InNetwork",
+        "OutOfNetwork",
+        "Managed",
+        "Preferred"
+      ]
+    },
+    "BenefitItemValue": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/BenefitItemValueInfo"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The unique Zywave identifier for the benefit item value.",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "BenefitItemValueInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tier",
+        "valueType"
+      ],
+      "properties": {
+        "tier": {
+          "description": "Specifies which medical provider network the specific benefit item value is associated with.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BenefitItemTier"
+            }
+          ]
+        },
+        "valueType": {
+          "description": "Specifies the format of the benefit item value.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BenefitItemValueType"
+            }
+          ]
+        },
+        "customText": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Specifies custom text that will follow the benefit item value in an effort to provide more specific information regarding the benefit item.",
+          "maxLength": 1000
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The specific value associated with the benefit item.",
+          "maxLength": 1000
+        }
+      }
+    },
+    "BenefitItemValueType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Boolean",
+        "Numeric",
+        "Dollar",
+        "Percent",
+        "Options",
+        "Text"
+      ],
+      "enum": [
+        "Boolean",
+        "Numeric",
+        "Dollar",
+        "Percent",
+        "Options",
+        "Text"
+      ]
+    },
+    "PlanAttribute": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "PlanInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "carrierCompanyId",
+        "carrierPlanIdentifier",
+        "planType",
+        "state",
+        "name",
+        "startDate",
+        "endDate"
+      ],
+      "properties": {
+        "carrierCompanyId": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the insurance carrier offering the plan.",
+          "format": "int32"
+        },
+        "carrierPlanIdentifier": {
+          "type": "string",
+          "description": "A plan identifier specified by the carrier offering the plan.",
+          "maxLength": 75,
+          "minLength": 1
+        },
+        "planType": {
+          "description": "The type of insurance coverage being offered by the plan.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PlanType"
+            }
+          ]
+        },
+        "agencyId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Plans within Zywave can be specific to an agency. When that is the case, this field will indicate the unique Zywave identifier for the agency associated with the plan. If a plan isn't agency specific this will be returned as null.",
+          "format": "int32"
+        },
+        "state": {
+          "type": "string",
+          "description": "The state(s) in which the plan is applicable.",
+          "maxLength": 2,
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the plan.",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The availability of this plan starts on this date.",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The availability of this plan ends on this date.",
+          "format": "date-time"
+        }
+      }
+    },
+    "PlanType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Unknown",
+        "Medical",
+        "Dental",
+        "EAP",
+        "LifeAndADD",
+        "LongTermCare",
+        "LongTermDisability",
+        "Section125",
+        "ShortTermDisability",
+        "Vision",
+        "PharmacyBenefitManagement",
+        "RetirementPlans",
+        "OtherBenefits",
+        "WorkersCompensation",
+        "CommercialAuto",
+        "GeneralLiability",
+        "Property",
+        "BusinessOwnersPolicy",
+        "OtherPropertyAndCasualty",
+        "PersonalLines",
+        "CommercialPackage",
+        "UmbrellaExcessLiability",
+        "DirectorsAndOfficers",
+        "ErrorsAndOmissions",
+        "EmploymentPracticesLiability",
+        "BuildersRisk",
+        "CrimeFidelity",
+        "Earthquake",
+        "Flood",
+        "InlandMarineCargo",
+        "OceanMarine",
+        "Surety",
+        "OtherProperty",
+        "OtherLiability",
+        "FeeForService",
+        "Program"
+      ],
+      "enum": [
+        "Unknown",
+        "Medical",
+        "Dental",
+        "EAP",
+        "LifeAndADD",
+        "LongTermCare",
+        "LongTermDisability",
+        "Section125",
+        "ShortTermDisability",
+        "Vision",
+        "PharmacyBenefitManagement",
+        "RetirementPlans",
+        "OtherBenefits",
+        "WorkersCompensation",
+        "CommercialAuto",
+        "GeneralLiability",
+        "Property",
+        "BusinessOwnersPolicy",
+        "OtherPropertyAndCasualty",
+        "PersonalLines",
+        "CommercialPackage",
+        "UmbrellaExcessLiability",
+        "DirectorsAndOfficers",
+        "ErrorsAndOmissions",
+        "EmploymentPracticesLiability",
+        "BuildersRisk",
+        "CrimeFidelity",
+        "Earthquake",
+        "Flood",
+        "InlandMarineCargo",
+        "OceanMarine",
+        "Surety",
+        "OtherProperty",
+        "OtherLiability",
+        "FeeForService",
+        "Program"
+      ]
+    }
+  }
+}

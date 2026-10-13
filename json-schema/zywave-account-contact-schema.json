@@ -1,0 +1,445 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-account-contact-schema.json",
+  "title": "AccountContact",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-accounts-v2-openapi.json#/components/schemas/AccountContact",
+  "allOf": [
+    {
+      "$ref": "#/$defs/AccountContactInfo"
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the account contact.",
+          "format": "int32"
+        },
+        "createdDateTime": {
+          "type": "string",
+          "description": "The date in which the account contact was created.",
+          "format": "date-time"
+        },
+        "updatedDateTime": {
+          "type": "string",
+          "description": "The date in which the account contact was updated.",
+          "format": "date-time"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "AccountContactInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "accountId": {
+          "type": "integer",
+          "description": "The unique Zywave identifier for the account the contact is associated with.",
+          "format": "int32"
+        },
+        "addressLine1": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Line 1 of the primary address for the account contact.",
+          "maxLength": 255
+        },
+        "addressLine2": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Line 2 of the primary address for the account contact.",
+          "maxLength": 255
+        },
+        "addressLine3": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Line 3 of the primary address for the account contact.",
+          "maxLength": 100
+        },
+        "birthDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The birth date of the account contact.",
+          "format": "date-time"
+        },
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The city of the primary address for the account contact.",
+          "maxLength": 75
+        },
+        "contactConsentExpirationDateTime": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The expiration of consent, used primarily in regions where consent is required to send email to the contact.",
+          "format": "date-time"
+        },
+        "contactConsentSource": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The source through which the contact consented to receive email, used primarily in regions where consent is required to send email to the contact.",
+          "maxLength": 100
+        },
+        "country": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The country of the primary address for the account contact.",
+          "maxLength": 2
+        },
+        "county": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The county of the primary address for the account contact.",
+          "maxLength": 150
+        },
+        "emailAddress": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The email address for the account contact.",
+          "maxLength": 100
+        },
+        "faxNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The fax number for the account contact.",
+          "maxLength": 50
+        },
+        "firstName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The first name for the account contact.",
+          "maxLength": 50
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Specifies whether or not the account contact appears in Zywave applications not used to manage accounts and account contacts."
+        },
+        "isArchived": {
+          "type": "boolean",
+          "description": "Specifies whether an account has been deleted from view in Zywave applications including applications used to manage accounts and contacts."
+        },
+        "isEmailAllowed": {
+          "type": "boolean",
+          "description": "Specifies whether the account contact will receive email notifications related to distributions sent from zywave applications."
+        },
+        "isPrimaryContact": {
+          "type": "boolean",
+          "description": "Specifies whether or not the contact is a primary contact for the account. More than one primary contact can exist per account. Primary contacts will appear on the account information screen in applications used to manage accounts and contacts."
+        },
+        "lastName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The last name for the account contact.",
+          "maxLength": 50
+        },
+        "mobilePhoneNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The mobile phone number for the account contact.",
+          "maxLength": 50
+        },
+        "phoneNumber": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The phone number for the account contact.",
+          "maxLength": 50
+        },
+        "phoneNumberExtension": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The phone number extension for the account contact.",
+          "maxLength": 10
+        },
+        "postalCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The zip code or postal code of the primary address for the account contact.",
+          "maxLength": 50
+        },
+        "salutation": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The proper salutation for the account contact.",
+          "maxLength": 50
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The state of the primary address for the account contact.",
+          "maxLength": 4
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The business title for the account contact.",
+          "maxLength": 100
+        },
+        "linesOfBusiness": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The line of businesses associated with the account contact.",
+          "maxItems": 50,
+          "items": {
+            "$ref": "#/$defs/LineOfBusiness"
+          }
+        },
+        "addresses": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The list of addresses for the account contact.",
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/Address"
+          }
+        },
+        "phones": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The list of phones for the account contact.",
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/Phone"
+          }
+        }
+      }
+    },
+    "Address": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/AddressInfo"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "AddressInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "accountContactId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "addressLine1": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 255
+        },
+        "addressLine2": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 255
+        },
+        "addressLine3": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 100
+        },
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 75
+        },
+        "country": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2
+        },
+        "county": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 150
+        },
+        "isPrimary": {
+          "type": "boolean"
+        },
+        "postalCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 50
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 4
+        },
+        "type": {
+          "$ref": "#/$defs/AddressType"
+        }
+      }
+    },
+    "AddressType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "Home",
+        "Mailing",
+        "Office",
+        "Billing",
+        "Business"
+      ],
+      "enum": [
+        "None",
+        "Home",
+        "Mailing",
+        "Office",
+        "Billing",
+        "Business"
+      ]
+    },
+    "LineOfBusiness": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Benefits",
+        "PC",
+        "PersonalLines"
+      ],
+      "enum": [
+        "Benefits",
+        "PC",
+        "PersonalLines"
+      ]
+    },
+    "Phone": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PhoneInfo"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "PhoneInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "accountContactId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "extension": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 10
+        },
+        "isPrimary": {
+          "type": "boolean"
+        },
+        "number": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 50
+        },
+        "type": {
+          "$ref": "#/$defs/PhoneType"
+        }
+      }
+    },
+    "PhoneType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "Mobile",
+        "Work",
+        "Home",
+        "Fax"
+      ],
+      "enum": [
+        "None",
+        "Mobile",
+        "Work",
+        "Home",
+        "Fax"
+      ]
+    }
+  }
+}

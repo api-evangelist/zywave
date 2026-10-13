@@ -1,0 +1,421 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-quote-info-schema.json",
+  "title": "QuoteInfo",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-plans-v2-openapi.json#/components/schemas/QuoteInfo",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "postalCode",
+    "county",
+    "state",
+    "accountId",
+    "status",
+    "effectiveDate",
+    "isArchived",
+    "planTypes",
+    "employeeCensus"
+  ],
+  "properties": {
+    "agencyId": {
+      "type": "integer",
+      "description": "Quotes are owned by insurance agencies. This is the unique Zywave identifier for the agency associated with the quote.",
+      "format": "int32"
+    },
+    "postalCode": {
+      "type": "string",
+      "description": "The employer zip code or postal code of the account the quote is associated with.",
+      "maxLength": 10,
+      "minLength": 5
+    },
+    "county": {
+      "type": "string",
+      "description": "The employer county of the account the quote is associated with.",
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "state": {
+      "type": "string",
+      "description": "The state of the account the quote is associated with.",
+      "maxLength": 4,
+      "minLength": 1
+    },
+    "accountId": {
+      "type": "integer",
+      "description": "Quotes are associated with an insurance agency's accounts. This is the unique Zywave identifier for the account associated with the quote.",
+      "format": "int32",
+      "maximum": 2147483647.0,
+      "minimum": 1.0
+    },
+    "status": {
+      "description": "Indicates where the quote is in the quoting process. ",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/QuoteStatus"
+        }
+      ]
+    },
+    "effectiveDate": {
+      "type": "string",
+      "description": "The effective date of the insurance plans presented in the quote.",
+      "format": "date-time"
+    },
+    "isArchived": {
+      "type": "boolean",
+      "description": "Indicates whether the quote has been removed from the Zywave CPQ application."
+    },
+    "sicCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The 4-digit Standard Industrial Classification code for the account.",
+      "maxLength": 4,
+      "minLength": 4,
+      "pattern": "\\d*"
+    },
+    "npn": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The National Producer Number requesting the quote.",
+      "maxLength": 10,
+      "pattern": "\\d*"
+    },
+    "tin": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The tax identification number requesting the quote.",
+      "maxLength": 15
+    },
+    "suppressedCarrierCompanyIds": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "List of carrier company ids to not include on the quote.",
+      "maxItems": 100,
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "planIds": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "List of specific plan ids to quote.",
+      "maxItems": 1000,
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "planTypes": {
+      "type": "array",
+      "description": "List of plan types to include on the quote.",
+      "items": {
+        "$ref": "#/$defs/PlanType"
+      }
+    },
+    "employeeCensus": {
+      "type": "array",
+      "description": "The employee census for the quote.",
+      "items": {
+        "$ref": "#/$defs/GroupMemberEmployee"
+      }
+    }
+  },
+  "$defs": {
+    "EnrolledCoverageGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planType",
+        "isWaived"
+      ],
+      "properties": {
+        "planType": {
+          "description": "The plan type for enrollment.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PlanType"
+            }
+          ]
+        },
+        "isWaived": {
+          "type": "boolean",
+          "description": "Whether or not the plan type is waived."
+        },
+        "coverageGroupName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The coverage group enrolled in.  An empty or null value will default to Waived.",
+          "maxLength": 150
+        }
+      }
+    },
+    "Gender": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Male",
+        "Female"
+      ],
+      "enum": [
+        "Male",
+        "Female"
+      ]
+    },
+    "GroupMemberBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gender",
+        "dateOfBirth",
+        "isTobaccoUser"
+      ],
+      "properties": {
+        "id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The ID assigned to the group member by Zywave CPQ.",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The first name of the group member.",
+          "maxLength": 50
+        },
+        "lastName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The last name of the group member.",
+          "maxLength": 50
+        },
+        "homePostalCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The home postal code of the group member.",
+          "maxLength": 10
+        },
+        "homeCounty": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The home county of the group member.",
+          "maxLength": 50
+        },
+        "gender": {
+          "description": "The gender of the group member.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Gender"
+            }
+          ]
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "description": "The date of birth of the group member.",
+          "format": "date-time"
+        },
+        "isTobaccoUser": {
+          "type": "boolean",
+          "description": "Whether or not the group member is a tobacco user."
+        }
+      }
+    },
+    "GroupMemberDependent": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupMemberBase"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "relationship"
+          ],
+          "properties": {
+            "relationship": {
+              "$ref": "#/$defs/RelationshipType"
+            },
+            "enrolledPlanTypes": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "$ref": "#/$defs/PlanType"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GroupMemberEmployee": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupMemberBase"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "dependents": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The dependents of the employee",
+              "items": {
+                "$ref": "#/$defs/GroupMemberDependent"
+              }
+            },
+            "enrolledCoverageGroups": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The plan types the group member is enrolled in.",
+              "items": {
+                "$ref": "#/$defs/EnrolledCoverageGroup"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PlanType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Unknown",
+        "Medical",
+        "Dental",
+        "EAP",
+        "LifeAndADD",
+        "LongTermCare",
+        "LongTermDisability",
+        "Section125",
+        "ShortTermDisability",
+        "Vision",
+        "PharmacyBenefitManagement",
+        "RetirementPlans",
+        "OtherBenefits",
+        "WorkersCompensation",
+        "CommercialAuto",
+        "GeneralLiability",
+        "Property",
+        "BusinessOwnersPolicy",
+        "OtherPropertyAndCasualty",
+        "PersonalLines",
+        "CommercialPackage",
+        "UmbrellaExcessLiability",
+        "DirectorsAndOfficers",
+        "ErrorsAndOmissions",
+        "EmploymentPracticesLiability",
+        "BuildersRisk",
+        "CrimeFidelity",
+        "Earthquake",
+        "Flood",
+        "InlandMarineCargo",
+        "OceanMarine",
+        "Surety",
+        "OtherProperty",
+        "OtherLiability",
+        "FeeForService",
+        "Program"
+      ],
+      "enum": [
+        "Unknown",
+        "Medical",
+        "Dental",
+        "EAP",
+        "LifeAndADD",
+        "LongTermCare",
+        "LongTermDisability",
+        "Section125",
+        "ShortTermDisability",
+        "Vision",
+        "PharmacyBenefitManagement",
+        "RetirementPlans",
+        "OtherBenefits",
+        "WorkersCompensation",
+        "CommercialAuto",
+        "GeneralLiability",
+        "Property",
+        "BusinessOwnersPolicy",
+        "OtherPropertyAndCasualty",
+        "PersonalLines",
+        "CommercialPackage",
+        "UmbrellaExcessLiability",
+        "DirectorsAndOfficers",
+        "ErrorsAndOmissions",
+        "EmploymentPracticesLiability",
+        "BuildersRisk",
+        "CrimeFidelity",
+        "Earthquake",
+        "Flood",
+        "InlandMarineCargo",
+        "OceanMarine",
+        "Surety",
+        "OtherProperty",
+        "OtherLiability",
+        "FeeForService",
+        "Program"
+      ]
+    },
+    "QuoteStatus": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Started",
+        "Rating",
+        "Rated",
+        "Completed",
+        "SoldFinal",
+        "Duplicating"
+      ],
+      "enum": [
+        "Started",
+        "Rating",
+        "Rated",
+        "Completed",
+        "SoldFinal",
+        "Duplicating"
+      ]
+    },
+    "RelationshipType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Dependent",
+        "Spouse"
+      ],
+      "enum": [
+        "Dependent",
+        "Spouse"
+      ]
+    }
+  }
+}

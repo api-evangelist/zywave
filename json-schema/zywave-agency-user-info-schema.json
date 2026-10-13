@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-agency-user-info-schema.json",
+  "title": "AgencyUserInfo",
+  "description": "AgencyUserInfo represents the editable properties of an agency user.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-agencies-v2-openapi.json#/components/schemas/AgencyUserInfo",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "firstName",
+    "lastName"
+  ],
+  "properties": {
+    "biography": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A written biography about the user.",
+      "maxLength": 1000
+    },
+    "designation": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A list of professional designations earned by the user.",
+      "maxLength": 50
+    },
+    "emailAddress": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The primary emails address of the user.",
+      "maxLength": 100
+    },
+    "externalEmployeeId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "An identifier for correlation with an external employee management system",
+      "maxLength": 50
+    },
+    "faxNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The primary fax number of the user.",
+      "maxLength": 20
+    },
+    "firstName": {
+      "type": "string",
+      "description": "The first name of the user.",
+      "maxLength": 50,
+      "minLength": 1
+    },
+    "isAdministrator": {
+      "type": "boolean",
+      "description": "Denotes whether the user has full administrative privileges for the specific agency the are associated with."
+    },
+    "isEnabled": {
+      "type": "boolean",
+      "description": "Determine whether the user is an active user.  If the user is not active they will not have access to the Zywave platform for the specific agency they are associated with."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "The last name of the user.",
+      "maxLength": 50,
+      "minLength": 1
+    },
+    "linesOfBusiness": {
+      "type": "array",
+      "description": "Specifies the lines of business within the agency the user is associated with.",
+      "items": {
+        "$ref": "#/$defs/LineOfBusiness"
+      }
+    },
+    "middleInitial": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The middle initial of the user.",
+      "maxLength": 2
+    },
+    "npn": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The national produce number for the user at this agency.",
+      "maxLength": 10
+    },
+    "phoneNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The primary phone number of the user.",
+      "maxLength": 20
+    },
+    "primaryRole": {
+      "description": "The primary role of the user at the agency.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/AgencyUserRole"
+        }
+      ]
+    },
+    "salutation": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The greeting associated with the user.",
+      "maxLength": 8
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The job title of the user at the agency.",
+      "maxLength": 100
+    }
+  },
+  "$defs": {
+    "AgencyUserRole": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "Executive",
+        "Sales",
+        "ClientServices",
+        "InformationTechnology",
+        "Finance",
+        "HumanResources"
+      ],
+      "enum": [
+        "None",
+        "Executive",
+        "Sales",
+        "ClientServices",
+        "InformationTechnology",
+        "Finance",
+        "HumanResources"
+      ]
+    },
+    "LineOfBusiness": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "Benefits",
+        "Financial",
+        "PersonalLines",
+        "PropertyCasualty"
+      ],
+      "enum": [
+        "None",
+        "Benefits",
+        "Financial",
+        "PersonalLines",
+        "PropertyCasualty"
+      ]
+    }
+  }
+}

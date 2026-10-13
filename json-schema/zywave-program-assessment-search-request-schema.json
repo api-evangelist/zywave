@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-program-assessment-search-request-schema.json",
+  "title": "ProgramAssessmentSearchRequest",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-commercial-policy-benchmark-v2-openapi.json#/components/schemas/ProgramAssessmentSearchRequest",
+  "allOf": [
+    {
+      "$ref": "#/$defs/AssessmentSearchRequest"
+    },
+    {
+      "type": "object",
+      "description": "ProgramAssessmentSearchRequest class.",
+      "additionalProperties": false,
+      "properties": {
+        "oldestTrailing": {
+          "type": "integer",
+          "description": "Default value is 24.\nOldestTrailing property.",
+          "format": "int32",
+          "default": 24
+        },
+        "newestTrailing": {
+          "type": "integer",
+          "description": "Default value is 0.\nNewestTrailing property.",
+          "format": "int32",
+          "default": 0
+        },
+        "premium": {
+          "type": "number",
+          "description": "Default value is 0.\nPremium property.",
+          "format": "decimal",
+          "default": 0
+        },
+        "limit": {
+          "type": "number",
+          "description": "Default value is 0.\nLimit property.",
+          "format": "decimal",
+          "default": 0
+        },
+        "retention": {
+          "type": "number",
+          "description": "Default value is 0.\nRetention property.",
+          "format": "decimal",
+          "default": 0
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "AssessmentSearchRequest": {
+      "type": "object",
+      "description": "AssessmentSearchRequest class.",
+      "additionalProperties": false,
+      "properties": {
+        "naics": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "BindRequired.\nNaics property.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coverageId": {
+          "type": "integer",
+          "description": "BindRequired.\nCoverageId property.",
+          "format": "int32"
+        },
+        "lineOfBusinessId": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "BindRequired.\nLineOfBusinessId property.",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "exposureType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "BindRequired.\nDefault value is \"Revenues\".\nExposureType property.",
+          "default": "Revenues"
+        },
+        "exposureRangeLow": {
+          "type": "number",
+          "description": "BindRequired.\nExposureRangeLow property.",
+          "format": "decimal"
+        },
+        "exposureRangeHigh": {
+          "type": "number",
+          "description": "BindRequired.\nExposureRangeHigh property.",
+          "format": "decimal"
+        },
+        "organizationType": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "OrganizationType property.",
+          "default": "All",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

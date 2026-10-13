@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-company-details-schema.json",
+  "title": "CompanyDetails",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-lead-insights-v3-openapi.json#/components/schemas/CompanyDetails",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "name": {
+      "type": "string",
+      "description": "The normalized company name"
+    },
+    "alternateEins": {
+      "type": "array",
+      "description": "List of known EINs and the date it was last reported",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ein": {
+            "type": "string"
+          },
+          "asOfDate": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "alternateAddresses": {
+      "type": "array",
+      "description": "List of known addresses and the date it was last reported",
+      "items": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "$ref": "#/$defs/Address"
+          },
+          "asOfDate": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "alternateNaicsCodes": {
+      "type": "array",
+      "description": "List of known NAICS for the business and the date it was last reported",
+      "items": {
+        "type": "object",
+        "properties": {
+          "naics": {
+            "type": "string"
+          },
+          "asOfDate": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "alternateNames": {
+      "type": "array",
+      "description": "List of known business names and the date it was last reported",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "asOfDate": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "alternatePhoneNumbers": {
+      "type": "array",
+      "description": "List of known phone numbers and the date it was last reported",
+      "items": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string"
+          },
+          "asOfDate": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "description": "Standardized and normalized address one"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "Standardized and normalized address two"
+        },
+        "city": {
+          "type": "string",
+          "description": "Standardized and normalized city"
+        },
+        "state": {
+          "type": "string",
+          "description": "Standardized and normalized state (2 letter abbreviation)"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "Standardized address postal code"
+        },
+        "county": {
+          "type": "string",
+          "description": "The county name of the broker address"
+        }
+      }
+    },
+    "id": {
+      "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+      "type": "string"
+    }
+  }
+}

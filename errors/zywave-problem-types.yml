@@ -1,0 +1,116 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/zywave-accounts-v2-openapi.json
+- openapi/zywave-accounts-v3-openapi.json
+- openapi/zywave-agencies-v2-openapi.json
+- openapi/zywave-bkb-v2-openapi.json
+- openapi/zywave-carriers-v2-openapi.json
+- openapi/zywave-client-engagement-v3-openapi.json
+- openapi/zywave-commercial-policy-benchmark-v2-openapi.json
+- openapi/zywave-content-v2-openapi.json
+- openapi/zywave-industries-v3-openapi.json
+- openapi/zywave-lead-insights-v3-openapi.json
+- openapi/zywave-licenses-v2-openapi.json
+- openapi/zywave-organizations-v3-openapi.json
+format: custom
+envelope:
+  media_type: application/json
+  schema: ProblemDetails
+coverage:
+  operations: 334
+  statuses_declared: 13
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request — neither FileId nor FolderId provided, entityType absent when FolderIdentifier present,
+    or pageSize exceeds 100.
+  operations: 171
+  media_types:
+  - application/json
+  schema: ValidationProblemDetails
+- status: 401
+  title: Unauthorized
+  description: Unauthorized
+  operations: 296
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 403
+  title: Forbidden
+  description: Forbidden
+  operations: 264
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 404
+  title: Not Found
+  description: Not Found
+  operations: 213
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 409
+  title: Conflict
+  description: Conflict - idempotency key already used for an in-flight request.
+  operations: 10
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 412
+  title: Precondition Failed
+  description: null
+  operations: 1
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 413
+  title: Content Too Large
+  description: null
+  operations: 1
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 422
+  title: Unprocessable Content
+  description: Unprocessable Entity - operation cannot be applied to the current file state.
+  operations: 2
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 4xx
+  title: null
+  description: null
+  operations: 1
+  media_types:
+  - application/json
+  schema: null
+- status: 500
+  title: Internal Server Error
+  description: Unexpected error
+  operations: 2
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 502
+  title: Bad Gateway
+  description: Bad Gateway — AuditTrailEventsAPI is unavailable.
+  operations: 6
+  media_types:
+  - application/json
+  schema: ProblemDetails
+- status: 5xx
+  title: null
+  description: null
+  operations: 1
+  media_types:
+  - application/json
+  schema: null
+- status: default
+  title: null
+  description: Error
+  operations: 26
+  media_types:
+  - application/json
+  schema: ProblemDetails

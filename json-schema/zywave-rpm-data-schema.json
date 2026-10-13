@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-rpm-data-schema.json",
+  "title": "RpmData",
+  "description": "RpmData class.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-commercial-policy-benchmark-v2-openapi.json#/components/schemas/RpmData",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "firstQuartile": {
+      "type": "number",
+      "description": "firstQuartile property.",
+      "format": "float"
+    },
+    "median": {
+      "type": "number",
+      "description": "median property.",
+      "format": "float"
+    },
+    "fourthQuartile": {
+      "type": "number",
+      "description": "fourthQuartile property.",
+      "format": "float"
+    },
+    "maxRpm": {
+      "type": "number",
+      "description": "maxRpm property.",
+      "format": "float"
+    },
+    "clientBar": {
+      "type": "number",
+      "description": "clientBar property.",
+      "format": "float"
+    },
+    "nthPercent": {
+      "type": "number",
+      "description": "nthPercent property.",
+      "format": "float"
+    },
+    "chartDescription": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "chartDescription nullable property."
+    }
+  }
+}

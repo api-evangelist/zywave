@@ -1,0 +1,15 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-conformance.py
+source: openapi/ (15 document(s), 148 mutating operations)
+idempotency:
+  coverage: partial
+  scope:
+  - PATCH /bkb/v2.0/file/{fileId}
+  - POST /bkb/v2.0/file/upload
+  - POST /bkb/v2.0/folder
+  - PATCH /bkb/v2.0/folder/{folderIdentifier}
+  header: X-Idempotency-Key
+  mechanism: request header / body token declared in the OpenAPI
+  evidence: X-Idempotency-Key on 3 of 148 mutating operations
+  verified: derived

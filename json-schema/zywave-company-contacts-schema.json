@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-company-contacts-schema.json",
+  "title": "CompanyContacts",
+  "description": "A list of contacts for the provided company ID.",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-lead-insights-v3-openapi.json#/components/schemas/CompanyContacts",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "contacts": {
+      "type": "array",
+      "description": "A list of contacts for the given ID.",
+      "items": {
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "description": "The contact's company name. Note it may be different than the parent company name in the case of a merger/acquisition."
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "addressLine1": {
+                "type": "string",
+                "description": "Standardized and normalized address one"
+              },
+              "addressLine2": {
+                "type": "string",
+                "description": "Standardized and normalized address two"
+              },
+              "city": {
+                "type": "string",
+                "description": "Standardized and normalized city"
+              },
+              "state": {
+                "type": "string",
+                "description": "Standardized and normalized state (2 letter abbreviation)"
+              },
+              "postalCode": {
+                "type": "string",
+                "description": "Standardized address postal code"
+              }
+            }
+          },
+          "fullName": {
+            "type": "string",
+            "description": "The contact's full name"
+          },
+          "namePrefix": {
+            "type": "string",
+            "description": "The name prefix"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The contact's first name"
+          },
+          "middleName": {
+            "type": "string",
+            "description": "The contact's middle name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The contact's last name"
+          },
+          "nameSuffix": {
+            "type": "string",
+            "description": "The name suffix"
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "The contacts job title"
+          },
+          "email": {
+            "type": "string",
+            "description": "The contact's email"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The contact's phone number"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "description": "The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.",
+      "type": "string"
+    }
+  }
+}

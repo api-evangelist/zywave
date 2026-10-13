@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-policy-info-schema.json",
+  "title": "PolicyInfo",
+  "description": "PolicyInfo class.\n            ",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-policies-v2-openapi.json#/components/schemas/PolicyInfo",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "accountId",
+    "policyCoverageTypeId",
+    "carrierCompanyId",
+    "beginningPolicyStatusId",
+    "effectiveDate",
+    "fundingType",
+    "productType",
+    "isVoluntary",
+    "policyName",
+    "firstWrittenDate"
+  ],
+  "properties": {
+    "accountId": {
+      "type": "integer",
+      "description": "The unique Zywave identifier for the account tied to the policy.",
+      "format": "int32",
+      "maximum": 2147483647.0,
+      "minimum": 1.0
+    },
+    "policyCoverageTypeId": {
+      "type": "integer",
+      "description": "The type of coverage for the policy. Ex. Medical, Dental, etc. Has a dependency on a policy coverage type item.  Please use the policy coverage type endpoint for reference.",
+      "format": "int32",
+      "maximum": 2147483647.0,
+      "minimum": 1.0
+    },
+    "carrierCompanyId": {
+      "type": "integer",
+      "description": "The carrier company tied to the policy.  Has a dependency on a carrier company item.  Please use the Carriers API for reference.",
+      "format": "int32",
+      "maximum": 2147483647.0,
+      "minimum": -1.0
+    },
+    "beginningPolicyStatusId": {
+      "type": "integer",
+      "description": "The identifier for the status of the policy when it is created.  Has a dependency on a policy status item.  Please use the policy status endpoint for reference.",
+      "format": "int32",
+      "maximum": 2147483647.0,
+      "minimum": 1.0
+    },
+    "effectiveDate": {
+      "type": "string",
+      "description": "The date that the policy becomes effective.",
+      "format": "date-time"
+    },
+    "expirationDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The date that the policy expires.",
+      "format": "date-time"
+    },
+    "fundingType": {
+      "description": "The funding type for the policy.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/FundingTypeOption"
+        }
+      ]
+    },
+    "productType": {
+      "description": "The product type for the policy.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ProductTypeOption"
+        }
+      ]
+    },
+    "isVoluntary": {
+      "type": "boolean",
+      "description": "Denotes if a policy is voluntary."
+    },
+    "policyName": {
+      "type": "string",
+      "description": "The name of the policy.",
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "firstWrittenDate": {
+      "type": "string",
+      "description": "The date that the policy was first written. Must be less than or equal to ExpirationDate.",
+      "format": "date-time"
+    },
+    "cancellationDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The date that the policy was cancelled.",
+      "format": "date-time"
+    },
+    "reinstatementDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The date that the policy was reinstated.",
+      "format": "date-time"
+    },
+    "policyNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The carrier's identifier for the policy.",
+      "maxLength": 75
+    },
+    "rateType": {
+      "description": "The type of rate for the policy. Ex. Tiered",
+      "nullable": true,
+      "oneOf": [
+        {
+          "$ref": "#/$defs/RateTypeOption"
+        }
+      ]
+    },
+    "endingPolicyStatusId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The identifier for the status of the policy at the end of its term.  Has a dependency on a policy status item.  Please use the policy status endpoint for reference.",
+      "format": "int32"
+    },
+    "departmentId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The identifier for the department related to the policy.",
+      "format": "int32"
+    },
+    "carrierCommissionToAgencyPaymentScheduleId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "The identifier for the carrier commission to agency payment schedule related to the policy.",
+      "format": "int32",
+      "maximum": 2147483647.0,
+      "minimum": 1.0
+    },
+    "needsReview": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Denotes if a policy needs to be reviewed."
+    },
+    "policyGroupId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Denotes the policy group ID that this policy belongs to.",
+      "format": "int32",
+      "maximum": 2147483647.0,
+      "minimum": 1.0
+    },
+    "vendorSourceId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Denotes the source ID of the vendor (requires CarrierCompanyId to be -1).",
+      "maxLength": 36
+    },
+    "vendorSourceType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Denotes the source type of the vendor (requires CarrierCompanyId to be -1).",
+      "maxLength": 32
+    },
+    "vendorSourceEntityName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Denotes the source entity name of the vendor (requires CarrierCompanyId to be -1).",
+      "maxLength": 32
+    }
+  },
+  "$defs": {
+    "FundingTypeOption": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "FullyInsured",
+        "SelfFunded",
+        "LevelFunded"
+      ],
+      "enum": [
+        "None",
+        "FullyInsured",
+        "SelfFunded",
+        "LevelFunded"
+      ]
+    },
+    "ProductTypeOption": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "PPO",
+        "HMO",
+        "POS",
+        "EPO",
+        "Indemnity",
+        "INO",
+        "HDHP",
+        "ReferenceBasedPricing"
+      ],
+      "enum": [
+        "None",
+        "PPO",
+        "HMO",
+        "POS",
+        "EPO",
+        "Indemnity",
+        "INO",
+        "HDHP",
+        "ReferenceBasedPricing"
+      ]
+    },
+    "RateTypeOption": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "Tiered",
+        "Fixed",
+        "Volume",
+        "Complex",
+        "SelfFunded"
+      ],
+      "enum": [
+        "None",
+        "Tiered",
+        "Fixed",
+        "Volume",
+        "Complex",
+        "SelfFunded"
+      ]
+    }
+  }
+}

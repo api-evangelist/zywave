@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-refresh-quote-request-schema.json",
+  "title": "RefreshQuoteRequest",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-plans-v2-openapi.json#/components/schemas/RefreshQuoteRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "quoteId"
+  ],
+  "properties": {
+    "quoteId": {
+      "type": "integer",
+      "description": "Id of the quote to refresh.",
+      "format": "int32"
+    },
+    "tin": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The tax identification number requesting the quote.",
+      "maxLength": 15
+    },
+    "suppressedCarrierCompanyIds": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "List of carrier company ids to not include on the quote.",
+      "maxItems": 100,
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "planIds": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "List of specific plan ids to quote.",
+      "maxItems": 1000,
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "planTypes": {
+      "type": "array",
+      "description": "List of plan types to include on the quote. If null will use existing plantypes on quote.",
+      "items": {
+        "$ref": "#/$defs/PlanType"
+      }
+    }
+  },
+  "$defs": {
+    "PlanType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Unknown",
+        "Medical",
+        "Dental",
+        "EAP",
+        "LifeAndADD",
+        "LongTermCare",
+        "LongTermDisability",
+        "Section125",
+        "ShortTermDisability",
+        "Vision",
+        "PharmacyBenefitManagement",
+        "RetirementPlans",
+        "OtherBenefits",
+        "WorkersCompensation",
+        "CommercialAuto",
+        "GeneralLiability",
+        "Property",
+        "BusinessOwnersPolicy",
+        "OtherPropertyAndCasualty",
+        "PersonalLines",
+        "CommercialPackage",
+        "UmbrellaExcessLiability",
+        "DirectorsAndOfficers",
+        "ErrorsAndOmissions",
+        "EmploymentPracticesLiability",
+        "BuildersRisk",
+        "CrimeFidelity",
+        "Earthquake",
+        "Flood",
+        "InlandMarineCargo",
+        "OceanMarine",
+        "Surety",
+        "OtherProperty",
+        "OtherLiability",
+        "FeeForService",
+        "Program"
+      ],
+      "enum": [
+        "Unknown",
+        "Medical",
+        "Dental",
+        "EAP",
+        "LifeAndADD",
+        "LongTermCare",
+        "LongTermDisability",
+        "Section125",
+        "ShortTermDisability",
+        "Vision",
+        "PharmacyBenefitManagement",
+        "RetirementPlans",
+        "OtherBenefits",
+        "WorkersCompensation",
+        "CommercialAuto",
+        "GeneralLiability",
+        "Property",
+        "BusinessOwnersPolicy",
+        "OtherPropertyAndCasualty",
+        "PersonalLines",
+        "CommercialPackage",
+        "UmbrellaExcessLiability",
+        "DirectorsAndOfficers",
+        "ErrorsAndOmissions",
+        "EmploymentPracticesLiability",
+        "BuildersRisk",
+        "CrimeFidelity",
+        "Earthquake",
+        "Flood",
+        "InlandMarineCargo",
+        "OceanMarine",
+        "Surety",
+        "OtherProperty",
+        "OtherLiability",
+        "FeeForService",
+        "Program"
+      ]
+    }
+  }
+}

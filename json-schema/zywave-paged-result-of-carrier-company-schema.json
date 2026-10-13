@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zywave/main/json-schema/zywave-paged-result-of-carrier-company-schema.json",
+  "title": "PagedResultOfCarrierCompany",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/zywave-carriers-v2-openapi.json#/components/schemas/PagedResultOfCarrierCompany",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasMoreResults": {
+      "type": "boolean"
+    },
+    "pageIndex": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "pageSize": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "skip": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "take": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCount": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CarrierCompany"
+      }
+    }
+  },
+  "$defs": {
+    "CarrierCompany": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/CarrierCompanyInfo"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The unique Zywave identifier for the carrier company.",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "CarrierCompanyInfo": {
+      "type": "object",
+      "description": "CarrierCompanyInfo\n            ",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "carrierId",
+        "countryCode",
+        "isActive"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the carrier company.",
+          "maxLength": 100,
+          "minLength": 1
+        },
+        "carrierId": {
+          "type": "integer",
+          "description": "The identifier for the carrier that is tied to the carrier company record.",
+          "format": "int32"
+        },
+        "naic": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "NAIC's (National Association of Insurance Commissioners) Company Number. The unique NAIC identifier for the carrier company.",
+          "maxLength": 50
+        },
+        "subdivisionCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The state that applies to the carrier company.",
+          "maxLength": 2
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "The country that applies to the carrier company.",
+          "maxLength": 2,
+          "minLength": 1
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Indicates whether the carrier company is active."
+        },
+        "isPreferred": {
+          "type": "boolean",
+          "description": "Indicates whether the carrier company is a preferred carrier company for your agency."
+        },
+        "displayName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The display name for the carrier company.",
+          "maxLength": 100
+        }
+      }
+    }
+  }
+}

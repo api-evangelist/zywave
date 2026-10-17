@@ -1,0 +1,1151 @@
+openapi: 3.2.0
+info:
+  title: BKB Accounts API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: Accounts
+paths:
+  /bkb/v2.0/accounts/{accountId}:
+    get:
+      tags:
+      - Accounts
+      summary: Get an account by id
+      operationId: Accounts_GetAccountById
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/accounts/customfields:
+    get:
+      tags:
+      - Accounts
+      summary: Get custom field definitions for accounts
+      operationId: Accounts_GetCustomFieldDefinitions
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomField'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/accounts/search:
+    post:
+      tags:
+      - Accounts
+      summary: Search for accounts using criteria
+      operationId: Accounts_SearchAccounts
+      requestBody:
+        x-name: model
+        description: The AccountSearchModel.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountSearchModel'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccount'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/accounts/update/{accountId}:
+    put:
+      tags:
+      - Accounts
+      summary: Update an account by id
+      operationId: Accounts_UpdateAccount
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: model
+        description: The Account.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccountModel'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ValueSearchCriteriaOfInteger:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          rangeEndValue:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          rangeStartValue:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          searchType:
+            $ref: '#/components/schemas/ValueSearchType'
+          value:
+            type:
+            - integer
+            - 'null'
+            format: int32
+    EnumSearchCriteriaOfClassifications:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/Classifications'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/Classifications'
+    BenchmarkIndustry:
+      type: string
+      description: Benchmark Industry
+      x-enumNames:
+      - Unknown
+      - AgricultureForestryFishing
+      - Education
+      - FinanceInsuranceRealEstate
+      - Healthcare
+      - Manufacturing
+      - MiningConstructionWholesale
+      - Retail
+      - Service
+      - StateLocalGovernment
+      - TransportationCommUtilities
+      - Other
+      enum:
+      - Unknown
+      - AgricultureForestryFishing
+      - Education
+      - FinanceInsuranceRealEstate
+      - Healthcare
+      - Manufacturing
+      - MiningConstructionWholesale
+      - Retail
+      - Service
+      - StateLocalGovernment
+      - TransportationCommUtilities
+      - Other
+    CustomField:
+      type: object
+      additionalProperties: false
+      properties:
+        brokerId:
+          type: integer
+          format: int32
+        fieldType:
+          $ref: '#/components/schemas/FieldType'
+        id:
+          type: integer
+          format: int32
+        includeOnRfp:
+          type: boolean
+        isDeleted:
+          type: boolean
+        isRequired:
+          type: boolean
+        lookups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Lookup'
+        name:
+          type:
+          - string
+          - 'null'
+        showInAmc:
+          type: boolean
+        showOnAccountHomePage:
+          type: boolean
+        sortOrder:
+          type: integer
+          format: int32
+    FieldType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - AlphaNumeric
+      - Numeric
+      - Date
+      - DropDownList
+      - YesNo
+      - StatesProvinces
+      - Email
+      - Phone
+      - Paragraph
+      - Currency
+      enum:
+      - Unknown
+      - AlphaNumeric
+      - Numeric
+      - Date
+      - DropDownList
+      - YesNo
+      - StatesProvinces
+      - Email
+      - Phone
+      - Paragraph
+      - Currency
+    Classifications:
+      type: string
+      description: Available BrokerageBuilder Account Classifications
+      x-enumNames:
+      - Unknown
+      - IndividualPersonal
+      - GroupCommercial
+      enum:
+      - Unknown
+      - IndividualPersonal
+      - GroupCommercial
+    SearchCriteriaBase:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        sort:
+          $ref: '#/components/schemas/SortType'
+        sortOrder:
+          type: integer
+          format: int32
+    ValueSearchCriteriaOfDateTime:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          rangeEndValue:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          rangeStartValue:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          searchType:
+            $ref: '#/components/schemas/ValueSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    StringSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/StringSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+    AccountStatus:
+      type: string
+      description: AccountStatus
+      x-enumNames:
+      - Active
+      - Inactive
+      enum:
+      - Active
+      - Inactive
+    EnumSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+    BooleanSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      enum:
+      - None
+      - Equals
+      - NotEquals
+    EnumSearchCriteriaOfProductType:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/ProductType'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ProductType'
+    StringSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+    AccountSearchModel:
+      type: object
+      additionalProperties: false
+      properties:
+        searchCriteria:
+          oneOf:
+          - $ref: '#/components/schemas/AccountSearchCriteria'
+        searchOptions:
+          oneOf:
+          - $ref: '#/components/schemas/SearchOptions'
+    IdListSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+    DateTimeSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/ValueSearchCriteriaOfDateTime'
+      - type: object
+        additionalProperties: false
+    SortType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Ascending
+      - Descending
+      enum:
+      - None
+      - Ascending
+      - Descending
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    Account:
+      allOf:
+      - $ref: '#/components/schemas/AccountInfo'
+      - type: object
+        description: Account
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: Gets or sets the unique ID for this account.
+            format: int32
+    BenchmarkEmployees:
+      type: string
+      description: BenchmarkEmployee
+      x-enumNames:
+      - Unknown
+      - _0000to0025
+      - _0026to0050
+      - _0051to0099
+      - _0100to0499
+      - _0500to0999
+      - _1000to2499
+      - _2500to4999
+      - _5000Plus
+      enum:
+      - Unknown
+      - _0000to0025
+      - _0026to0050
+      - _0051to0099
+      - _0100to0499
+      - _0500to0999
+      - _1000to2499
+      - _2500to4999
+      - _5000Plus
+    EnumSearchCriteriaOfBenchmarkEmployees:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/BenchmarkEmployees'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/BenchmarkEmployees'
+    CustomFieldSearchValue:
+      type: object
+      additionalProperties: false
+      properties:
+        customFieldId:
+          type: integer
+          format: int32
+        searchCriteria:
+          oneOf:
+          - $ref: '#/components/schemas/SearchCriteriaBase'
+    BooleanSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/BooleanSearchType'
+          value:
+            type: boolean
+    ValueSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - GreaterThan
+      - GreaterThanEquals
+      - LessThan
+      - LessThanEquals
+      - Between
+      - NotBetween
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - GreaterThan
+      - GreaterThanEquals
+      - LessThan
+      - LessThanEquals
+      - Between
+      - NotBetween
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    UpdateAccountModel:
+      type: object
+      additionalProperties: false
+      properties:
+        account:
+          oneOf:
+          - $ref: '#/components/schemas/AccountInfo'
+        crudOptions:
+          oneOf:
+          - $ref: '#/components/schemas/CrudOptions'
+    EnumSearchCriteriaOfBenchmarkIndustry:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/BenchmarkIndustry'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/BenchmarkIndustry'
+    Lookup:
+      type: object
+      additionalProperties: false
+      properties:
+        customFieldId:
+          type: integer
+          format: int32
+        description:
+          type:
+          - string
+          - 'null'
+        id:
+          type: integer
+          format: int32
+        sortOrder:
+          type: integer
+          format: int32
+    AccountSearchCriteria:
+      type: object
+      description: AccountSearchCriteria
+      additionalProperties: false
+      properties:
+        accountStatus:
+          description: Gets or sets the criteria used to search accounts by "BrokerageBuilder Status."
+          oneOf:
+          - $ref: '#/components/schemas/EnumSearchCriteriaOfAccountStatus'
+        address1:
+          description: Gets or sets the criteria used to search for accounts by "Address 1."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        address2:
+          description: Gets or sets the criteria used to search for accounts by "Address 2."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        address3:
+          description: Gets or sets the criteria used to search for accounts by the "Address 3."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        clientCode:
+          description: Gets or sets the criteria used to search for accounts by "AMS ID."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        benchmarkEmployees:
+          description: Gets or sets the criteria used to search for accounts by "Benchmark employees."
+          oneOf:
+          - $ref: '#/components/schemas/EnumSearchCriteriaOfBenchmarkEmployees'
+        benchmarkIndustry:
+          description: Gets or sets the criteria used to search for accounts by "Benchmark industry."
+          oneOf:
+          - $ref: '#/components/schemas/EnumSearchCriteriaOfBenchmarkIndustry'
+        businessLine:
+          description: Gets or sets the criteria used to search for accounts by "Business line."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        classification:
+          description: Gets or sets the criteria used to search for accounts by "Client type."
+          oneOf:
+          - $ref: '#/components/schemas/EnumSearchCriteriaOfClassifications'
+        county:
+          description: Gets or sets the criteria used to search for accounts by "County."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        country:
+          description: Gets or sets the criteria used to search for accounts by "Country."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        city:
+          description: Gets or sets the criteria used to search for accounts by "City."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        createdDate:
+          description: Gets or sets the criteria used to search for accounts by "Created date."
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        customFields:
+          type:
+          - array
+          - 'null'
+          description: Gets or sets the criteria used to search for account by a custom field.
+          items:
+            $ref: '#/components/schemas/CustomFieldSearchValue'
+        fax:
+          description: Gets or sets the criteria used to search for accounts by "Fax."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        id:
+          description: Gets or sets the criteria used to search for accounts based on "ID."
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        isBenefitClient:
+          description: Gets or sets the criteria used to search for accounts based on "Benefits client status."
+          oneOf:
+          - $ref: '#/components/schemas/BooleanSearchCriteria'
+        isBenefitProspect:
+          description: Gets or sets the criteria used to search for accounts based on "Benefits prospect status."
+          oneOf:
+          - $ref: '#/components/schemas/BooleanSearchCriteria'
+        productType:
+          description: Gets or sets the criteria used to search for accounts based on "Product type."
+          oneOf:
+          - $ref: '#/components/schemas/EnumSearchCriteriaOfProductType'
+        lastUpdatedDate:
+          description: Gets or sets the criteria used to search accounts by "Last updated date."
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        name:
+          description: Gets or sets the criteria used to search for accounts by "Name."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        numberOfEmployees:
+          description: Gets or sets the criteria used to search accounts by "Number of employees."
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        numberOfRetirees:
+          description: Gets or sets the criteria used to search accounts by "Number of retirees."
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        phone:
+          description: Gets or sets the criteria used to search for accounts by "Phone."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        producerId:
+          description: Gets or sets the criteria used to search for accounts by "Producer ID."
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        sicCode:
+          description: Gets or sets the criteria used to search for accounts by "SIC code."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        stateProvince:
+          description: Gets or sets the criteria used to search accounts by "State."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        brokerageBuilderStatus:
+          description: Gets or sets the criteria used to search accounts by "TBD."
+          oneOf:
+          - $ref: '#/components/schemas/EnumSearchCriteriaOfBrokerageBuilderStatus'
+        url:
+          description: Gets or sets the criteria used to search for accounts by "URL."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        yearFounded:
+          description: Gets or sets the criteria used to search for accounts by "Year founded."
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        zipPostalCode:
+          description: Gets or sets the criteria used to search for accounts by "ZIP/Postal code."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+    IdListSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/IdListSearchType'
+          value:
+            type: integer
+            format: int32
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              type: integer
+              format: int32
+          inclusiveNulls:
+            type: boolean
+    EnumSearchCriteriaOfBrokerageBuilderStatus:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/BrokerageBuilderStatus'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/BrokerageBuilderStatus'
+    SearchOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    CrudOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        force:
+          type: boolean
+        validateOnly:
+          type: boolean
+    EnumSearchCriteriaOfAccountStatus:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/AccountStatus'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/AccountStatus'
+    ProductType:
+      type: string
+      description: ProductType
+      x-enumNames:
+      - Other
+      - BrokerageBuilder
+      enum:
+      - Other
+      - BrokerageBuilder
+    IntSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/ValueSearchCriteriaOfInteger'
+      - type: object
+        additionalProperties: false
+    BrokerageBuilderStatus:
+      type: string
+      description: Available BKB Account Statuses
+      x-enumNames:
+      - Unknown
+      - Active
+      - Inactive
+      - Dead
+      - Test
+      enum:
+      - Unknown
+      - Active
+      - Inactive
+      - Dead
+      - Test
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    AccountInfo:
+      type: object
+      description: AccountInfo
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        accountStatus:
+          description: "Gets or sets the status of this account.\n "
+          oneOf:
+          - $ref: '#/components/schemas/AccountStatus'
+        productType:
+          description: Gets or sets the account product type.
+          oneOf:
+          - $ref: '#/components/schemas/ProductType'
+        address1:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the street address for this account.
+          maxLength: 75
+        address2:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the second address line.
+          maxLength: 75
+        address3:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the third address line.
+        city:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the city for this account location.
+          maxLength: 25
+        createdDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date and time the account was created.
+          format: date-time
+        customFields:
+          type:
+          - array
+          - 'null'
+          description: Gets or sets the custom fields, as defined by the agency, for this account.
+          items:
+            $ref: '#/components/schemas/CustomFieldValue'
+        fax:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the fax number for this account.
+          maxLength: 25
+        isDeleted:
+          type: boolean
+          description: Gets a value that indicates whether this instance has been deleted.
+        lastUpdatedDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date and time the account was modified.
+          format: date-time
+        name:
+          type: string
+          description: Gets or sets the account name.
+          maxLength: 255
+          minLength: 1
+        phone:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the phone number for this account.
+          maxLength: 25
+          pattern: ^(\(?[0-9]{3}[\)-\.]?\ ?)?[0-9]{3}[-\.]?[0-9]{4}$
+        stateProvince:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the two-letter abbreviation for U.S. state/territory, Canadian, Carribbean or Mexican province.
+        url:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the URL for this account's Web page.
+          maxLength: 255
+        zipPostalCode:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the ZIP or postal code for this account.
+          maxLength: 10
+          pattern: ^(\d{5}-\d{4}|\d{5})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$
+        bkbStatusLastUpdatedById:
+          type:
+          - integer
+          - 'null'
+          description: Gets the id of the last user to update the BrokerageBuilder status.  This field is read-only.
+          format: int32
+        bkbStatusLastUpdatedDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date and time the BrokerageBuilder status was last updated.  This field is read-only.
+          format: date-time
+        clientCode:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the client code - the account id in a third-party system.
+          maxLength: 50
+        producerId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the account's producer id.
+          format: int32
+        brokerageBuilderStatus:
+          description: Gets or sets the BrokerageBuilder status.
+          oneOf:
+          - $ref: '#/components/schemas/BrokerageBuilderStatus'
+        brokerageBuilderDeactivatedReason:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the reason the account was set to InActive or Dead in BrokerageBuilder.
+        benchmarkEmployees:
+          description: Gets or sets the id of the employee benchmark value.
+          oneOf:
+          - $ref: '#/components/schemas/BenchmarkEmployees'
+        benchmarkIndustry:
+          description: Gets or sets the benchmark industry.
+          oneOf:
+          - $ref: '#/components/schemas/BenchmarkIndustry'
+        businessLine:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets a description about the account's business line.
+          maxLength: 255
+        classification:
+          description: Gets or sets the Classification of the account.
+          oneOf:
+          - $ref: '#/components/schemas/Classifications'
+        county:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the account's county.
+          maxLength: 50
+        country:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the account's two letter country code.
+          maxLength: 2
+        isBenefitClient:
+          type: boolean
+          description: Gets or sets a value indicating whether this instance is benefit client.  This field is read-only.
+        isBenefitProspect:
+          type: boolean
+          description: Gets or sets a value indicating whether this instance is benefit prospect.  This field is read-only.
+        numberOfEmployees:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the number of employees.
+          format: int32
+        numberOfRetirees:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the number of retirees.
+          format: int32
+        sicCode:
+          type:
+          - string
+          - 'null'
+          description: 'Gets or sets the SIC (Standard Industrial Classification) Code. '
+        yearFounded:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the year founded.
+          format: int32
+          maximum: 9999.0
+          minimum: 0.0
+    CustomFieldValue:
+      type: object
+      additionalProperties: false
+      properties:
+        brokerId:
+          type: integer
+          format: int32
+        customFieldId:
+          type: integer
+          format: int32
+        id:
+          type: integer
+          format: int32
+        itemId:
+          type: integer
+          format: int32
+        value:
+          type:
+          - string
+          - 'null'
+    PagedResultOfAccount:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

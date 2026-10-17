@@ -1,0 +1,397 @@
+openapi: 3.2.0
+info:
+  title: Client Engagement API v1.0 Employee Groups API
+  version: v1.0
+servers:
+- url: https://api.zywave.com
+tags:
+- name: EmployeeGroups
+paths:
+  /v3/clientEngagement/v1.0/org/{organizationId}/agency/{agencyId}/employeegroup/{id}:
+    get:
+      tags:
+      - EmployeeGroups
+      summary: Gets an employee group by ID
+      operationId: EmployeeGroups_GetEmployeeGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeGroupResponse'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - EmployeeGroups
+      summary: Replaces an employee group
+      operationId: EmployeeGroups_UpdateEmployeeGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeGroupRequest'
+        required: true
+        x-position: 4
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - EmployeeGroups
+      summary: Deletes an employee group
+      operationId: EmployeeGroups_DeleteEmployeeGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v3/clientEngagement/v1.0/org/{organizationId}/agency/{agencyId}/employeegroup:
+    get:
+      tags:
+      - EmployeeGroups
+      summary: Gets employee groups for a given account using OData query options ($filter…
+      operationId: EmployeeGroups_GetEmployeeGroups
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: accountId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: $filter
+        x-originalName: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $orderby
+        x-originalName: orderby
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: $top
+        x-originalName: top
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      - name: $skip
+        x-originalName: skip
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 7
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfEmployeeGroupResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - EmployeeGroups
+      summary: Creates a new employee group
+      operationId: EmployeeGroups_CreateEmployeeGroup
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeGroupRequest'
+        required: true
+        x-position: 3
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeGroupResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    PagedResultOfEmployeeGroupResponse:
+      type: object
+      description: A page of results from a larger result set, along with paging metadata.
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: A value indicating whether the larger result set has more results.
+        skip:
+          type: integer
+          description: A value indicating how many of the previous values in the larger result set were omitted.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        take:
+          type: integer
+          description: The number of records retrieved from the larger result set.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        totalCount:
+          type: integer
+          description: The total number of records in the larger result set.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        items:
+          type: array
+          description: The records retrieved from the larger result set.
+          items:
+            $ref: '#/components/schemas/EmployeeGroupResponse'
+    EmployeeGroupResponse:
+      type: object
+      description: Client-facing employee group response. Exposes only fields accessible to the client â€” internal audit fields are excluded.
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the employee group.
+          format: int32
+        accountId:
+          type: integer
+          description: The identifier of the account this group belongs to.
+          format: int32
+          maximum: 2147483647
+          minimum: 1
+        name:
+          type: string
+          description: The name of the employee group.
+          maxLength: 100
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          description: An optional description for the employee group.
+          maxLength: 255
+          minLength: 0
+    EmployeeGroupRequest:
+      type: object
+      description: Payload for creating or updating an employee group.
+      additionalProperties: false
+      required:
+      - accountId
+      - name
+      properties:
+        accountId:
+          type: integer
+          description: The identifier of the account this group belongs to.
+          format: int32
+          maximum: 2147483647
+          minimum: 1
+        name:
+          type: string
+          description: The name of the employee group.
+          maxLength: 100
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          description: An optional description for the employee group.
+          maxLength: 255
+          minLength: 0
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'

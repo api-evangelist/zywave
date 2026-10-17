@@ -1,0 +1,219 @@
+openapi: 3.2.0
+info:
+  title: Policies Agency Data API
+  version: v2.0
+  description: Agency data, not tied to a specific policy.
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: Agency Data
+  description: Agency data, not tied to a specific policy.
+paths:
+  /policies/v2.0/departments:
+    post:
+      tags:
+      - Agency Data
+      summary: Creates a department for the agency
+      operationId: Departments_PostDepartment
+      requestBody:
+        x-name: departmentInfo
+        description: The department to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: A 201 Created response containing the id of the created department.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/feetypes:
+    post:
+      tags:
+      - Agency Data
+      summary: Creates a fee type
+      description: Fee has a dependency on fee type.
+      operationId: FeeTypes_PostFeeType
+      requestBody:
+        x-name: feeTypeInfo
+        description: The fee type info used for the creation of a fee type record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeeTypeInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: A 201 CREATED response with the fee type.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DepartmentInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - description
+      properties:
+        description:
+          type: string
+          description: The description of the department.
+          maxLength: 50
+          minLength: 1
+        isArchived:
+          type: boolean
+          description: Indicates whether the department is archived.
+    BaseFeeTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Administrative
+      - Agency
+      - Vendor
+      - Service
+      - Billing
+      - Other
+      enum:
+      - Administrative
+      - Agency
+      - Vendor
+      - Service
+      - Billing
+      - Other
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    FeeTypeInfo:
+      type: object
+      description: Fee type info
+      additionalProperties: false
+      required:
+      - baseFeeType
+      - description
+      - isArchived
+      - isDefault
+      properties:
+        baseFeeType:
+          description: The BaseFeeTypeOption
+          default: Administrative
+          oneOf:
+          - $ref: '#/components/schemas/BaseFeeTypeOption'
+        description:
+          type: string
+          description: The fee description
+          maxLength: 100
+          minLength: 1
+        isArchived:
+          type: boolean
+          description: If archived
+          default: false
+        isDefault:
+          type: boolean
+          description: If the fee type should appear in the default list
+          default: false
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

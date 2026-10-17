@@ -1,0 +1,196 @@
+openapi: 3.2.0
+info:
+  title: CommercialPolicyBenchmark Reference Data API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.commercialpolicybenchmark
+  - api.commercialpolicybenchmark:read
+tags:
+- name: Reference Data
+paths:
+  /commercialpolicybenchmark/v2.0/referencedata/revenue:
+    get:
+      tags:
+      - Reference Data
+      summary: return revenue ranges
+      operationId: ReferenceData_GetRevenueRanges
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Range'
+  /commercialpolicybenchmark/v2.0/referencedata/marketcap:
+    get:
+      tags:
+      - Reference Data
+      summary: return market cap ranges
+      operationId: ReferenceData_GetMarketCapRanges
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Range'
+  /commercialpolicybenchmark/v2.0/referencedata/employeecount:
+    get:
+      tags:
+      - Reference Data
+      summary: return employee ranges
+      operationId: ReferenceData_GetEmployeeCountRanges
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Range'
+  /commercialpolicybenchmark/v2.0/referencedata/organizationtype:
+    get:
+      tags:
+      - Reference Data
+      summary: return organization types
+      operationId: ReferenceData_GetOrganizationTypes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationType'
+  /commercialpolicybenchmark/v2.0/referencedata/coveragelinesofbusiness:
+    get:
+      tags:
+      - Reference Data
+      summary: return coverage(s)/lob(s)
+      operationId: ReferenceData_GetCoverageLineOfBusiness
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoverageLineOfBusiness'
+  /commercialpolicybenchmark/v2.0/referencedata/naicscodes:
+    get:
+      tags:
+      - Reference Data
+      summary: return naics codes
+      operationId: ReferenceData_GetNAICSCodesNew
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NAICSCode'
+components:
+  schemas:
+    Range:
+      type: object
+      description: Range class.
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Id property.
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name property.
+        lowRange:
+          type:
+          - integer
+          - 'null'
+          description: LowRange property.
+          format: int64
+        highRange:
+          type:
+          - integer
+          - 'null'
+          description: HighRange property.
+          format: int64
+    CoverageLineOfBusiness:
+      type: object
+      description: CoverageLineOfBusiness class.
+      additionalProperties: false
+      properties:
+        coverageId:
+          type: integer
+          description: CoverageId property.
+          format: int32
+        coverageName:
+          type:
+          - string
+          - 'null'
+          description: CoverageName property.
+        lineOfBusinessId:
+          type: integer
+          description: LineOfBusinessId property.
+          format: int32
+        lineOfBusinessName:
+          type:
+          - string
+          - 'null'
+          description: LineOfBusinessName property.
+    NAICSCode:
+      type: object
+      description: NAICSCode class.
+      additionalProperties: false
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: Code property.
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name property.
+    OrganizationType:
+      type: object
+      description: OrganizationType class.
+      additionalProperties: false
+      properties:
+        typeId:
+          type:
+          - string
+          - 'null'
+          description: TypeId property.
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name property.
+  securitySchemes:
+    oidc:
+      type: oauth2
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.commercialpolicybenchmark: Full access to all api operations
+            api.commercialpolicybenchmark:read: Read-only access to api
+x-generator: NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))

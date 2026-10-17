@@ -1,0 +1,468 @@
+openapi: 3.2.0
+info:
+  title: Content API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.content
+  - api.content:read
+tags:
+- name: Content
+paths:
+  /content/v2.0/content/{id}:
+    get:
+      tags:
+      - Content
+      summary: Returns the content item for the id sent in the request
+      operationId: Content_GetContent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the content item
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: The desired piece of content.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Content
+      summary: Updates an existing content item
+      operationId: Content_PutContent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the content to update
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                Title:
+                  type:
+                  - string
+                  - 'null'
+                Description:
+                  type:
+                  - string
+                  - 'null'
+                ClientDescription:
+                  type:
+                  - string
+                  - 'null'
+                IsActive:
+                  type: boolean
+                File:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                CreatedDateTime:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                UpdatedDateTime:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                Metadata:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    $ref: '#/components/schemas/KeyValuePairOfStringAndString'
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Content
+      summary: Deletes the content item with the associated content ID
+      operationId: Content_DeleteContent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the content to delete.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /content/v2.0/content:
+    get:
+      tags:
+      - Content
+      summary: Searches content
+      description: See Zywave API search documentation for details.
+      operationId: Content_GetContent2
+      parameters:
+      - name: query
+        in: query
+        description: The text that should be used for the full text search on a content item's title, description, and file body
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: includeImportedContent
+        in: query
+        description: A flag controlling whether or not to include Imported and shared content in the search results
+        schema:
+          type: boolean
+          default: true
+        x-position: 2
+      - name: includeZywaveContent
+        in: query
+        description: A flag controlling whether or not to include Zywave content in the search results
+        schema:
+          type: boolean
+          default: true
+        x-position: 3
+      - name: includeThirdPartyContent
+        in: query
+        description: A flag controlling whether or not to include third party content in the search results
+        schema:
+          type: boolean
+          default: false
+        x-position: 4
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired agency users
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 7
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 8
+      responses:
+        '200':
+          description: The desired piece of content.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfContent'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Content
+      summary: Creates a piece of content
+      operationId: Content_PostContent
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                Title:
+                  type:
+                  - string
+                  - 'null'
+                Description:
+                  type:
+                  - string
+                  - 'null'
+                ClientDescription:
+                  type:
+                  - string
+                  - 'null'
+                IsActive:
+                  type: boolean
+                File:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                CreatedDateTime:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                UpdatedDateTime:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                Metadata:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    $ref: '#/components/schemas/KeyValuePairOfStringAndString'
+      responses:
+        '201':
+          description: The ID of the created content item.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Content:
+      allOf:
+      - $ref: '#/components/schemas/ContentInfo'
+      - type: object
+        description: A piece of content represents a container for files and metadata in the Zywave system. Can be maintained by an agency or Zywave.
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the content.
+            format: int32
+          fileId:
+            type: integer
+            description: The unique identifier for the lastest ContentFile for the content.
+            format: int32
+          fileName:
+            type:
+            - string
+            - 'null'
+            description: The name of the lastest ContentFile for the content.
+          thumbnailUrl:
+            type:
+            - string
+            - 'null'
+            description: Thumbnail image source for the content.
+          tagNames:
+            type:
+            - array
+            - 'null'
+            description: A list of tags that describes what the content is.
+            items:
+              type: string
+    ContentInfo:
+      type: object
+      description: ContentInfo represents the editable properties of a piece of content.
+      additionalProperties: false
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+          description: The title of the piece of content.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The description of the piece of content.
+        clientDescription:
+          type:
+          - string
+          - 'null'
+          description: The description clients see for the piece of content.
+        isActive:
+          type: boolean
+          description: Whether the content is active
+        file:
+          type:
+          - string
+          - 'null'
+          description: The file that will be associated to the content.
+          format: binary
+        createdDateTime:
+          type:
+          - string
+          - 'null'
+          description: The date the content was created
+          format: date-time
+        updatedDateTime:
+          type:
+          - string
+          - 'null'
+          description: The date the file was last edited
+          format: date-time
+        metadata:
+          type:
+          - array
+          - 'null'
+          description: Additional dynamic information about the content.
+          items:
+            $ref: '#/components/schemas/KeyValuePairOfStringAndString'
+    KeyValuePairOfStringAndString:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    PagedResultOfContent:
+      type: object
+      description: A model containing a collection of Content pieces and metadata about their position in a larger result list.
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: A value indicating whether the larger result set has more results.
+        pageIndex:
+          type:
+          - integer
+          - 'null'
+          description: The index of the page reflected by the collection.
+          format: int32
+        pageSize:
+          type:
+          - integer
+          - 'null'
+          description: The size of the page relfected by the collection.
+          format: int32
+        skip:
+          type: integer
+          description: A value indicating how many of the previous values in the larger result set were omitted.
+          format: int32
+        take:
+          type: integer
+          description: The number of records retrieved from larger result set.
+          format: int32
+        totalCount:
+          type: integer
+          description: The total number of records in the larger result set.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: The records retrieved from the larger result set.
+          items:
+            $ref: '#/components/schemas/Content'
+  securitySchemes:
+    oidc:
+      type: oauth2
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.content: Full access to all agency operations
+            api.content:read: Read-only access to agencies
+x-generator: NSwag v14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))

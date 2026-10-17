@@ -1,0 +1,476 @@
+openapi: 3.2.0
+info:
+  title: CommercialPolicyBenchmark Assessment API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.commercialpolicybenchmark
+  - api.commercialpolicybenchmark:read
+tags:
+- name: Assessment
+paths:
+  /commercialpolicybenchmark/v2.0/assessment/gettotallosscount:
+    post:
+      tags:
+      - Assessment
+      summary: GetTotalLossCount endpoint
+      operationId: Assessment_GetTotalLossCount
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LossAssessmentSearchRequest'
+            example:
+              ClientLimit: null
+              MostRecentLossYear: null
+              OldestLossYear: null
+              Naics: null
+              CoverageId: 0
+              LineOfBusinessId: null
+              ExposureType: null
+              ExposureRangeLow: 0.0
+              ExposureRangeHigh: 0.0
+              OrganizationType: null
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /commercialpolicybenchmark/v2.0/assessment/gettotalprogramcount:
+    post:
+      tags:
+      - Assessment
+      summary: GetTotalProgramCount endpoint
+      operationId: Assessment_GetTotalProgramCount
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramAssessmentSearchRequest'
+            example:
+              OldestTrailing: 0
+              NewestTrailing: 0
+              Premium: 0.0
+              Limit: 0.0
+              Retention: 0.0
+              Naics: null
+              CoverageId: 0
+              LineOfBusinessId: null
+              ExposureType: null
+              ExposureRangeLow: 0.0
+              ExposureRangeHigh: 0.0
+              OrganizationType: null
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /commercialpolicybenchmark/v2.0/assessment/getassessmentdata:
+    post:
+      tags:
+      - Assessment
+      summary: GetAssessmentData endpoint
+      operationId: Assessment_GetAssessmentData
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramAssessmentSearchRequest'
+            example:
+              OldestTrailing: 0
+              NewestTrailing: 0
+              Premium: 0.0
+              Limit: 0.0
+              Retention: 0.0
+              Naics: null
+              CoverageId: 0
+              LineOfBusinessId: null
+              ExposureType: null
+              ExposureRangeLow: 0.0
+              ExposureRangeHigh: 0.0
+              OrganizationType: null
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentData'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /commercialpolicybenchmark/v2.0/assessment/getrpmdistributiondata:
+    post:
+      tags:
+      - Assessment
+      summary: GetRpmDistributionData endpoint
+      operationId: Assessment_GetRpmDistributionData
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramAssessmentSearchRequest'
+            example:
+              OldestTrailing: 0
+              NewestTrailing: 0
+              Premium: 0.0
+              Limit: 0.0
+              Retention: 0.0
+              Naics: null
+              CoverageId: 0
+              LineOfBusinessId: null
+              ExposureType: null
+              ExposureRangeLow: 0.0
+              ExposureRangeHigh: 0.0
+              OrganizationType: null
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RpmData'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ProgramAssessmentSearchRequest:
+      allOf:
+      - $ref: '#/components/schemas/AssessmentSearchRequest'
+      - type: object
+        description: ProgramAssessmentSearchRequest class.
+        additionalProperties: false
+        properties:
+          oldestTrailing:
+            type: integer
+            description: 'Default value is 24.
+
+              OldestTrailing property.'
+            format: int32
+            default: 24
+          newestTrailing:
+            type: integer
+            description: 'Default value is 0.
+
+              NewestTrailing property.'
+            format: int32
+            default: 0
+          premium:
+            type: number
+            description: 'Default value is 0.
+
+              Premium property.'
+            format: decimal
+            default: 0
+          limit:
+            type: number
+            description: 'Default value is 0.
+
+              Limit property.'
+            format: decimal
+            default: 0
+          retention:
+            type: number
+            description: 'Default value is 0.
+
+              Retention property.'
+            format: decimal
+            default: 0
+    Bands:
+      type: object
+      description: Bands class.
+      additionalProperties: false
+      properties:
+        bandSeq:
+          type: integer
+          description: BandSeq property.
+          format: int32
+        bandDescription:
+          type:
+          - string
+          - 'null'
+          description: BandDescription property.
+        programCount:
+          type: integer
+          description: ProgramCount property.
+          format: int32
+    AssessmentData:
+      type: object
+      description: AssessmentData class.
+      additionalProperties: false
+      properties:
+        limitDistribution:
+          description: LimitDistribution property.
+          oneOf:
+          - $ref: '#/components/schemas/DistributionData'
+        premiumDistribution:
+          description: PremiumDistribution property.
+          oneOf:
+          - $ref: '#/components/schemas/DistributionData'
+        retentionDistribution:
+          description: RetentionDistribution property.
+          oneOf:
+          - $ref: '#/components/schemas/DistributionData'
+    LossAssessmentSearchRequest:
+      allOf:
+      - $ref: '#/components/schemas/AssessmentSearchRequest'
+      - type: object
+        description: LossAssessmentSearchRequest class.
+        additionalProperties: false
+        properties:
+          clientLimit:
+            type:
+            - number
+            - 'null'
+            description: 'Default value is 0.
+
+              ClientLimit nullable property.'
+            format: decimal
+            default: 0
+          mostRecentLossYear:
+            type:
+            - integer
+            - 'null'
+            description: MostRecentLossYear nullable property.
+            format: int32
+          oldestLossYear:
+            type:
+            - integer
+            - 'null'
+            description: OldestLossYear nullable property.
+            format: int32
+    DistributionData:
+      type: object
+      description: DistributionData class.
+      additionalProperties: false
+      properties:
+        chartDescription:
+          type:
+          - string
+          - 'null'
+          description: ChartDescription property.
+        bands:
+          type:
+          - array
+          - 'null'
+          description: Bands property.
+          items:
+            $ref: '#/components/schemas/Bands'
+    AssessmentSearchRequest:
+      type: object
+      description: AssessmentSearchRequest class.
+      additionalProperties: false
+      properties:
+        naics:
+          type:
+          - array
+          - 'null'
+          description: 'BindRequired.
+
+            Naics property.'
+          items:
+            type: string
+        coverageId:
+          type: integer
+          description: 'BindRequired.
+
+            CoverageId property.'
+          format: int32
+        lineOfBusinessId:
+          type:
+          - array
+          - 'null'
+          description: 'BindRequired.
+
+            LineOfBusinessId property.'
+          items:
+            type: integer
+            format: int32
+        exposureType:
+          type:
+          - string
+          - 'null'
+          description: 'BindRequired.
+
+            Default value is "Revenues".
+
+            ExposureType property.'
+          default: Revenues
+        exposureRangeLow:
+          type: number
+          description: 'BindRequired.
+
+            ExposureRangeLow property.'
+          format: decimal
+        exposureRangeHigh:
+          type: number
+          description: 'BindRequired.
+
+            ExposureRangeHigh property.'
+          format: decimal
+        organizationType:
+          type:
+          - array
+          - 'null'
+          description: OrganizationType property.
+          default: All
+          items:
+            type: string
+    RpmData:
+      type: object
+      description: RpmData class.
+      additionalProperties: false
+      properties:
+        firstQuartile:
+          type: number
+          description: firstQuartile property.
+          format: float
+        median:
+          type: number
+          description: median property.
+          format: float
+        fourthQuartile:
+          type: number
+          description: fourthQuartile property.
+          format: float
+        maxRpm:
+          type: number
+          description: maxRpm property.
+          format: float
+        clientBar:
+          type: number
+          description: clientBar property.
+          format: float
+        nthPercent:
+          type: number
+          description: nthPercent property.
+          format: float
+        chartDescription:
+          type:
+          - string
+          - 'null'
+          description: chartDescription nullable property.
+  securitySchemes:
+    oidc:
+      type: oauth2
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.commercialpolicybenchmark: Full access to all api operations
+            api.commercialpolicybenchmark:read: Read-only access to api
+x-generator: NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))

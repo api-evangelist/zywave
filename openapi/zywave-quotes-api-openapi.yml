@@ -1,0 +1,1962 @@
+openapi: 3.2.0
+info:
+  title: Plans Quotes API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.plans
+  - api.plans:read
+tags:
+- name: Quotes
+paths:
+  /plans/v2.0/quote/{quoteId}/plan/{planId}/benefititem:
+    get:
+      tags:
+      - Quotes
+      summary: Gets all benefit items associated with a plan
+      operationId: BenefitItem_GetBenefitItems
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: planId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a plan.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: The benefit items for a specified plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BenefitItemCollection'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/memberrate:
+    get:
+      tags:
+      - Quotes
+      summary: Gets member rates associated with a quote, per quoted plan
+      description: 'For more information on how to work with the Search endpoints within the Zywave API check out OData Search within the Zywave API documentation.
+
+
+        The following properties can be used when filtering and ordering the response:
+
+
+        | Search parameter | Use case |
+
+        | ------- | -------- |
+
+        | quotedPlanId | Filter the member rates returned to a specific quotedPlanId(s) |'
+      operationId: MemberRate_GetMemberRates
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired quoted plans
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 5
+      responses:
+        '200':
+          description: A paged collection of member rates, per quoted plan, for a specified quote.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultOfQuotedPlanWithMemberRates'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/quotedplan/{quotedPlanId}/memberrate:
+    get:
+      tags:
+      - Quotes
+      summary: Gets the member rates associated with a quoted plan
+      operationId: MemberRate_GetMemberRates2
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: quotedPlanId
+        in: path
+        required: true
+        description: The unique Zywave identifier for the quoted plan.This id is specific to the combination of a quote and plan and is different than the general planId.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: The member rates for a specified quoted plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberRateCollection'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/plan/{planId}:
+    get:
+      tags:
+      - Quotes
+      summary: Gets a specific plan included in a quote
+      operationId: Plan_GetPlan
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: planId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a plan.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: The desired plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/plan:
+    get:
+      tags:
+      - Quotes
+      summary: Searches for plans within a quote
+      description: 'For more information on how to work with the Search endpoints within the Zywave API check out OData Search within the Zywave API documentation.
+
+
+        The following properties can be used when filtering and ordering the response:
+
+
+        | Search parameter | Use case |
+
+        | ------- | -------- |'
+      operationId: Plan_SearchPlans
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired plans
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      responses:
+        '200':
+          description: The plans that fulfill the search criteria on the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultOfPlan'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/planrate:
+    get:
+      tags:
+      - Quotes
+      summary: Gets rates associated with a quote, per plan
+      description: 'An age rate is a plan specific premium for an enrolled member based on their age. The rate will apply to all enrolled members who are the given age at the effective date of the plan. For this response, the tier will represent the age the premium is associated with. Anything 14 and under is considered the same rate and anything 65 and above is considered the same rate.
+
+        A composite rate is a plan rate for a specific family tier. The rate will apply to all employees that fall into the specific family tier based on the family members that enroll in the plan. For this response, the tier will represent the coverage tier the premium is associated with. Values for the supported four coverage tier rate structure include; Employee, Employee + Spouse, Employee + Child, and Family.
+
+        A level funded rate will return tiers similar to a composite rate, but may also include a breakdown of the different components that make up the rate.'
+      operationId: PlanRate_GetPlanRates
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired quoted plans
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 5
+      responses:
+        '200':
+          description: A paged collection of rates, per plan, for a specified quote.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultOfPlanWithRates'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/plan/{planId}/planrate:
+    get:
+      tags:
+      - Quotes
+      summary: Gets all of the rates associated with a plan
+      description: 'An age rate is a plan specific premium for an enrolled member based on their age. The rate will apply to all enrolled members who are the given age at the effective date of the plan. For this response, the tier will represent the age the premium is associated with. Anything 14 and under is considered the same rate and anything 65 and above is considered the same rate.
+
+        A composite rate is a plan rate for a specific family tier. The rate will apply to all employees that fall into the specific family tier based on the family members that enroll in the plan. For this response, the tier will represent the coverage tier the premium is associated with. Values for the supported four coverage tier rate structure include; Employee, Employee + Spouse, Employee + Child, and Family.
+
+        A level funded rate will return tiers similar to a composite rate, but may also include a breakdown of the different components that make up the rate.'
+      operationId: PlanRate_GetPlanRates2
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: planId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a plan.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A paged collection of rates, per plan, for a specified quote.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanRateCollection'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}:
+    get:
+      tags:
+      - Quotes
+      summary: Gets a specific quote
+      operationId: Quote_GetQuote
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: The desired quote.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/marksold:
+    post:
+      tags:
+      - Quotes
+      summary: Marks a quote as sold, along with a list of plans
+      operationId: Quote_MarkSold
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: markSoldRequest
+        description: A list of quoted plans to mark as sold and their premium type selections.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkSoldRequest'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote:
+    get:
+      tags:
+      - Quotes
+      summary: Searches for quotes
+      description: 'For more information on how to work with the Search endpoints within the Zywave API check out OData Search within the Zywave API documentation.
+
+
+        The following properties can be used when filtering and ordering the response:
+
+
+        | Search parameter | Use case |
+
+        | ------- | -------- |
+
+        | accountId | Retrieve quotes related to an account in Zywave. |
+
+        | effectiveDate | Retrieve quotes based on the effective data of the plans within the quote. |
+
+        | updateDateTime | Retrieve all quotes based on when the quote was last updated. |
+
+        | status | Retrieve all quotes with a specific quote status. This field can be used to only return quotes that have been marked sold/final. |
+
+        | isArchived | Filter the quotes returned based on whether the quote is archived. |
+
+        | state | Retrieve all quotes for a specific state. |'
+      operationId: Quote_SearchQuotes
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired quotes
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: The quotes that fulfill the search criteria on the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultOfQuote'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Quotes
+      summary: Creates a quote
+      description: Creates a quote and asynchronously finds and rates plans the group is eligible for. Progress can be monitored using the Status field.
+      operationId: Quote_PostQuote
+      requestBody:
+        x-name: quoteInfo
+        description: The quote to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: A 201 Created response containing the ID of the created quote.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+  /plans/v2.0/quote/refreshquote:
+    post:
+      tags:
+      - Quotes
+      summary: Refreshes a quote
+      description: Updates an existing quote with newly available plans or rates. Progress can be monitored using the Status field.
+      operationId: Quote_RefreshQuote
+      requestBody:
+        x-name: refreshQuoteRequest
+        description: The information about the quote to update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshQuoteRequest'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: A 201 Created response containing the ID of the updated quote.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+  /plans/v2.0/quote/{quoteId}/errors:
+    get:
+      tags:
+      - Quotes
+      summary: Gets errors for a specific quote
+      operationId: Quote_GetQuoteErrors
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: Errors related to the desired quote.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuoteErrors'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/quotedplan:
+    get:
+      tags:
+      - Quotes
+      summary: Searches for quoted plans
+      description: 'For more information on how to work with the Search endpoints within the Zywave API check out OData Search within the Zywave API documentation.
+
+
+        The following properties can be used when filtering and ordering the response:
+
+
+        | Search parameter | Use case |
+
+        | ------- | -------- |
+
+        | isSoldFinal | Filter the plans returned to only the plans sold to the client. |'
+      operationId: QuotedPlan_SearchCoverageGroupQuotedPlans
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired quoted plans
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 5
+      responses:
+        '200':
+          description: The quoted plans that fulfill the search criteria on the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultOfCoverageGroupQuotedPlan'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /plans/v2.0/quote/{quoteId}/plan/{planId}/sbc:
+    get:
+      tags:
+      - Quotes
+      summary: Gets the SBC for a quoted plan
+      operationId: Sbc_GetSbc
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a quote.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: planId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a plan.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: The SBC for the plan.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '502':
+          description: ''
+components:
+  schemas:
+    MemberRate:
+      allOf:
+      - $ref: '#/components/schemas/MemberRateInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the member rate.
+            format: int32
+            deprecated: true
+    PlanRate:
+      allOf:
+      - $ref: '#/components/schemas/PlanRateInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the rate.
+            format: int32
+            deprecated: true
+          updatedDateTime:
+            type:
+            - string
+            - 'null'
+            description: The date in which the rate was last updated.
+            format: date-time
+            deprecated: true
+    PremiumType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AgeBanded
+      - Composite
+      enum:
+      - AgeBanded
+      - Composite
+    CoverageGroupQuotedPlan:
+      allOf:
+      - $ref: '#/components/schemas/CoverageGroupQuotedPlanInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - coverageGroupName
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the quoted plan. This id is specific to the combination of a quote and plan and is different than the general planId.
+            format: int32
+          quoteId:
+            type: integer
+            description: The unique Zywave identifier for the quote.
+            format: int32
+          planId:
+            type: integer
+            description: The unique Zywave identifier for the plan.
+            format: int32
+          planName:
+            type: string
+            description: Plan name is available on the plan record.
+            maxLength: 100
+            deprecated: true
+            x-deprecatedMessage: Plan name is available on the plan record.
+          coverageGroupName:
+            type: string
+            description: 'A coverage group represents a collection of employees in the quote who are assumed to be enrolled in the plan for the purposes of calculating costs. The field indicates the name of the coverage group. '
+            maxLength: 150
+            minLength: 1
+          insuranceType:
+            description: Insurance type is available as an attribute on the plan object.
+            deprecated: true
+            x-deprecatedMessage: Insurance type is available on the plan record.
+            oneOf:
+            - $ref: '#/components/schemas/InsuranceType'
+          ageBandedPremium:
+            type:
+            - number
+            - 'null'
+            description: The age banded premium for the coverage group.
+            format: decimal
+          compositePremium:
+            type:
+            - number
+            - 'null'
+            description: The composite premium for the coverage group.
+            format: decimal
+          classification:
+            description: The classification of the quoted plan.
+            oneOf:
+            - $ref: '#/components/schemas/Classification'
+          planPackages:
+            type:
+            - array
+            - 'null'
+            description: Any packages that the plan is available in.
+            items:
+              type: string
+    SearchResultOfQuotedPlanWithMemberRates:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: Indicates whether the search has more results than returned in the response.
+        totalCount:
+          type: integer
+          description: The total records that meet the search criteria specified.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: A list of business and personal accounts matching the search criteria.
+          items:
+            $ref: '#/components/schemas/QuotedPlanWithMemberRates'
+    BenefitItem:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - updatedDateTime
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the benefit item.
+            format: int32
+          updatedDateTime:
+            type: string
+            description: The date in which the benefit item information was last updated.
+            format: date-time
+    BenefitItemValue:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemValueInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the benefit item value.
+            format: int32
+    RelationshipType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Dependent
+      - Spouse
+      enum:
+      - Dependent
+      - Spouse
+    Classification:
+      type: string
+      description: ''
+      x-enumNames:
+      - Alternative
+      - Current
+      - Renewal
+      enum:
+      - Alternative
+      - Current
+      - Renewal
+    MarkSoldRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - markSoldQuotedPlans
+      properties:
+        markSoldQuotedPlans:
+          type: array
+          description: The list of quoted plans to be marked sold alongside the quote.
+          items:
+            $ref: '#/components/schemas/MarkSoldQuotedPlan'
+    QuoteInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - postalCode
+      - county
+      - state
+      - accountId
+      - status
+      - effectiveDate
+      - isArchived
+      - planTypes
+      - employeeCensus
+      properties:
+        agencyId:
+          type: integer
+          description: Quotes are owned by insurance agencies. This is the unique Zywave identifier for the agency associated with the quote.
+          format: int32
+        postalCode:
+          type: string
+          description: The employer zip code or postal code of the account the quote is associated with.
+          maxLength: 10
+          minLength: 5
+        county:
+          type: string
+          description: The employer county of the account the quote is associated with.
+          maxLength: 100
+          minLength: 1
+        state:
+          type: string
+          description: The state of the account the quote is associated with.
+          maxLength: 4
+          minLength: 1
+        accountId:
+          type: integer
+          description: Quotes are associated with an insurance agency's accounts. This is the unique Zywave identifier for the account associated with the quote.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        status:
+          description: 'Indicates where the quote is in the quoting process. '
+          oneOf:
+          - $ref: '#/components/schemas/QuoteStatus'
+        effectiveDate:
+          type: string
+          description: The effective date of the insurance plans presented in the quote.
+          format: date-time
+        isArchived:
+          type: boolean
+          description: Indicates whether the quote has been removed from the Zywave CPQ application.
+        sicCode:
+          type:
+          - string
+          - 'null'
+          description: The 4-digit Standard Industrial Classification code for the account.
+          maxLength: 4
+          minLength: 4
+          pattern: \d*
+        npn:
+          type:
+          - string
+          - 'null'
+          description: The National Producer Number requesting the quote.
+          maxLength: 10
+          pattern: \d*
+        tin:
+          type:
+          - string
+          - 'null'
+          description: The tax identification number requesting the quote.
+          maxLength: 15
+        suppressedCarrierCompanyIds:
+          type:
+          - array
+          - 'null'
+          description: List of carrier company ids to not include on the quote.
+          maxItems: 100
+          items:
+            type: integer
+            format: int32
+        planIds:
+          type:
+          - array
+          - 'null'
+          description: List of specific plan ids to quote.
+          maxItems: 1000
+          items:
+            type: integer
+            format: int32
+        planTypes:
+          type: array
+          description: List of plan types to include on the quote.
+          items:
+            $ref: '#/components/schemas/PlanType'
+        employeeCensus:
+          type: array
+          description: The employee census for the quote.
+          items:
+            $ref: '#/components/schemas/GroupMemberEmployee'
+    InsuranceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - PPO
+      - EPO
+      - HMO
+      - Indemnity
+      - POS
+      - INO
+      enum:
+      - PPO
+      - EPO
+      - HMO
+      - Indemnity
+      - POS
+      - INO
+    RateComponent:
+      type: object
+      additionalProperties: false
+      properties:
+        rate:
+          type: number
+          description: The premium rate for the specific rate component.
+          format: decimal
+        rateAttributes:
+          type:
+          - array
+          - 'null'
+          description: The plan rate attributes for the specific rate component.
+          items:
+            type: string
+    PlanAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    GroupMemberDependent:
+      allOf:
+      - $ref: '#/components/schemas/GroupMemberBase'
+      - type: object
+        additionalProperties: false
+        required:
+        - relationship
+        properties:
+          relationship:
+            $ref: '#/components/schemas/RelationshipType'
+          enrolledPlanTypes:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PlanType'
+    GroupMemberBase:
+      type: object
+      additionalProperties: false
+      required:
+      - gender
+      - dateOfBirth
+      - isTobaccoUser
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          description: The ID assigned to the group member by Zywave CPQ.
+          format: int32
+        firstName:
+          type:
+          - string
+          - 'null'
+          description: The first name of the group member.
+          maxLength: 50
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: The last name of the group member.
+          maxLength: 50
+        homePostalCode:
+          type:
+          - string
+          - 'null'
+          description: The home postal code of the group member.
+          maxLength: 10
+        homeCounty:
+          type:
+          - string
+          - 'null'
+          description: The home county of the group member.
+          maxLength: 50
+        gender:
+          description: The gender of the group member.
+          oneOf:
+          - $ref: '#/components/schemas/Gender'
+        dateOfBirth:
+          type: string
+          description: The date of birth of the group member.
+          format: date-time
+        isTobaccoUser:
+          type: boolean
+          description: Whether or not the group member is a tobacco user.
+    PlanRateInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - rate
+      - tier
+      - rateType
+      properties:
+        rate:
+          type: number
+          description: The premium rate for the specific tier.
+          format: decimal
+        tier:
+          type: string
+          description: The tier the premium rate is associated with. For more information regarding the tiers supported by this call please review the endpoint documentation.
+          minLength: 1
+        rateType:
+          type: string
+          description: The tier the premium rate is associated with. For more information regarding the tiers supported by this call please review the endpoint documentation.
+          minLength: 1
+        rateComponents:
+          type:
+          - array
+          - 'null'
+          description: For Level Funded Rate Types, the carrier may provide a breakdown of how the rate is calculated.
+          items:
+            $ref: '#/components/schemas/RateComponent'
+    GroupMemberEmployee:
+      allOf:
+      - $ref: '#/components/schemas/GroupMemberBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          dependents:
+            type:
+            - array
+            - 'null'
+            description: The dependents of the employee
+            items:
+              $ref: '#/components/schemas/GroupMemberDependent'
+          enrolledCoverageGroups:
+            type:
+            - array
+            - 'null'
+            description: The plan types the group member is enrolled in.
+            items:
+              $ref: '#/components/schemas/EnrolledCoverageGroup'
+    QuotedPlanWithMemberRates:
+      type: object
+      additionalProperties: false
+      properties:
+        planId:
+          type: integer
+          format: int32
+        quotedPlanId:
+          type: integer
+          format: int32
+        memberRates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/MemberRate'
+        quotedMemberCount:
+          type: integer
+          format: int32
+    BenefitItemValueInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - tier
+      - valueType
+      properties:
+        tier:
+          description: Specifies which medical provider network the specific benefit item value is associated with.
+          oneOf:
+          - $ref: '#/components/schemas/BenefitItemTier'
+        valueType:
+          description: Specifies the format of the benefit item value.
+          oneOf:
+          - $ref: '#/components/schemas/BenefitItemValueType'
+        customText:
+          type:
+          - string
+          - 'null'
+          description: Specifies custom text that will follow the benefit item value in an effort to provide more specific information regarding the benefit item.
+          maxLength: 1000
+        value:
+          type:
+          - string
+          - 'null'
+          description: The specific value associated with the benefit item.
+          maxLength: 1000
+    SearchResultOfCoverageGroupQuotedPlan:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: Indicates whether the search has more results than returned in the response.
+        totalCount:
+          type: integer
+          description: The total records that meet the search criteria specified.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: A list of business and personal accounts matching the search criteria.
+          items:
+            $ref: '#/components/schemas/CoverageGroupQuotedPlan'
+    SearchResultOfQuote:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: Indicates whether the search has more results than returned in the response.
+        totalCount:
+          type: integer
+          description: The total records that meet the search criteria specified.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: A list of business and personal accounts matching the search criteria.
+          items:
+            $ref: '#/components/schemas/Quote'
+    PlanRateCollection:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PlanRate'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Quote:
+      allOf:
+      - $ref: '#/components/schemas/QuoteInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the quote.
+            format: int32
+          updatedDateTime:
+            type:
+            - string
+            - 'null'
+            description: The date in which the quote was last updated.
+            format: date-time
+    QuoteStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Started
+      - Rating
+      - Rated
+      - Completed
+      - SoldFinal
+      - Duplicating
+      enum:
+      - Started
+      - Rating
+      - Rated
+      - Completed
+      - SoldFinal
+      - Duplicating
+    MemberRateInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        quotedPlanId:
+          type: integer
+          description: The unique Zywave identifier for the quoted plan. This id is specific to the combination of a quote and plan and is different than the general planId.
+          format: int32
+          deprecated: true
+        memberId:
+          type: integer
+          description: The unique Zywave identifier for the member.
+          format: int32
+        rate:
+          type: number
+          description: The rate for the member.
+          format: decimal
+    QuoteErrors:
+      type: object
+      additionalProperties: false
+      properties:
+        carrierCompanyId:
+          type: integer
+          format: int32
+        coverageGroupName:
+          type:
+          - string
+          - 'null'
+        messages:
+          type: array
+          items:
+            type: string
+    Plan:
+      allOf:
+      - $ref: '#/components/schemas/PlanInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - hasSbc
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the plan.
+            format: int32
+          hasSbc:
+            type: boolean
+            description: Whether the plan has a linked SBC file
+          updatedDateTime:
+            type:
+            - string
+            - 'null'
+            description: The date in which the plan was last updated.
+            format: date-time
+          attributes:
+            type:
+            - array
+            - 'null'
+            description: The list of additional attributes for the plan
+            items:
+              $ref: '#/components/schemas/PlanAttribute'
+          benefitItems:
+            type:
+            - array
+            - 'null'
+            description: The list of benefit items for the plan
+            items:
+              $ref: '#/components/schemas/BenefitItem'
+    SearchResultOfPlanWithRates:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: Indicates whether the search has more results than returned in the response.
+        totalCount:
+          type: integer
+          description: The total records that meet the search criteria specified.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: A list of business and personal accounts matching the search criteria.
+          items:
+            $ref: '#/components/schemas/PlanWithRates'
+    BenefitItemCollection:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BenefitItem'
+    BenefitItemValueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Boolean
+      - Numeric
+      - Dollar
+      - Percent
+      - Options
+      - Text
+      enum:
+      - Boolean
+      - Numeric
+      - Dollar
+      - Percent
+      - Options
+      - Text
+    Gender:
+      type: string
+      description: ''
+      x-enumNames:
+      - Male
+      - Female
+      enum:
+      - Male
+      - Female
+    MemberRateCollection:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/MemberRate'
+        quotedMemberCount:
+          type: integer
+          format: int32
+    PlanInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - carrierCompanyId
+      - carrierPlanIdentifier
+      - planType
+      - state
+      - name
+      - startDate
+      - endDate
+      properties:
+        carrierCompanyId:
+          type: integer
+          description: The unique Zywave identifier for the insurance carrier offering the plan.
+          format: int32
+        carrierPlanIdentifier:
+          type: string
+          description: A plan identifier specified by the carrier offering the plan.
+          maxLength: 75
+          minLength: 1
+        planType:
+          description: The type of insurance coverage being offered by the plan.
+          oneOf:
+          - $ref: '#/components/schemas/PlanType'
+        agencyId:
+          type:
+          - integer
+          - 'null'
+          description: Plans within Zywave can be specific to an agency. When that is the case, this field will indicate the unique Zywave identifier for the agency associated with the plan. If a plan isn't agency specific this will be returned as null.
+          format: int32
+        state:
+          type: string
+          description: The state(s) in which the plan is applicable.
+          maxLength: 2
+          minLength: 1
+        name:
+          type: string
+          description: The name of the plan.
+          maxLength: 200
+          minLength: 1
+        startDate:
+          type: string
+          description: The availability of this plan starts on this date.
+          format: date-time
+        endDate:
+          type: string
+          description: The availability of this plan ends on this date.
+          format: date-time
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    CoverageGroupQuotedPlanInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        isSoldFinal:
+          type:
+          - boolean
+          - 'null'
+          description: 'Indicates whether the plan was marked sold/final. Sold/final plan represent the client''s plan selection for the quote. '
+    MarkSoldQuotedPlan:
+      type: object
+      additionalProperties: false
+      required:
+      - quotedPlanId
+      properties:
+        quotedPlanId:
+          type: integer
+          description: The unique Zywave identifier for the quoted plan. This id is specific to the combination of a quote and plan and is different than the general planId.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        premiumType:
+          description: The selected premium type on the sold plan, if there are multiple options. May be left blank otherwise.
+          oneOf:
+          - $ref: '#/components/schemas/PremiumType'
+    BenefitItemInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        parentBenefitItemId:
+          type:
+          - integer
+          - 'null'
+          description: The unique Zywave identifier of the parent of this benefit item (if applicable).
+          format: int32
+        values:
+          type:
+          - array
+          - 'null'
+          description: A list of values related to this benefit item.
+          items:
+            $ref: '#/components/schemas/BenefitItemValue'
+        name:
+          type: string
+          description: The name of the benefit item.
+          maxLength: 150
+          minLength: 1
+    SearchResultOfPlan:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: Indicates whether the search has more results than returned in the response.
+        totalCount:
+          type: integer
+          description: The total records that meet the search criteria specified.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: A list of business and personal accounts matching the search criteria.
+          items:
+            $ref: '#/components/schemas/Plan'
+    BenefitItemTier:
+      type: string
+      description: ''
+      x-enumNames:
+      - InNetwork
+      - OutOfNetwork
+      - Managed
+      - Preferred
+      enum:
+      - InNetwork
+      - OutOfNetwork
+      - Managed
+      - Preferred
+    PlanWithRates:
+      type: object
+      additionalProperties: false
+      properties:
+        planId:
+          type: integer
+          format: int32
+        quotedPlanId:
+          type: integer
+          format: int32
+        planRates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PlanRate'
+    EnrolledCoverageGroup:
+      type: object
+      additionalProperties: false
+      required:
+      - planType
+      - isWaived
+      properties:
+        planType:
+          description: The plan type for enrollment.
+          oneOf:
+          - $ref: '#/components/schemas/PlanType'
+        isWaived:
+          type: boolean
+          description: Whether or not the plan type is waived.
+        coverageGroupName:
+          type:
+          - string
+          - 'null'
+          description: The coverage group enrolled in.  An empty or null value will default to Waived.
+          maxLength: 150
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    RefreshQuoteRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - quoteId
+      properties:
+        quoteId:
+          type: integer
+          description: Id of the quote to refresh.
+          format: int32
+        tin:
+          type:
+          - string
+          - 'null'
+          description: The tax identification number requesting the quote.
+          maxLength: 15
+        suppressedCarrierCompanyIds:
+          type:
+          - array
+          - 'null'
+          description: List of carrier company ids to not include on the quote.
+          maxItems: 100
+          items:
+            type: integer
+            format: int32
+        planIds:
+          type:
+          - array
+          - 'null'
+          description: List of specific plan ids to quote.
+          maxItems: 1000
+          items:
+            type: integer
+            format: int32
+        planTypes:
+          type: array
+          description: List of plan types to include on the quote. If null will use existing plantypes on quote.
+          items:
+            $ref: '#/components/schemas/PlanType'
+    PlanType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Medical
+      - Dental
+      - EAP
+      - LifeAndADD
+      - LongTermCare
+      - LongTermDisability
+      - Section125
+      - ShortTermDisability
+      - Vision
+      - PharmacyBenefitManagement
+      - RetirementPlans
+      - OtherBenefits
+      - WorkersCompensation
+      - CommercialAuto
+      - GeneralLiability
+      - Property
+      - BusinessOwnersPolicy
+      - OtherPropertyAndCasualty
+      - PersonalLines
+      - CommercialPackage
+      - UmbrellaExcessLiability
+      - DirectorsAndOfficers
+      - ErrorsAndOmissions
+      - EmploymentPracticesLiability
+      - BuildersRisk
+      - CrimeFidelity
+      - Earthquake
+      - Flood
+      - InlandMarineCargo
+      - OceanMarine
+      - Surety
+      - OtherProperty
+      - OtherLiability
+      - FeeForService
+      - Program
+      enum:
+      - Unknown
+      - Medical
+      - Dental
+      - EAP
+      - LifeAndADD
+      - LongTermCare
+      - LongTermDisability
+      - Section125
+      - ShortTermDisability
+      - Vision
+      - PharmacyBenefitManagement
+      - RetirementPlans
+      - OtherBenefits
+      - WorkersCompensation
+      - CommercialAuto
+      - GeneralLiability
+      - Property
+      - BusinessOwnersPolicy
+      - OtherPropertyAndCasualty
+      - PersonalLines
+      - CommercialPackage
+      - UmbrellaExcessLiability
+      - DirectorsAndOfficers
+      - ErrorsAndOmissions
+      - EmploymentPracticesLiability
+      - BuildersRisk
+      - CrimeFidelity
+      - Earthquake
+      - Flood
+      - InlandMarineCargo
+      - OceanMarine
+      - Surety
+      - OtherProperty
+      - OtherLiability
+      - FeeForService
+      - Program
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.0.0 (NJsonSchema v11.6.0.0 (Newtonsoft.Json v13.0.0.0))

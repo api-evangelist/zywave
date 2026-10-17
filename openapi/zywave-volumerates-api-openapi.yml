@@ -1,0 +1,388 @@
+openapi: 3.2.0
+info:
+  title: Policies Volume Rates API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: VolumeRates
+paths:
+  /policies/v2.0/policies/{policyId}/volumerates:
+    post:
+      tags:
+      - VolumeRates
+      summary: Creates a VolumeRate record for the policy
+      operationId: Policies_CreateVolumeRate
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: info
+        description: The VolumeRateInfo used to create a new record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeRateInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 CREATED with the id of the new record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolumeRates'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - VolumeRates
+      summary: Gets the VolumeRates for a policy
+      operationId: Policies_GetVolumeRateRecords
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: A 200 OK response with an array of VolumeRate records.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolumeRates'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+  /policies/v2.0/policies/{policyId}/volumerates/{id}:
+    delete:
+      tags:
+      - VolumeRates
+      summary: Deletes a VolumeRate record by id for a policy
+      operationId: Policies_DeleteVolumeRate
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: the id of the VolumeRate record.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A 204 No Content response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolumeRates'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - VolumeRates
+      summary: Gets an VolumeRate record for a policy by id
+      operationId: Policies_GetVolumeRate
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The id of the VolumeRate record.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A 200 OK response with the VolumeRate record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolumeRate'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    put:
+      tags:
+      - VolumeRates
+      summary: Updates a VolumeRate record for a policy
+      operationId: Policies_UpdateVolumeRate
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The id of the VolumeRate record.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: info
+        description: The VolumeRateInfo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeRateInfo'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: A 204 No Content response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolumeRates'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    VolumeRateInfo:
+      type: object
+      description: Volume rate create/update data
+      additionalProperties: false
+      required:
+      - monthlyRatePerBasisAmount
+      - basisAmount
+      - coverageOrSalaryAmount
+      - amountType
+      - description
+      properties:
+        monthlyRatePerBasisAmount:
+          type: number
+          description: The rate per BasisAmount
+          format: decimal
+          maximum: 99999.9999
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,4}$
+        basisAmount:
+          type: number
+          description: The basis amount used when applying the MonthlyRatePerBasisAmount
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        coverageOrSalaryAmount:
+          type: number
+          description: The total amount of coverage (can also be interpreted as salary when that is used to determine volume coverage).
+          format: decimal
+          maximum: 99999999999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        amountType:
+          description: Indicates whether the BasisAmount represents Salary or Coverage.
+          oneOf:
+          - $ref: '#/components/schemas/VolumeAmountTypeOption'
+        description:
+          type: string
+          description: The description for this record. This should be unique with respect to other VolumeRate records for the policy.
+          maxLength: 255
+          minLength: 1
+        totalMonthlyPremium:
+          type: number
+          readOnly: true
+          description: The calculated total monthly premium for this Volume Rate record. Fractional cents are rounded up.
+          format: decimal
+        totalAnnualPremium:
+          type: number
+          readOnly: true
+          description: The calculated total annual premium for this Volume Rate record.
+          format: decimal
+    VolumeRate:
+      allOf:
+      - $ref: '#/components/schemas/VolumeRateInfo'
+      - type: object
+        description: Volume Rate data
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The record id.
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    VolumeAmountTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Salary
+      - Coverage
+      enum:
+      - Salary
+      - Coverage
+    VolumeRates:
+      type: object
+      description: An array of volume rates with the total premium for all.
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          description: An array of VolumeRate
+          items:
+            $ref: '#/components/schemas/VolumeRate'
+        totalMonthlyPremium:
+          type: number
+          readOnly: true
+          description: The total monthly premium for all Items.
+          format: decimal
+        totalAnnualPremium:
+          type: number
+          readOnly: true
+          description: The total annual premium for all Items.
+          format: decimal
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

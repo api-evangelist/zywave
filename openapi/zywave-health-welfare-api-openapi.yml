@@ -1,0 +1,474 @@
+openapi: 3.2.0
+info:
+  title: Lead Insights Health & Welfare API
+  version: v3.0
+servers:
+- url: https://api.zywave.com
+security:
+- bearerAuth: []
+tags:
+- name: Health & Welfare
+paths:
+  /v3/companies/v1.0/company/{id}/welfare/details:
+    get:
+      tags:
+      - Health & Welfare
+      summary: Welfare details
+      description: The welfare details endpoint returns health and welfare data at a plan level for the given company. The ID parameter must be provided to retrieve detail data.
+      parameters:
+      - name: id
+        description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: The welfare details corresponding to the provided `ID`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WelfareDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV3CompaniesV10CompanyByIdWelfareDetails
+      x-operation-id-source: derived
+  /v3/companies/v1.0/company/{id}/welfare/summary:
+    get:
+      summary: Welfare summary
+      description: The welfare endpoint returns the welfare summary for a corresponding ID.
+      tags:
+      - Health & Welfare
+      parameters:
+      - in: path
+        name: id
+        description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+        required: true
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: The welfare summary corresponding to the provided `ID`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WelfareSummary'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV3CompaniesV10CompanyByIdWelfareSummary
+      x-operation-id-source: derived
+components:
+  schemas:
+    WelfareDetails:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        linesOfBusiness:
+          type: array
+          description: A list of all lines of business
+          items:
+            $ref: '#/components/schemas/LineOfBusiness'
+    WelfareSummary:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        eligibleEmployees:
+          type: integer
+          description: The number of eligible eligible Employees
+          example: 2205900
+        renewalDate:
+          type: string
+          description: Benefits plan primary renewal date
+          example: 01/01/2022
+        primaryBroker:
+          $ref: '#/components/schemas/PrimaryBroker'
+        secondaryBroker:
+          $ref: '#/components/schemas/SecondaryBroker'
+        totalRevenue:
+          type: integer
+          description: Sum of all plans revenue for the sponsor
+          example: 57518
+        totalCommission:
+          type: integer
+          description: Sum of all plans commissions for the sponsor
+          example: 36260
+        totalFees:
+          type: integer
+          description: Sum of all plans fees for the sponsor
+          example: 21258
+        totalPremium:
+          type: integer
+          description: Sum of all plans premiums for the sponsor
+          example: 738593958
+        administrator:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the administrator who filed the Form 5500
+              example: HOGANTAYLOR LLP PREPARER
+            phoneNumber:
+              type: string
+              description: Phone number of the administrator who filed the Form 5500
+              example: '8004211362'
+        accountingFirm:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the accounting firm
+              example: ERNST & YOUNG, LLP
+        largestLineOfBusiness:
+          type: string
+          description: Text description of the plan which is the largest benefit line of business, by revenue
+          example: BUSINESS TRAVEL ACCIDENT
+        largestCarrier:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Lead insurance carrier, by revenue
+              example: KAISER FOUNDATION HEALTH PLAN OF CALIFORNIA
+            parent:
+              type: string
+              description: The parent or normalized lead insurance carrier, normally due to acquisition or corporate ownership
+              example: KAISER
+        largestServiceProvider:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The largest service provider for the benefit plans
+              example: ARKANSAS BLUE CROSS AND BLUE SHIELD
+            service:
+              type: string
+              description: Description of the service provided by the largest service providers (e.g. Claims Administration)
+              example: Claims processing
+            totalRevenue:
+              type: number
+              format: float
+              description: Revenue associated with the largest service provider
+              example: 205186220.0
+        serviceProviders:
+          type: object
+          properties:
+            directCompensation:
+              type: number
+              format: float
+              description: Service provider direct compensation
+              example: 339056525.0
+            indirectCompensation:
+              type: number
+              format: float
+              description: Service provider indirect compensation
+              example: 0
+            totalCompensation:
+              type: number
+              format: float
+              description: Service provider total compensation
+              example: 339056525.0
+        currentRetireesReceivingBenefits:
+          type: integer
+          description: Number of current retirees receiving benefits
+          example: 6488
+        futureRetireesReceivingBenefits:
+          type: integer
+          description: Number of future retirees receiving benefits
+          example: 0
+        isSelfFunded:
+          type: boolean
+          description: True/False indicator if the benefit plan is self-funded
+          example: true
+        isCollectiveBargained:
+          type: boolean
+          description: True/False indicator if the benefit plans are collectively bargained
+          example: false
+        isMegaWrap:
+          type: boolean
+          description: True/False indicator if the company uses a mega-wrap to combine benefits under one plan
+          example: false
+        isFirstFiling:
+          type: boolean
+          description: True/False indicator if this is the first filing for this company
+          example: false
+        isDelinquentFiling:
+          type: boolean
+          description: True/False indicator if this is a delinquent filing
+          example: false
+        isFinalFiling:
+          type: boolean
+          description: True/False indicator if this is the final filing for this organization
+          example: false
+        isExtensionFiled:
+          type: boolean
+          description: True/False indicator if this organization filed an extension
+          example: true
+        preparerName:
+          type: string
+          description: Text field containing the name of the preparer, if any
+          example: ''
+        hasMultipleEmployer:
+          type: boolean
+          description: True/False indicator if this organization filed as a multiemployer/multiple employer benefit plan
+          example: false
+        hasScheduleA:
+          type: boolean
+          description: True/False indicator if a filing has no schedule A, but has a 5500
+          example: false
+        thirdPartyAdmin:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of third party admin
+              example: ARKANSAS BLUE CROSS AND BLUE SHIELD
+            compensation:
+              type: integer
+              description: Third party admin total compensation
+              example: 205186220
+    SecondaryBroker:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The secondary broker for employee benefits plans by revenue amount
+          example: SAMMONS COMPANY LP
+        address:
+          type: object
+          $ref: '#/components/schemas/Address'
+    ProblemDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        exceptionSource:
+          type:
+          - string
+          - 'null'
+        additionalInfo:
+          type:
+          - string
+          - 'null'
+    PrimaryBroker:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The lead broker for employee benefits plans by revenue amount
+          example: MERCER HEALTH AND BENEFITS LLC
+        parent:
+          type: string
+          description: The parent or normalized name of the lead broker, normally due to acquisition
+          example: MERCER HEALTH AND BENEFITS
+        affiliation:
+          type: array
+          description: Affiliation name broker belongs to
+          items:
+            type: string
+          example: []
+        address:
+          type: object
+          $ref: '#/components/schemas/Address'
+    Address:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+          description: Standardized and normalized address one
+          example: 4565 PAYSPHERE CIRCLE
+        addressLine2:
+          type: string
+          description: Standardized and normalized address two
+          example: null
+        city:
+          type: string
+          description: Standardized and normalized city
+          example: CHICAGO
+        state:
+          type: string
+          description: Standardized and normalized state (2 letter abbreviation)
+          example: IL
+        postalCode:
+          type: string
+          description: Standardized address postal code
+          example: 60674
+        county:
+          type: string
+          description: The county name of the broker address
+          example: Cook
+    id:
+      description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+      type: string
+      example: M84000053215022
+    LineOfBusiness:
+      type: object
+      properties:
+        renewalDate:
+          type: string
+          description: Benefits plan primary renewal date
+          example: 01/01/2022
+        PrimaryBroker:
+          allOf:
+          - $ref: '#/components/schemas/PrimaryBroker'
+          - type: object
+            properties:
+              revenue:
+                type: integer
+                description: Total revenue for this broker from this plan
+                example: 18772
+              commission:
+                type: integer
+                description: Total commission for this broker from this plan
+                example: 15643
+              fees:
+                type: integer
+                description: Total fees for this broker from this plan
+                example: 3129
+        SecondaryBroker:
+          allOf:
+          - $ref: '#/components/schemas/SecondaryBroker'
+          - type: object
+            properties:
+              revenue:
+                type: integer
+                description: Total revenue for this broker from this plan
+                example: 18772
+              commission:
+                type: integer
+                description: Total commission for this broker from this plan
+                example: 15643
+              fees:
+                type: integer
+                description: Total fees for this broker from this plan
+                example: 3129
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        planType:
+          type: array
+          description: Array of plan types.
+          example:
+          - Health
+          - Dental
+          - Vision
+          items:
+            type: string
+        peopleCovered:
+          type: integer
+          description: Number of people covered on the plan
+          example: 367209
+        otherPlanTypeDescription:
+          type: string
+          description: Text Description of the other contract type
+          example: BUSINESS TRAVEL ACCIDENT
+        contractNumber:
+          type: string
+          description: The contract number
+          example: 4EL641721
+        premiumToRevenuePercent:
+          type: number
+          format: float
+          description: Percent of revenue compared to premium
+          example: 0.62
+        premiumToCommissionPercent:
+          type: number
+          format: float
+          description: Percent of revenue compared to premium
+          example: 0.0
+        type:
+          type: string
+          description: Describes the related product or services a company offers
+          example: ACCIDENT, CRITICAL ILLNESS
+        revenue:
+          type: integer
+          description: The total revenue for this plan
+          example: 400000
+        commission:
+          type: integer
+          description: The total commission for this plan
+          example: 0
+        premium:
+          type: integer
+          description: The total premium for this plan
+        fees:
+          type: integer
+          description: The fees for this plan
+          example: 400000
+    Carrier:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The carrier name
+          example: AMERICAN HERITAGE LIFE INSURANCE COMPANY
+        parent:
+          type: string
+          description: The parent or normalized name
+          example: ALLSTATE
+        ein:
+          type: string
+          description: Federal employer identification number
+          example: '590781901'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter your token in the text input below

@@ -1,0 +1,335 @@
+openapi: 3.2.0
+info:
+  title: Policies Commission Periods API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: CommissionPeriods
+paths:
+  /policies/v2.0/policies/{policyId}/commissionperiods/{id}:
+    get:
+      tags:
+      - CommissionPeriods
+      summary: Gets a CommissionPeriodInfo record by id
+      operationId: Policies_GetCommissionPeriod
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The commission period id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A 200 result with the object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommissionPeriod'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+  /policies/v2.0/policies/{policyId}/commissionperiods:
+    get:
+      tags:
+      - CommissionPeriods
+      summary: Gets all of the CommissionPeriodInfo records for a policy
+      operationId: Policies_GetCommissionPeriodsForPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: A 200 result with an array of objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommissionPeriod'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    post:
+      tags:
+      - CommissionPeriods
+      summary: Creates, updated, or deletes a Commission Period for a policy based on the…
+      description: 'auditInfo Delta follows the following validation rules
+
+
+        | Action | Id | Info |
+
+        |---------|--------|--------|
+
+        | Create | Never | Always |
+
+        | Update | Always | Always |
+
+        | Delete | Always | Never |'
+      operationId: Policies_PostCommissionPeriod
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: auditInfo
+        description: The info used to create or update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommissionPeriodAuditInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: Either 201 for a CREATE message or a 204 for an UPDATE or DELETE message.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '204':
+          description: Either 201 for a CREATE message or a 204 for an UPDATE or DELETE message.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AuditInfoOfCommissionPeriodInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - entityAction
+      properties:
+        entityId:
+          type:
+          - integer
+          - 'null'
+          description: Required for Update and Delete. It is invalid to provide an id for a Create.
+          format: int32
+        entityAction:
+          $ref: '#/components/schemas/EntityActionOption'
+        info:
+          description: The information used to create or update an entity. It is invalid to provide this for a Delete.
+          oneOf:
+          - $ref: '#/components/schemas/DeltaOfCommissionPeriodInfo'
+    DeltaOfCommissionPeriodInfo:
+      type: object
+      description: A wrapper for values to be used for updating or creating a record.
+      additionalProperties: false
+      properties:
+        updateOrCreateInformation:
+          description: The information to use for updating or creating.  Null values are ignored.
+          oneOf:
+          - $ref: '#/components/schemas/CommissionPeriodInfo'
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    CommissionPeriodInfo:
+      type: object
+      description: 'Information used when creating or updating a CommissionPeriod.
+
+        All values are required when used for creation.'
+      additionalProperties: false
+      properties:
+        commissionCalculationStrategy:
+          description: The commission calculation method (e.g. "Percentage" or "Flat").
+          oneOf:
+          - $ref: '#/components/schemas/CommissionCalculationStrategyOption'
+        commissionRoundingStrategy:
+          description: The rounding method to use.
+          oneOf:
+          - $ref: '#/components/schemas/CommissionRoundingStrategyOption'
+        startDateTimeOffset:
+          type:
+          - string
+          - 'null'
+          description: The start date for the commission period.
+          format: date-time
+    CommissionRoundingStrategyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - HouseWins
+      enum:
+      - HouseWins
+    CommissionCalculationStrategyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Percentage
+      - Flat
+      enum:
+      - Percentage
+      - Flat
+    CommissionPeriodAuditInfo:
+      allOf:
+      - $ref: '#/components/schemas/AuditInfoOfCommissionPeriodInfo'
+      - type: object
+        description: Audit info for commission period
+        additionalProperties: false
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    EntityActionOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Create
+      - Update
+      - Delete
+      enum:
+      - Create
+      - Update
+      - Delete
+    CommissionPeriod:
+      allOf:
+      - $ref: '#/components/schemas/CommissionPeriodInfo'
+      - type: object
+        description: 'Represents a commission period. '
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The id of the commission period record.
+            format: int32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

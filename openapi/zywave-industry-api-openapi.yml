@@ -1,0 +1,554 @@
+openapi: 3.2.0
+info:
+  title: Zywave Industry API
+  version: '1.0'
+  description: 'Operations tagged Industry across 2 of this provider''s published API definitions: zywave-accounts-v2-openapi.json, zywave-accounts-v3-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.accounts
+  - api.accounts:read
+tags:
+- name: Industry
+paths:
+  /accounts/v2.0/industry:
+    get:
+      tags:
+      - Industry
+      summary: Search for business and personal industries
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * id
+
+        * name
+
+        * naicsCode
+
+
+        The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.
+
+
+        | Operation | Example Request | Returns |
+
+        | ------- | -------- | -------- |
+
+        | startswith | startswith(Name,''Zyw'') | Returns all industries where the name starts with ''Zyw'' |
+
+        | endswith | endswith(Name,''wave'') | Returns all industries where the name ends with ''wave'' |
+
+        | contains | contains(Name,''wave'') | Returns all industries where the name contains ''wave'' |
+
+        | Equals | Name eq ''Zywave'' | Returns all industries named Zywave |
+
+        | Not Equals | Name ne ''Zywave'' | Returns all industries not named Zywave |
+
+        | Greater Than | naicsCode gt 22 | Returns all industries with a nacisCode greater than 22 |
+
+        | Greater Than or equal | naicsCode ge 22 | Returns all industries with a nacisCode greater than or equal to 22 |
+
+        | Less Than | naicsCode lt 22 | Returns all industries with a nacisCode less than or equal to 22 |
+
+        | Less Than or equal | naicsCode le 22 | Returns all industries with a nacisCode less than or equal to 22 |
+
+        | In | Name in (''Zyw'', ''ave'') | Returns all industries with the names ''Zyw'' or ''ave''. |
+
+        | Not | not startswith(Name,''Zyw'') | Returns all industries with a name that doesn''t start with ‘Zyw’ |
+
+        The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all industries with a name that incldes ‘I’ and a naicsCode greater than 22
+
+
+        *Contains(Name, ''I'') and naicsCode gt 22*
+
+
+        The orderby operation also supports multiple levels of ordering. For example, to order the results by name and then by naicsCode, the following can be used;
+
+
+        *Name asc, naicsCode desc*'
+      operationId: Industry_SearchIndustries
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $take
+        x-originalName: take
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfIndustry'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    servers:
+    - url: https://api.zywave.com
+  /v3/accounts/v3.0/industry/sic:
+    get:
+      tags:
+      - Industry
+      summary: Search for business and personal industry (SIC classification) information
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * id
+
+        * name
+
+        * code
+
+        * year
+
+        * length
+
+
+        The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.
+
+
+        | Operation | Example Request | Returns |
+
+        | ------- | -------- | -------- |
+
+        | startswith | startswith(Name,''Zyw'') | Returns all industries where the name starts with ''Zyw'' |
+
+        | endswith | endswith(Name,''wave'') | Returns all industries where the name ends with ''wave'' |
+
+        | contains | contains(Name,''wave'') | Returns all industries where the name contains ''wave'' |
+
+        | Equals | Name eq ''Zywave'' | Returns all industries named Zywave |
+
+        | Not Equals | Name ne ''Zywave'' | Returns all industries not named Zywave |
+
+        | Greater Than | year gt 2012 | Returns all industries with a sicCode year greater than 2012 |
+
+        | Greater Than or equal | length ge 2 | Returns all industries with a sicCode length greater than or equal to 2 |
+
+        | Less Than | year lt 2012 | Returns all industries with a sicCode year less than or equal to 2012 |
+
+        | Less Than or equal | length le 22 | Returns all industries with a sicCode length less than or equal to 22 |
+
+        | In | Name in (''Zyw'', ''ave'') | Returns all industries with the names ''Zyw'' or ''ave''. |
+
+        | Not | not startswith(Name,''Zyw'') | Returns all industries with a name that doesn''t start with ‘Zyw’ |
+
+        The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all industries with a name that includes ‘I’ and a sicCode greater than 22
+
+
+        *Contains(Name, ''I'') and naicsCode gt 22*
+
+
+        The orderby operation also supports multiple levels of ordering. For example, to order the results by name and then by sicCode, the following can be used;
+
+
+        *Name asc, sicCode desc*'
+      operationId: Industry_SearchSic
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: take
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfIndustry'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+    servers:
+    - url: https://api.zywave.com
+  /v3/accounts/v3.0/industry/naics:
+    get:
+      tags:
+      - Industry
+      summary: Search for business and personal industry (NAICS classification) information
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * id
+
+        * name
+
+        * code
+
+        * year
+
+        * length
+
+
+        The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.
+
+
+        | Operation | Example Request | Returns |
+
+        | ------- | -------- | -------- |
+
+        | startswith | startswith(Name,''Zyw'') | Returns all NAICS codes where the name starts with ''Zyw'' |
+
+        | endswith | endswith(Name,''wave'') | Returns all NAICS codes where the name ends with ''wave'' |
+
+        | contains | contains(Name,''wave'') | Returns all NAICS codes where the name contains ''wave'' |
+
+        | Equals | Name eq ''Zywave'' | Returns all NAICS codes named Zywave |
+
+        | Not Equals | Name ne ''Zywave'' | Returns all NAICS codes not named Zywave |
+
+        | Greater Than | year gt 2017 | Returns all NAICS codes with a NAICS code year greater than 2017 |
+
+        | Greater Than or equal | length ge 2 | Returns all NAICS codes with a naicsCode length greater than or equal to 2 |
+
+        | Less Than | year lt 22 | Returns all NAICS codes with a naicsCode less than or equal to 22 |
+
+        | Less Than or equal | length le 2 | Returns all NAICS codes with a naicsCode length less than or equal to 2 |
+
+        | In | Name in (''Zyw'', ''ave'') | Returns all NAICS codes with the names ''Zyw'' or ''ave''. |
+
+        | Not | not startswith(Name,''Zyw'') | Returns all NAICS codes with a name that doesn''t start with ‘Zyw’ |
+
+        The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all industries with a name that includes ‘I’ and a naicsCode greater than 22
+
+
+        *Contains(Name, ''I'') and naicsCode gt 22*
+
+
+        The orderby operation also supports multiple levels of ordering. For example, to order the results by name and then by naicsCode, the following can be used;
+
+
+        *Name asc, naicsCode desc*'
+      operationId: Industry_SearchNaics
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: take
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfIndustry'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+    servers:
+    - url: https://api.zywave.com
+components:
+  schemas:
+    PagedResultOfIndustry:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Industry'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Industry:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: The unique Zywave identifier for the industry.
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+          description: The display name for the industry.
+        naicsCode:
+          type:
+          - integer
+          - 'null'
+          description: The two-digit NAICS code for the industry.
+          format: int32
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    ProblemDetails_2:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Industry_2:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        code:
+          type:
+          - string
+          - 'null'
+        year:
+          type: string
+        replacementIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+    ValidationProblemDetails_2:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    HttpValidationProblemDetails_2:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-refined-from:
+- zywave-accounts-v2-openapi.json
+- zywave-accounts-v3-openapi.json
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

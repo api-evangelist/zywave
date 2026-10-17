@@ -1,0 +1,413 @@
+openapi: 3.2.0
+info:
+  title: Policies Fixed Rates API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: FixedRates
+paths:
+  /policies/v2.0/policies/{policyId}/fixedrates/{id}:
+    delete:
+      tags:
+      - FixedRates
+      summary: Deletes the fixed rate information associated with the fixed rate id specified
+      description: Fixed rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: FixedRates_DeleteFixedRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The ID of the policy for which all fixed rates are to be deleted.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The id of the fixed rate to delete.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '204':
+          description: A 204 No Content response.
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - FixedRates
+      summary: Returns the fixed rate information for the fixed rate id specified
+      description: Fixed rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: FixedRates_GetFixedRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The fixed rate id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixedRate'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    put:
+      tags:
+      - FixedRates
+      summary: Updates the existing fixed rate information for the fixed rate id specified
+      description: Fixed rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: FixedRates_PutFixedRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The id of the fixed rate to update
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: fixedRateInfo
+        description: The information to update on the fixed rate.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FixedRateBaseInfo'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: The FixedRate with a calculated annual rate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixedRate'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/fixedrates:
+    post:
+      tags:
+      - FixedRates
+      summary: Creates a fixed rate for a policy
+      description: Fixed rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: FixedRates_PostFixedRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: fixedRateInfo
+        description: The fixed rate to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FixedRateBaseInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 Created response with the FixedRate with the calculated annual rate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixedRate'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - FixedRates
+      summary: Returns list of fixed rate information for the policy
+      operationId: FixedRates_SearchFixedRatesFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FixedRate'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    FixedRateBaseInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - frequency
+      properties:
+        rate:
+          type:
+          - number
+          - 'null'
+          description: The rate for the fixed rate.
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        frequency:
+          description: The frequency of the `Rate`.
+          default: AnnuallyOrOneTime
+          oneOf:
+          - $ref: '#/components/schemas/FixedRateFrequencyOption'
+        employeeCount:
+          type:
+          - integer
+          - 'null'
+          description: The employee count.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+    FixedRateInfo:
+      allOf:
+      - $ref: '#/components/schemas/FixedRateBaseInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - policyId
+        properties:
+          policyId:
+            type: integer
+            description: The identifier for the policy that is tied to the fixed rate record. Has a dependency on a policy item.  Please use the policy endpoint for reference.
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    FixedRateFrequencyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - AnnuallyOrOneTime
+      - SemiAnnually
+      - Quarterly
+      - BiMonthly
+      - Monthly
+      - SemiMonthly
+      - BiWeekly
+      - Weekly
+      - PerEmployeePerMonth
+      - PerEmployeePerYear
+      enum:
+      - AnnuallyOrOneTime
+      - SemiAnnually
+      - Quarterly
+      - BiMonthly
+      - Monthly
+      - SemiMonthly
+      - BiWeekly
+      - Weekly
+      - PerEmployeePerMonth
+      - PerEmployeePerYear
+    FixedRate:
+      allOf:
+      - $ref: '#/components/schemas/FixedRateInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          annualRate:
+            type: number
+            readOnly: true
+            description: "The _calculated_ annual rate.\n            "
+            format: decimal
+          id:
+            type: integer
+            description: "The unique Zywave identifier for the fixed rate.\n            "
+            format: int32
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

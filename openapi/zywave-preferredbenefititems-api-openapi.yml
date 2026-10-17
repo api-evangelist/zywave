@@ -1,0 +1,320 @@
+openapi: 3.2.0
+info:
+  title: Policies Preferred Benefit Items API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: PreferredBenefitItems
+paths:
+  /policies/v2.0/preferredbenefititems:
+    get:
+      tags:
+      - PreferredBenefitItems
+      summary: Returns list of preferred benefit items for the agency (if they exist…
+      description: 'Preferred benefit items describe the benefit items an agency has configured as preferred for their policies.
+
+
+        The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * Id
+
+        * PolicyCoverageTypeId
+
+        * Name
+
+        * SortOrder
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: PreferredBenefitItems_SearchPreferredBenefitItems
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfBenefitItem'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    put:
+      tags:
+      - PreferredBenefitItems
+      summary: Sets or unsets a preferred benefit item for the agency
+      description: 'Use this endpoint to mark a single benefit item as preferred or non-preferred for the agency.
+
+        Setting IsPreferred to true creates or updates the preferred benefit item record.
+
+        Setting IsPreferred to false removes the preferred benefit item record if it exists.'
+      operationId: PreferredBenefitItems_SetPreferredBenefitItem
+      requestBody:
+        x-name: info
+        description: The set preferred benefit item info.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPreferredBenefitItemInfo'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: The updated benefit item.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BenefitItem'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    BenefitItemInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: The name of the benefit item.
+          maxLength: 255
+          minLength: 1
+        defaultBenefitItemValueType:
+          $ref: '#/components/schemas/BenefitItemValueType'
+        benefitItemOptionTypeId:
+          type:
+          - integer
+          - 'null'
+          description: Must be not blank when DefaultBenefitItemValueType is 'Options'. Otherwise must stay blank.
+          format: int32
+        allowsMultipleValues:
+          type: boolean
+        isHeader:
+          type: boolean
+        parentBenefitItemId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sortOrder:
+          type: integer
+          description: The index in which the benefit item is in the list
+          format: int32
+    SetPreferredBenefitItemInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - benefitItemId
+      - isPreferred
+      properties:
+        benefitItemId:
+          type: integer
+          description: The unique identifier for the benefit item.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        isPreferred:
+          type: boolean
+          description: Whether the benefit item is preferred for the agency.
+        enrollmentBookletsSync:
+          type: boolean
+          description: Whether the benefit item should be synced to enrollment booklets.
+    PagedResultOfBenefitItem:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BenefitItem'
+    BenefitItem:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemCreateInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the benefit item.
+            format: int32
+    BenefitItemValueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Percent
+      - Dollar
+      - DollarOrPercent
+      - Boolean
+      - Numeric
+      - Options
+      - Text
+      enum:
+      - Percent
+      - Dollar
+      - DollarOrPercent
+      - Boolean
+      - Numeric
+      - Options
+      - Text
+    BenefitItemCreateInfo:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          policyCoverageTypeId:
+            type: integer
+            format: int32
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

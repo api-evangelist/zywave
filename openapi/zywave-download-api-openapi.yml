@@ -1,0 +1,166 @@
+openapi: 3.2.0
+info:
+  title: Content Download API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.content
+  - api.content:read
+tags:
+- name: Download
+paths:
+  /content/v2.0/download:
+    post:
+      tags:
+      - Download
+      summary: Creates a file using the download request options and streams it back
+      operationId: Download_Download
+      requestBody:
+        x-name: downloadRequest
+        description: The request containg options for the download
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadRequest'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: The ID of the created content item.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /content/v2.0/download/link:
+    post:
+      tags:
+      - Download
+      summary: Creates a file using the download request options and sends back a short lived…
+      operationId: Download_DownloadLink
+      requestBody:
+        x-name: downloadRequest
+        description: The request containg options for the download
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: The ID of the created content item.
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DownloadRequest:
+      type: object
+      description: The request that contains options for configuring the download of content
+      additionalProperties: false
+      properties:
+        contentId:
+          type: integer
+          description: The unique Zywave identifier for the content.
+          format: int32
+        fileId:
+          type:
+          - integer
+          - 'null'
+          description: The unique Zywave identifier for the file under the content.
+          format: int32
+        convertToPDF:
+          type: boolean
+          description: The flag that will convert the file from its native format to a PDF, ignored for inapplicable filetypes
+        mergeFields:
+          type:
+          - object
+          - 'null'
+          description: The merge fields the download will attempt to find and replace in the body of the content, ignored for inapplicable filetypes
+          additionalProperties:
+            type: string
+        brandId:
+          type:
+          - integer
+          - 'null'
+          description: The brand for merge fields to apply to the content when downloading, ignored for inapplicable filetypes
+          format: int32
+        themeId:
+          type:
+          - integer
+          - 'null'
+          description: The theme to apply to the content when downloading, ignored for inapplicable filetypes
+          format: int32
+        skipApplyingTheme:
+          type: boolean
+          description: Whether to skip applying the theme for this download, ignored for inapplicable filetypes
+        origin:
+          type:
+          - string
+          - 'null'
+          description: The origin of the request, used for logging and analytics
+  securitySchemes:
+    oidc:
+      type: oauth2
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.content: Full access to all agency operations
+            api.content:read: Read-only access to agencies
+x-generator: NSwag v14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))

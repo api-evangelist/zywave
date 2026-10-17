@@ -1,0 +1,741 @@
+openapi: 3.2.0
+info:
+  title: BKB Rates API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: Rates
+paths:
+  /bkb/v2.0/plans/{planId}/rates:
+    get:
+      tags:
+      - Rates
+      summary: Gets plan rates by plan id
+      operationId: Rates_GetPlanRates
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rate'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Rates
+      summary: Modifies the plan's rates.
+      operationId: Rates_ModifyPlanRates
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: modifyRatesRequest
+        description: The RatesWithOptionsRequestModel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RatesWithOptionsRequestModel'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Rates
+      summary: Deletes all rates for the plan
+      operationId: Rates_DeletePlanRates
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/rates/feetypes:
+    get:
+      tags:
+      - Rates
+      summary: Gets fee types
+      operationId: Rates_GetFeeTypes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FeeType'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/plans/{planId}/otherfees:
+    get:
+      tags:
+      - Rates
+      summary: Gets other plan fees by plan id
+      operationId: Rates_GetOtherPlanFees
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OtherFee'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Rates
+      summary: Modifies the other/additional plan fees.
+      operationId: Rates_ModifyOtherPlanFees
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: modifyOtherFeesRequest
+        description: The OtherFeesWithOptionsRequestModel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtherFeesWithOptionsRequestModel'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/plans/{planId}/contributionrates:
+    get:
+      tags:
+      - Rates
+      summary: Gets the plan contribution rates
+      operationId: Rates_GetPlanContributionRates
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContributionRate'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Rates
+      summary: Adds or updates the plan contribution rates.
+      operationId: Rates_ModifyPlanContributionRates
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: modifyContributionRatesRequest
+        description: The ContributionRatesWithOptionsRequestModel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContributionRatesWithOptionsRequestModel'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/rates/tieredrates/tiertypes:
+    get:
+      tags:
+      - Rates
+      summary: Gets the tiered rate tier types
+      operationId: Rates_GetTierTypes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TierType'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/rates/selffundedrates/tiertypes:
+    get:
+      tags:
+      - Rates
+      summary: Gets the self funded tier types
+      operationId: Rates_GetSelfFundedTierTypes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SelfFundedTierType'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/plan/{planId}/rates/selffundedrates/ratemetadata:
+    get:
+      tags:
+      - Rates
+      summary: Gets the self funded rates plan rate metadata for the specified plan
+      operationId: Rates_GetSelfFundedRateMetadata
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanRateMetadata'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    ContributionRatesWithOptionsRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - contributionRates
+      properties:
+        contributionRates:
+          type: array
+          description: The list of contribution rates
+          items:
+            $ref: '#/components/schemas/ContributionRate'
+        options:
+          description: The request options
+          oneOf:
+          - $ref: '#/components/schemas/CrudOptions'
+    RatesWithOptionsRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - rates
+      properties:
+        rates:
+          type: array
+          description: The list of rates
+          items:
+            $ref: '#/components/schemas/Rate'
+        options:
+          description: The request options
+          oneOf:
+          - $ref: '#/components/schemas/CrudOptions'
+        planRateMetadata:
+          description: The plan rate metadata. Used for modifying Self-Funded rates.
+          oneOf:
+          - $ref: '#/components/schemas/PlanRateMetadata'
+    SelfFundedTierType:
+      type: object
+      description: SelfFundedTierType
+      additionalProperties: false
+      properties:
+        selfFundedTierTypeId:
+          type: integer
+          description: Gets or sets the tier type id.
+          format: int32
+        name:
+          type: string
+          description: Gets or sets the name.
+        isDeleted:
+          type: boolean
+          description: Gets or sets a value indicating whether this instance is deleted.
+    Rate:
+      type: object
+      discriminator:
+        propertyName: discriminator
+        mapping:
+          FixedRate: '#/components/schemas/FixedRate'
+          TieredRate: '#/components/schemas/TieredRate'
+          VolumeRate: '#/components/schemas/VolumeRate'
+          ComplexRate: '#/components/schemas/ComplexRate'
+          SelfFundedRate: '#/components/schemas/SelfFundedRate'
+      description: Plan Rate
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - discriminator
+      properties:
+        discriminator:
+          type: string
+    CrudOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        force:
+          type: boolean
+        validateOnly:
+          type: boolean
+    OtherFee:
+      type: object
+      description: Other Plan Fee
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique id.
+          format: int32
+        description:
+          type: string
+          description: Gets or sets the fee description.
+        fee:
+          type: number
+          description: Gets or sets the monthly fee.
+          format: decimal
+    SelfFundedSections:
+      type: string
+      description: SelfFundedSections
+      x-enumNames:
+      - Administative
+      - StopLoss
+      - UtilizationReview
+      - Network
+      - PrescriptionBenefitManagement
+      enum:
+      - Administative
+      - StopLoss
+      - UtilizationReview
+      - Network
+      - PrescriptionBenefitManagement
+    PlanRateMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        urBusinessEntityId:
+          type:
+          - integer
+          - 'null'
+          description: 'Gets or sets the Utilization Review administrator.
+
+            Applies to Self-Funded rates.'
+          format: int32
+        slBusinessEntityId:
+          type:
+          - integer
+          - 'null'
+          description: 'Gets or sets the Stop Loss carrier.
+
+            Applies to Self-Funded rates.'
+          format: int32
+        pbmBusinessEntityId:
+          type:
+          - integer
+          - 'null'
+          description: 'Gets or sets the PBM carrier.
+
+            Applies to Self-Funded rates.'
+          format: int32
+        adminHasNetwork:
+          type:
+          - boolean
+          - 'null'
+          description: 'Gets or sets a value indicating whether the Administrative fees include Network fees.
+
+            Applies to Self-Funded rates.'
+        adminHasUr:
+          type:
+          - boolean
+          - 'null'
+          description: 'Gets or sets a value indicating whether the Administrative fees include Utilization Review fees.
+
+            Applies to Self-Funded rates.'
+        adminHasPbm:
+          type:
+          - boolean
+          - 'null'
+          description: 'Gets or sets a value indicating whether the Administrative fees include PBM fees.
+
+            Applies to Self-Funded rates.'
+        adminHasStopLoss:
+          type:
+          - boolean
+          - 'null'
+          description: 'Gets or sets a value indicating whether Administrative fees include Stop Loss fees.
+
+            Applies to Self-Funded rates.'
+        networkHasUr:
+          type:
+          - boolean
+          - 'null'
+          description: 'Gets or sets a value indicating whether the Network fees include Utilization Review fees.
+
+            Applies to Self-Funded rates.'
+        stopLossHasAggregate:
+          type:
+          - boolean
+          - 'null'
+          description: 'Gets or sets a value indicating whether the Stop Loss rates include Aggregate fees.
+
+            Applies to Self-Funded rates.'
+    TierType:
+      type: object
+      description: TierType
+      additionalProperties: false
+      properties:
+        tierTypeId:
+          type: integer
+          description: Gets or sets the tier type id.
+          format: int32
+        name:
+          type: string
+          description: Gets or sets the name.
+        isDeleted:
+          type: boolean
+          description: Gets or sets a value indicating whether this instance is deleted.
+    ContributionTypes:
+      type: string
+      description: Type of contribtution rate.
+      x-enumNames:
+      - Percent
+      - Dollar
+      enum:
+      - Percent
+      - Dollar
+    FeeType:
+      type: object
+      description: Self-Funded Fee Type
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique fee type id.
+          format: int32
+        description:
+          type: string
+          description: Gets or sets the fee type description.
+        section:
+          description: Gets or sets the self-funded rate section the fee type applies to.
+          oneOf:
+          - $ref: '#/components/schemas/SelfFundedSections'
+    ContributionRate:
+      type: object
+      description: Plan Contribution Rates
+      additionalProperties: false
+      properties:
+        contributionType:
+          description: Gets or sets the type of the contribution.
+          oneOf:
+          - $ref: '#/components/schemas/ContributionTypes'
+        tierTypeId:
+          type: integer
+          description: Gets or sets the tier type id.
+          format: int32
+        employerRate:
+          type:
+          - number
+          - 'null'
+          description: Gets or sets the employer rate.
+          format: decimal
+        employeeRate:
+          type:
+          - number
+          - 'null'
+          description: Gets or sets the employee rate.
+          format: decimal
+    OtherFeesWithOptionsRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - otherFees
+      properties:
+        otherFees:
+          type: array
+          description: The list of other fees
+          items:
+            $ref: '#/components/schemas/OtherFee'
+        options:
+          description: The request options
+          oneOf:
+          - $ref: '#/components/schemas/CrudOptions'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

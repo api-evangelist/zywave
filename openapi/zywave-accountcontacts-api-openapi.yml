@@ -1,0 +1,694 @@
+openapi: 3.2.0
+info:
+  title: BKB Account Contacts API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: AccountContacts
+paths:
+  /bkb/v2.0/accountcontacts/{accountContactId}:
+    get:
+      tags:
+      - AccountContacts
+      summary: Get an account contact by id
+      operationId: AccountContacts_GetAccountContact
+      parameters:
+      - name: accountContactId
+        in: path
+        required: true
+        description: The account contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountContact'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/accountcontacts/search:
+    post:
+      tags:
+      - AccountContacts
+      summary: Search for account contacts by criteria
+      operationId: AccountContacts_SearchAccountContacts
+      requestBody:
+        x-name: model
+        description: The AccountContactSearchModel.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountContactSearchModel'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccountContact'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    PagedResultOfAccountContact:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountContact'
+    SearchCriteriaBase:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        sort:
+          $ref: '#/components/schemas/SortType'
+        sortOrder:
+          type: integer
+          format: int32
+    ValueSearchCriteriaOfDateTime:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          rangeEndValue:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          rangeStartValue:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          searchType:
+            $ref: '#/components/schemas/ValueSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    StringSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/StringSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+    BooleanSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      enum:
+      - None
+      - Equals
+      - NotEquals
+    EnumSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+    StringSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+    IdListSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+    DateTimeSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/ValueSearchCriteriaOfDateTime'
+      - type: object
+        additionalProperties: false
+    SortType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Ascending
+      - Descending
+      enum:
+      - None
+      - Ascending
+      - Descending
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    CustomFieldSearchValue:
+      type: object
+      additionalProperties: false
+      properties:
+        customFieldId:
+          type: integer
+          format: int32
+        searchCriteria:
+          oneOf:
+          - $ref: '#/components/schemas/SearchCriteriaBase'
+    BooleanSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/BooleanSearchType'
+          value:
+            type: boolean
+    AccountContactSearchCriteria:
+      type: object
+      additionalProperties: false
+      properties:
+        accountId:
+          description: Gets or sets the criteria used to search for account contacts by "Account ID."
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        address1:
+          description: Gets or sets the criteria used to search for account contacts by "Address 1."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        address2:
+          description: Gets or sets the criteria used to search for account contacts by "Address 2."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        address3:
+          description: Gets or sets the criteria used to search for account contacts by "Address 3."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        birthDate:
+          description: Gets or sets the criteria used to search for account contacts by "Birth date."
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        city:
+          description: 'Gets or sets the criteria used to search for account contacts by "City."
+
+            Maximum of 25 characters.'
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        country:
+          description: Gets or sets the criteria used to search for account contacts by "Country."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        createdDate:
+          description: Gets or sets the criteria used to search for account contacts by "Created date."
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        contactStatus:
+          description: Gets or sets the criteria used to search for account contacts by "Contact status."
+          oneOf:
+          - $ref: '#/components/schemas/EnumSearchCriteriaOfContactStatus'
+        customFields:
+          type:
+          - array
+          - 'null'
+          description: Gets or sets the criteria used to search for account contacts by a custom field.
+          items:
+            $ref: '#/components/schemas/CustomFieldSearchValue'
+        emailAddress:
+          description: Gets or sets the criteria used to search for account contacts by "E-mail address."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        fax:
+          description: Gets or sets the criteria used to search for account contacts by "Fax."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        firstName:
+          description: Gets or sets the criteria used to search for account contacts by "First name."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        id:
+          description: Gets or sets the criteria used to search for account contacts by "ID."
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        isPrimaryContact:
+          description: Gets or sets the criteria used to search for accounts based on "Primary contact status."
+          oneOf:
+          - $ref: '#/components/schemas/BooleanSearchCriteria'
+        lastName:
+          description: 'Gets or sets the criteria used to search for accounts by "Last name."
+
+            Maximum of 25 characters.'
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        mobilePhone:
+          description: Gets or sets the criteria used to search for account contacts by "Mobile phone."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        modifiedDate:
+          description: Gets or sets the criteria used to search for account contacts by "Modified date."
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        phone:
+          description: Gets or sets the criteria used to search for account contacts by "Phone."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        phoneExtension:
+          description: Gets or sets the criteria used to search for account contacts by "Phone extension."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        salutation:
+          description: Gets or sets the criteria used to search for account contacts by "Salutation".
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        stateProvince:
+          description: Gets or sets the criteria used to search account contacts by "State."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        title:
+          description: Gets or sets the criteria used to search account contacts by "Title."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        zipPostalCode:
+          description: Gets or sets the criteria used to search for account contacts by "ZIP/Postal code."
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    ValueSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - GreaterThan
+      - GreaterThanEquals
+      - LessThan
+      - LessThanEquals
+      - Between
+      - NotBetween
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - GreaterThan
+      - GreaterThanEquals
+      - LessThan
+      - LessThanEquals
+      - Between
+      - NotBetween
+    IdListSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/IdListSearchType'
+          value:
+            type: integer
+            format: int32
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              type: integer
+              format: int32
+          inclusiveNulls:
+            type: boolean
+    SearchOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    AccountContactSearchModel:
+      type: object
+      additionalProperties: false
+      properties:
+        searchCriteria:
+          description: Account contact search criteria
+          oneOf:
+          - $ref: '#/components/schemas/AccountContactSearchCriteria'
+        searchOptions:
+          description: Account contact search options
+          oneOf:
+          - $ref: '#/components/schemas/SearchOptions'
+    AccountContact:
+      allOf:
+      - $ref: '#/components/schemas/AccountContactInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: Gets or sets the unique ID for this account contact.
+            format: int32
+    AccountContactInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        accountId:
+          type: integer
+          description: Gets or sets the unique ID for this account.
+          format: int32
+        address1:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the street address for this account contact.
+          maxLength: 100
+        address2:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the second address line.
+          maxLength: 100
+        address3:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the third address line.
+          maxLength: 100
+        birthDate:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the birth date of this account contact.
+          format: date-time
+        city:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the city for the location of this account contact.
+          maxLength: 25
+        contactStatus:
+          description: Gets or sets the status of this account contact.
+          oneOf:
+          - $ref: '#/components/schemas/ContactStatus'
+        createdDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date and time the account contact was created.
+          format: date-time
+        country:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the two-letter country code.
+          maxLength: 2
+        customFields:
+          type: array
+          description: Gets or sets the custom fields, as defined by the agency, for this account contact.
+          items:
+            $ref: '#/components/schemas/CustomFieldValue'
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the e-mail address for this account contact.
+          maxLength: 100
+        fax:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the fax number for this account.
+          maxLength: 25
+          pattern: ^(\(?[0-9]{3}[\)-\.]?\ ?)?[0-9]{3}[-\.]?[0-9]{4}$
+        firstName:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the first name of the account contact.
+          maxLength: 25
+        isDeleted:
+          type: boolean
+          description: Gets a value indicating whether this account contact has been deleted.
+        isPrimaryContact:
+          type:
+          - boolean
+          - 'null'
+          description: Gets or sets a value indicating whether this is primary contact for the account.
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the first name of the account contact.
+          maxLength: 25
+        mobilePhone:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the mobile phone number for the account contact.
+          maxLength: 25
+          pattern: ^(\(?[0-9]{3}[\)-\.]?\ ?)?[0-9]{3}[-\.]?[0-9]{4}$
+        modifiedDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date and time the account was modified.
+          format: date-time
+        phone:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the phone number for this account contact.
+          maxLength: 25
+          pattern: ^(\(?[0-9]{3}[\)-\.]?\ ?)?[0-9]{3}[-\.]?[0-9]{4}$
+        phoneExtension:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the extension for an account contact's primary phone number.
+          maxLength: 10
+        salutation:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the salutation that should precede the account contact's name.
+        stateProvince:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the two-letter abbreviation for the U.S. state/territory or the Canadian, Carribbean or Mexican province.
+          maxLength: 2
+        title:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the account contact's title.
+          maxLength: 100
+        zipPostalCode:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the ZIP or postal code for this account.
+          maxLength: 10
+          pattern: ^(\d{5}-\d{4}|\d{5})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$
+    EnumSearchCriteriaOfContactStatus:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/ContactStatus'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ContactStatus'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    CustomFieldValue:
+      type: object
+      additionalProperties: false
+      properties:
+        brokerId:
+          type: integer
+          format: int32
+        customFieldId:
+          type: integer
+          format: int32
+        id:
+          type: integer
+          format: int32
+        itemId:
+          type: integer
+          format: int32
+        value:
+          type:
+          - string
+          - 'null'
+    ContactStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Active
+      - Inactive
+      enum:
+      - Active
+      - Inactive
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,1454 @@
+openapi: 3.2.0
+info:
+  title: Zywave Account Contact API
+  version: '1.0'
+  description: 'Operations tagged AccountContact across 2 of this provider''s published API definitions: zywave-accounts-v2-openapi.json, zywave-accounts-v3-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.accounts
+  - api.accounts:read
+tags:
+- name: AccountContact
+paths:
+  /accounts/v2.0/accountcontact/{id}:
+    get:
+      tags:
+      - AccountContact
+      summary: Gets a specific account contact by id
+      operationId: AccountContact_GetContact
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The account contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountContact'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - AccountContact
+      summary: Updates an account contact
+      operationId: AccountContact_PutContact
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The account contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: contactInfo
+        description: An object representing the account contact information. All fields will be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountContactInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - AccountContact
+      summary: Delete an account contact
+      operationId: AccountContact_DeleteContact
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The account contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: ''
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    servers:
+    - url: https://api.zywave.com
+  /accounts/v2.0/accountcontact:
+    get:
+      tags:
+      - AccountContact
+      summary: Search for account contacts
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties that can be used when filtering and ordering the response.
+
+        * id
+
+        * accountId
+
+        * firstName
+
+        * lastName
+
+        * isPrimaryContact
+
+        * isActive
+
+
+        The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.
+
+
+        | Operation | Example Request | Returns |
+
+        | ------- | -------- | -------- |
+
+        | endswith | endswith(lastName,''tact'') | Returns all account contacts where the last name ends with ''tact'' |
+
+        | startswith | startswith(lastName,''Cont'') | Returns all account contacts where the last name starts with ''Cont'' |
+
+        | contains | contains(lastName,''tact'') | Returns all account contacts where the name contains ''tact'' |
+
+        | Equals | accountId eq 2726742 | Returns all account contacts for the Zywave account with this unique id |
+
+        | Not Equals | isActive ne false | Returns all account contacts that are active |
+
+        | In | lastName in (''Cont'', ''act'') | Returns all account contacts where the last name is ''Cont'' or ''act'' |
+
+        | Not | not startswith(lastName, ''Cont'') | Returns all account contacts where the last name does not start with ''Cont'' |
+
+
+        The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all active account contacts for the given account;
+
+
+        *accountId eq 726742 and isActive ne false*
+
+
+        The orderby operation also supports multiple levels of ordering. For example, to order the results by accountId then lastName the following can be used;
+
+
+        *accountId asc, lastName asc*'
+      operationId: AccountContact_SearchContacts
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccountContact'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - AccountContact
+      summary: Creates an account contact
+      operationId: AccountContact_PostContact
+      requestBody:
+        x-name: contactInfo
+        description: An object representing the account contact information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountContactInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    servers:
+    - url: https://api.zywave.com
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountcontact/{id}:
+    get:
+      tags:
+      - AccountContact
+      summary: Gets a specific account contact by id
+      operationId: getV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountcontactById
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountContact_2'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: AccountContact_GetContact
+    put:
+      tags:
+      - AccountContact
+      summary: Updates an account contact
+      operationId: putV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountcontactById
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      requestBody:
+        x-name: contactInfo
+        description: An object representing the account contact information. All fields will be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountContactInfo_2'
+        required: true
+        x-position: 4
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: AccountContact_PutContact
+    patch:
+      tags:
+      - AccountContact
+      summary: Partially updates an account contact
+      operationId: AccountContact_PatchContact
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      requestBody:
+        x-name: patch
+        description: A JSON Patch document (RFC 6902) describing the fields to update.
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+          application/json-patch+json:
+            schema:
+              type: object
+        required: true
+        x-position: 4
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+    delete:
+      tags:
+      - AccountContact
+      summary: Delete an account contact
+      operationId: deleteV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountcontactById
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: AccountContact_DeleteContact
+    servers:
+    - url: https://api.zywave.com
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountcontact:
+    get:
+      tags:
+      - AccountContact
+      summary: Search for account contacts
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties that can be used when filtering and ordering the response.
+
+        * id
+
+        * accountId
+
+        * firstName
+
+        * lastName
+
+        * emailAddress
+
+        * isPrimaryContact
+
+        * isActive
+
+
+        The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.
+
+
+        | Operation | Example Request | Returns |
+
+        | ------- | -------- | -------- |
+
+        | endswith | endswith(lastName,''tact'') | Returns all account contacts where the last name ends with ''tact'' |
+
+        | startswith | startswith(lastName,''Cont'') | Returns all account contacts where the last name starts with ''Cont'' |
+
+        | contains | contains(lastName,''tact'') | Returns all account contacts where the name contains ''tact'' |
+
+        | Equals | accountId eq 2726742 | Returns all account contacts for the Zywave account with this unique id |
+
+        | Not Equals | isActive ne false | Returns all account contacts that are active |
+
+        | In | lastName in (''Cont'', ''act'') | Returns all account contacts where the last name is ''Cont'' or ''act'' |
+
+        | Not | not startswith(lastName, ''Cont'') | Returns all account contacts where the last name does not start with ''Cont'' |
+
+
+        The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all active account contacts for the given account;
+
+
+        *accountId eq 726742 and isActive ne false*
+
+
+        The orderby operation also supports multiple levels of ordering. For example, to order the results by accountId then lastName the following can be used;
+
+
+        *accountId asc, lastName asc*'
+      operationId: getV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountcontact
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 5
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccountContact'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: AccountContact_SearchContacts
+    post:
+      tags:
+      - AccountContact
+      summary: Creates an account contact
+      operationId: postV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountcontact
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: contactInfo
+        description: An object representing the account contact information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountContactInfo_2'
+        required: true
+        x-position: 3
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: AccountContact_PostContact
+    servers:
+    - url: https://api.zywave.com
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfAccountContact:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountContact'
+    AddressInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        accountContactId:
+          type: integer
+          format: int32
+        addressLine1:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        addressLine3:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        city:
+          type:
+          - string
+          - 'null'
+          maxLength: 75
+        country:
+          type:
+          - string
+          - 'null'
+          maxLength: 2
+        county:
+          type:
+          - string
+          - 'null'
+          maxLength: 150
+        isPrimary:
+          type: boolean
+        postalCode:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        state:
+          type:
+          - string
+          - 'null'
+          maxLength: 4
+        type:
+          $ref: '#/components/schemas/AddressType'
+    Address:
+      allOf:
+      - $ref: '#/components/schemas/AddressInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            format: int32
+    Phone:
+      allOf:
+      - $ref: '#/components/schemas/PhoneInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            format: int32
+    AccountContactInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        accountId:
+          type: integer
+          description: The unique Zywave identifier for the account the contact is associated with.
+          format: int32
+        addressLine1:
+          type:
+          - string
+          - 'null'
+          description: Line 1 of the primary address for the account contact.
+          maxLength: 255
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: Line 2 of the primary address for the account contact.
+          maxLength: 255
+        addressLine3:
+          type:
+          - string
+          - 'null'
+          description: Line 3 of the primary address for the account contact.
+          maxLength: 100
+        birthDate:
+          type:
+          - string
+          - 'null'
+          description: The birth date of the account contact.
+          format: date-time
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city of the primary address for the account contact.
+          maxLength: 75
+        contactConsentExpirationDateTime:
+          type:
+          - string
+          - 'null'
+          description: The expiration of consent, used primarily in regions where consent is required to send email to the contact.
+          format: date-time
+        contactConsentSource:
+          type:
+          - string
+          - 'null'
+          description: The source through which the contact consented to receive email, used primarily in regions where consent is required to send email to the contact.
+          maxLength: 100
+        country:
+          type:
+          - string
+          - 'null'
+          description: The country of the primary address for the account contact.
+          maxLength: 2
+        county:
+          type:
+          - string
+          - 'null'
+          description: The county of the primary address for the account contact.
+          maxLength: 150
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The email address for the account contact.
+          maxLength: 100
+        faxNumber:
+          type:
+          - string
+          - 'null'
+          description: The fax number for the account contact.
+          maxLength: 50
+        firstName:
+          type:
+          - string
+          - 'null'
+          description: The first name for the account contact.
+          maxLength: 50
+        isActive:
+          type: boolean
+          description: Specifies whether or not the account contact appears in Zywave applications not used to manage accounts and account contacts.
+        isArchived:
+          type: boolean
+          description: Specifies whether an account has been deleted from view in Zywave applications including applications used to manage accounts and contacts.
+        isEmailAllowed:
+          type: boolean
+          description: Specifies whether the account contact will receive email notifications related to distributions sent from zywave applications.
+        isPrimaryContact:
+          type: boolean
+          description: Specifies whether or not the contact is a primary contact for the account. More than one primary contact can exist per account. Primary contacts will appear on the account information screen in applications used to manage accounts and contacts.
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: The last name for the account contact.
+          maxLength: 50
+        mobilePhoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The mobile phone number for the account contact.
+          maxLength: 50
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number for the account contact.
+          maxLength: 50
+        phoneNumberExtension:
+          type:
+          - string
+          - 'null'
+          description: The phone number extension for the account contact.
+          maxLength: 10
+        postalCode:
+          type:
+          - string
+          - 'null'
+          description: The zip code or postal code of the primary address for the account contact.
+          maxLength: 50
+        salutation:
+          type:
+          - string
+          - 'null'
+          description: The proper salutation for the account contact.
+          maxLength: 50
+        state:
+          type:
+          - string
+          - 'null'
+          description: The state of the primary address for the account contact.
+          maxLength: 4
+        title:
+          type:
+          - string
+          - 'null'
+          description: The business title for the account contact.
+          maxLength: 100
+        linesOfBusiness:
+          type:
+          - array
+          - 'null'
+          description: The line of businesses associated with the account contact.
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/LineOfBusiness'
+        addresses:
+          type:
+          - array
+          - 'null'
+          description: The list of addresses for the account contact.
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/Address'
+        phones:
+          type:
+          - array
+          - 'null'
+          description: The list of phones for the account contact.
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/Phone'
+    AccountContact:
+      allOf:
+      - $ref: '#/components/schemas/AccountContactInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the account contact.
+            format: int32
+          createdDateTime:
+            type: string
+            description: The date in which the account contact was created.
+            format: date-time
+          updatedDateTime:
+            type: string
+            description: The date in which the account contact was updated.
+            format: date-time
+    AddressType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Home
+      - Mailing
+      - Office
+      - Billing
+      - Business
+      enum:
+      - None
+      - Home
+      - Mailing
+      - Office
+      - Billing
+      - Business
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    PhoneInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        accountContactId:
+          type: integer
+          format: int32
+        extension:
+          type:
+          - string
+          - 'null'
+          maxLength: 10
+        isPrimary:
+          type: boolean
+        number:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        type:
+          $ref: '#/components/schemas/PhoneType'
+    PhoneType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Mobile
+      - Work
+      - Home
+      - Fax
+      enum:
+      - None
+      - Mobile
+      - Work
+      - Home
+      - Fax
+    LineOfBusiness:
+      type: string
+      description: ''
+      x-enumNames:
+      - Benefits
+      - PC
+      - PersonalLines
+      enum:
+      - Benefits
+      - PC
+      - PersonalLines
+    ProblemDetails_2:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AddressInfo_2:
+      type: object
+      additionalProperties: false
+      properties:
+        addressLine1:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        addressLine3:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        city:
+          type:
+          - string
+          - 'null'
+          maxLength: 75
+        country:
+          type:
+          - string
+          - 'null'
+          maxLength: 2
+        county:
+          type:
+          - string
+          - 'null'
+          maxLength: 150
+        isPrimary:
+          type: boolean
+        postalCode:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        state:
+          type:
+          - string
+          - 'null'
+          maxLength: 4
+        type:
+          $ref: '#/components/schemas/AddressType'
+    PhoneInfo_2:
+      type: object
+      additionalProperties: false
+      properties:
+        extension:
+          type:
+          - string
+          - 'null'
+          maxLength: 10
+        isPrimary:
+          type: boolean
+        number:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        type:
+          $ref: '#/components/schemas/PhoneType'
+    AccountContactAddress:
+      allOf:
+      - $ref: '#/components/schemas/AddressInfo_2'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            format: int32
+          accountContactId:
+            type: integer
+            format: int32
+    AccountContactPhone:
+      allOf:
+      - $ref: '#/components/schemas/PhoneInfo_2'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            format: int32
+          accountContactId:
+            type: integer
+            format: int32
+    AccountContactInfo_2:
+      type: object
+      additionalProperties: false
+      properties:
+        accountId:
+          type: integer
+          format: int32
+        birthDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        gender:
+          oneOf:
+          - $ref: '#/components/schemas/Gender'
+        maritalStatus:
+          oneOf:
+          - $ref: '#/components/schemas/MaritalStatus'
+        contactConsentExpirationDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        contactConsentStartDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        contactConsentOrigin:
+          type:
+          - string
+          - 'null'
+        contactConsentSource:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        firstName:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        isActive:
+          type: boolean
+        isArchived:
+          type: boolean
+        isEmailAllowed:
+          type: boolean
+        isPrimaryContact:
+          type: boolean
+        lastName:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        salutation:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        title:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        linesOfBusiness:
+          type:
+          - array
+          - 'null'
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/LineOfBusiness'
+        addresses:
+          type:
+          - array
+          - 'null'
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/AccountContactAddress'
+        phones:
+          type:
+          - array
+          - 'null'
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/AccountContactPhone'
+    Gender:
+      type: string
+      description: ''
+      x-enumNames:
+      - Male
+      - Female
+      enum:
+      - Male
+      - Female
+    AccountContact_2:
+      allOf:
+      - $ref: '#/components/schemas/AccountContactInfo_2'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            format: int32
+          createdDateTime:
+            type: string
+            format: date-time
+          updatedDateTime:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    ValidationProblemDetails_2:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    HttpValidationProblemDetails_2:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    MaritalStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Single
+      - Married
+      - Separated
+      - Divorced
+      - Widowed
+      - DomesticPartner
+      - CivilUnion
+      - Fiancee
+      - Other
+      enum:
+      - Single
+      - Married
+      - Separated
+      - Divorced
+      - Widowed
+      - DomesticPartner
+      - CivilUnion
+      - Fiancee
+      - Other
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-refined-from:
+- zywave-accounts-v2-openapi.json
+- zywave-accounts-v3-openapi.json
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

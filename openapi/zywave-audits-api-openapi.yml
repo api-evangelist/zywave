@@ -1,0 +1,237 @@
+openapi: 3.2.0
+info:
+  title: BKB Audits API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: Audits
+paths:
+  /bkb/v2.0/audits:
+    get:
+      tags:
+      - Audits
+      summary: Returns paginated audit event history showing who performed what action and…
+      operationId: Audits_GetAuditHistory
+      parameters:
+      - name: FileId
+        in: query
+        description: UUID of file to audit; optional unless FolderId absent.
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 1
+      - name: FolderIdentifier
+        in: query
+        description: UUID of folder to audit; optional unless FileId absent.
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 2
+      - name: EntityType
+        in: query
+        description: Owner entity type; required when FolderIdentifier is provided.
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/EntityType2'
+        x-position: 3
+      - name: PageIndex
+        in: query
+        description: 1-based page number; minimum value is 1.
+        schema:
+          type: integer
+          format: int32
+          default: 1
+          maximum: 2147483647.0
+          minimum: 1.0
+        x-position: 4
+      - name: PageSize
+        in: query
+        description: Results per page; maximum allowed value is 100.
+        schema:
+          type: integer
+          format: int32
+          default: 20
+          maximum: 100.0
+          minimum: 1.0
+        x-position: 5
+      responses:
+        '200':
+          description: Returns the paged audit history.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditPagedResult'
+        '400':
+          description: Bad Request — neither FileId nor FolderId provided, entityType absent when FolderIdentifier present, or pageSize exceeds 100.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized — invalid or expired JWT.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden — insufficient scope or tenant access denied.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found — file or folder does not exist or belongs to another tenant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '502':
+          description: Bad Gateway — AuditTrailEventsAPI is unavailable.
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    AuditResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        folderId:
+          type: string
+          description: UUID of folder containing the audited files.
+          format: guid
+        folderLocation:
+          type: string
+          description: Full path within the entity hierarchy.
+        folderName:
+          type: string
+          description: Display name of this folder.
+        files:
+          type: array
+          description: Files with their audit histories inside folder.
+          items:
+            $ref: '#/components/schemas/AuditFileItem'
+    AuditPagedResult:
+      allOf:
+      - $ref: '#/components/schemas/PagedResultOfAuditResponse'
+      - type: object
+        additionalProperties: false
+    PagedResultOfAuditResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditResponse'
+    AuditEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        actionPerformed:
+          type: string
+          description: Verb describing event; e.g., Uploaded, Moved.
+        actionPerformedBy:
+          type: string
+          description: Username who performed this specific action.
+        actionPerformedDate:
+          type: string
+          description: UTC ISO 8601 timestamp of the action.
+          format: date-time
+        status:
+          type: string
+          description: File status at time of this action.
+    EntityType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - General
+      - Account
+      - Carrier
+      enum:
+      - General
+      - Account
+      - Carrier
+    AuditFileItem:
+      type: object
+      additionalProperties: false
+      properties:
+        fileId:
+          type: string
+          description: UUID public identifier of the audited file.
+          format: guid
+        fileName:
+          type: string
+          description: Display name including file extension.
+        audits:
+          type: array
+          description: Ordered list of audit events; newest first.
+          items:
+            $ref: '#/components/schemas/AuditEntry'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

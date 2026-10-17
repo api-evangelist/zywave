@@ -1,0 +1,538 @@
+openapi: 3.2.0
+info:
+  title: Policies Policy Action API
+  version: v2.0
+  description: 'Operations that can be performed on a policy: e.g. renew, cancel.'
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: PolicyAction
+  description: 'Operations that can be performed on a policy: e.g. renew, cancel.'
+paths:
+  /policies/v2.0/policies/{id}/reinstate:
+    put:
+      tags:
+      - PolicyAction
+      summary: Reinstates the policy
+      description: 'NOTE: Reinstatement removes policy ending status.'
+      operationId: Policies_Reinstate
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: policyReinstateInfo
+        description: The policy reinstate information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyReinstateInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{id}/cancel:
+    put:
+      tags:
+      - PolicyAction
+      summary: Cancels the policy
+      description: 'NOTE: Cancellation removes reinstatement data.'
+      operationId: Policies_Cancel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: policyCancelInfo
+        description: The policy cancel information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyCancelInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{id}/undocancel:
+    put:
+      tags:
+      - PolicyAction
+      summary: Undoes the cancellation of a policy
+      description: 'NOTE: Undo cancellation will not work on reinstated policies.'
+      operationId: Policies_UndoCancel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{id}/renew:
+    post:
+      tags:
+      - PolicyAction
+      summary: Renews the policy
+      description: 'Conceptually, renewal is a deep copy of the object graph of the source policy
+
+        with some values replaced by parameters supplied here and others overwritten with defaults.
+
+
+        NOTE: Renewal does not copy reinstatement and cancellation data from the old policy to the new policy.'
+      operationId: Policies_Renew
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The id of the policy to renew.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: renewPolicyInfo
+        description: The policy renewal information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewPolicyInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 Created response with a URL to the new policy.
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{id}/setneedsreview:
+    put:
+      tags:
+      - PolicyAction
+      summary: Sets a policy as needing review
+      operationId: Policies_SetNeedsReview
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The id of the policy to set as needing review.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{id}/clearneedsreview:
+    put:
+      tags:
+      - PolicyAction
+      summary: Clears the needs review flag on a policy
+      operationId: Policies_ClearNeedsReview
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The id of the policy to clear the needs reviewed flag on.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PolicyReinstateInfo:
+      type: object
+      description: The policy reinstate information.
+      additionalProperties: false
+      required:
+      - reinstatementDate
+      properties:
+        reinstatementDate:
+          type: string
+          description: The reinstatement date.
+          format: date-time
+    PolicyCancelInfo:
+      type: object
+      description: The policy cancel information.
+      additionalProperties: false
+      required:
+      - cancellationDate
+      - endingPolicyStatusId
+      properties:
+        cancellationDate:
+          type: string
+          description: The cancellation date.
+          format: date-time
+        endingPolicyStatusId:
+          type: integer
+          description: 'The ending policy status id.
+
+            Use GET policystatus to search for allowed values.
+
+            The ending policy status id must have base type "Lost".'
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    RenewPolicyInfo:
+      type: object
+      description: The renewal information for a policy.
+      additionalProperties: false
+      required:
+      - beginningPolicyStatusId
+      properties:
+        beginningPolicyStatusId:
+          type: integer
+          description: The identifier for the status of the policy when it is created.  Has a dependency on a policy status item.  Please use the policy status endpoint for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        effectiveDate:
+          type:
+          - string
+          - 'null'
+          description: The date that the new policy becomes effective.
+          format: date-time
+        expirationDate:
+          type:
+          - string
+          - 'null'
+          description: The date that the new policy expires.
+          format: date-time
+        policyId:
+          type: integer
+          description: 'The id for the policy to renew. '
+          format: int32
+        carrierCompanyId:
+          type:
+          - integer
+          - 'null'
+          description: The carrier company id for the new policy. If left blank will use the old policy for new.
+          format: int32
+        userPrincipalId:
+          type: string
+          description: Gets or sets the user principal id.
+          format: guid
+        userProfileTypeCode:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the user profile type code.
+          maxLength: 4
+        userProfileId:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the user profile id.
+          maxLength: 36
+        policyNumber:
+          type:
+          - string
+          - 'null'
+          description: The policy number for the new policy. If left blank will use the old policy for new.
+          maxLength: 75
+        billingCarrierCompanyId:
+          type:
+          - integer
+          - 'null'
+          description: 'The billing carrier company id.
+
+
+            If missing, the value for billing carrier company is copied from the source policy.
+
+
+            NOTE: simply setting the value for the carrier company underwriting the policy does NOT update this property.
+
+            It is recommended that callers *always* set this value when renewing.'
+          format: int32
+        needsReview:
+          type:
+          - boolean
+          - 'null'
+          description: 'Indicates if the new policy should be marked as needing review.
+
+            If this property is null/missing, the value of the flag from the source policy is carried into the new policy.'
+        policyGroupId:
+          type:
+          - integer
+          - 'null'
+          description: 'The id of the policy group to add the renewed policy to.
+
+            If the policy group does not exist, the renewed policy will not be added to any group.'
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        policyVendorSourceId:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source ID of the vendor for the new policy (requires CarrierCompanyId to be -1).
+          maxLength: 36
+        policyVendorSourceType:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source type of the vendor for the new policy (requires CarrierCompanyId to be -1).
+          maxLength: 32
+        policyVendorSourceEntityName:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source entity name of the vendor for the new policy (requires CarrierCompanyId to be -1).
+          maxLength: 32
+        billingVendorSourceId:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source ID of the billing vendor for the new policy (requires BillingCarrierCompanyId to be -1).
+          maxLength: 36
+        billingVendorSourceType:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source type of the billing vendor for the new policy (requires BillingCarrierCompanyId to be -1).
+          maxLength: 32
+        billingVendorSourceEntityName:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source entity name of the billing vendor for the new policy (requires BillingCarrierCompanyId to be -1).
+          maxLength: 32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

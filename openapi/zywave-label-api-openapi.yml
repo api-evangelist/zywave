@@ -1,0 +1,274 @@
+openapi: 3.2.0
+info:
+  title: Accounts API - 3.0 Label API
+  version: v3.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.accounts
+  - api.accounts:read
+tags:
+- name: Label
+paths:
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/label/{id}:
+    get:
+      tags:
+      - Label
+      summary: Gets a specific account label by id
+      operationId: Label_GetLabel
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account label id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLabel'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/label:
+    get:
+      tags:
+      - Label
+      summary: Search for account labels
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * id
+
+        * name
+
+        * description
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: Label_SearchLabels
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 5
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is divisible by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      - name: $search
+        x-originalName: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccountLabel'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AccountLabel:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    PagedResultOfAccountLabel:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountLabel'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.accounts: Full access to all operations
+            api.accounts:read: Read-only access
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

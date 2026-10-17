@@ -1,0 +1,258 @@
+openapi: 3.2.0
+info:
+  title: Licenses API v2.0 License API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.licenses
+  - api.licenses:read
+tags:
+- name: License
+paths:
+  /licenses/v2.0/license/{id}:
+    get:
+      tags:
+      - License
+      summary: Gets a specific license by id
+      operationId: License_GetLicense
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The license id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /licenses/v2.0/license:
+    get:
+      tags:
+      - License
+      summary: Search for licenses
+      description: 'The Zywave API search is implemented using OData Version 4.0.1.
+
+
+        The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.
+
+
+        | Operation | Example Request | Returns |
+
+        | ------- | -------- | -------- |
+
+        | startswith | startswith(Name,''Zyw'') | Returns all licenses where the name starts with ''Zyw'' |
+
+        | endswith | endswith(Name,''wave'') | Returns all licenses where the name ends with ''wave'' |
+
+        | contains | contains(Name,''wave'') | Returns all licenses where the name contains ''wave'' |
+
+        | Equals | Name eq ''Zywave'' | Returns all licenses named Zywave |
+
+        | Not Equals | Name ne ''Zywave'' | Returns all licenses not named Zywave |
+
+        | Greater Than | StartDateTime gt 2020-04-01T10:00:00.000Z | Returns all licenses with a StartDateTime after 10:00: on April 1st |
+
+        | Greater Than or equal | StartDateTime ge 2020-04-01T10:00:00.000Z | Returns all licenses with a StartDateTime after 10:00 on April 1st. Note: Timestamp matters |
+
+        | Less Than | StartDateTime lt 2020-04-01T10:00:00.000Z | Returns all licenses with a StartDateTime before 10:00 on April 1st |
+
+        | Less Than or equal | StartDateTime le 2020-04-01T10:00:00.000Z | Returns all licenses with a StartDateTime at or before 10:00 on April 1st. Note: Timestamp matters |
+
+        | In | Name in (''Zyw'', ''ave'') | Returns all licenses with the names ''Zyw'' or ''ave''. |
+
+        | Not | not startswith(Name,''Zyw'') | Returns all licenses with a name that doesn''t start with ‘Zyw’ |
+
+        When searching the Zywave API using DateTime the following format should be used YYYY-MM-DDTHH:MM:SS.fffZ.
+
+        The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all licenses with the name Zywave that have have a start date after January 2020;
+
+
+        *Name eq ''Zywave'' and StartDateTime ge 2020-01-01T00:00:00.000Z
+
+
+        The orderby operation also supports multiple levels of ordering. For example, to order the results by name showing the licenses that ended most recently first, the following can be used;
+
+
+        *Name asc, EndDateTime desc*'
+      operationId: License_SearchLicenses
+      parameters:
+      - name: $filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfLicense'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    License:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        endDateTime:
+          type:
+          - string
+          - 'null'
+          description: The effective end time for the license.
+          format: date-time
+        id:
+          type: integer
+          description: The license identifier.
+          format: int32
+        name:
+          type: string
+          description: The license name.
+        quantity:
+          type: integer
+          description: The quantity supplied by the license, if applicable.
+          format: int32
+        startDateTime:
+          type: string
+          description: The effective start time for the license.
+          format: date-time
+    PagedResultOfLicense:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: A value indicating whether the larger result set has more results.
+        skip:
+          type: integer
+          description: A value indicating how many of the previous values in the larger result set were omitted.
+          format: int32
+        take:
+          type: integer
+          description: The number of records retrieved from larger result set.
+          format: int32
+        totalCount:
+          type: integer
+          description: The total number of records in the larger result set.
+          format: int32
+        items:
+          type: array
+          description: The records retrieved from the larger result set.
+          items:
+            $ref: '#/components/schemas/License'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

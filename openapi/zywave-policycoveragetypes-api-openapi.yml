@@ -1,0 +1,398 @@
+openapi: 3.2.0
+info:
+  title: Policies Policy Coverage Types API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: PolicyCoverageTypes
+paths:
+  /policies/v2.0/policycoveragetypes/{id}:
+    get:
+      tags:
+      - PolicyCoverageTypes
+      summary: Returns the policy coverage type for the policy coverage type id specified
+      description: 'Policy coverage type has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+
+        Policy coverage types describe the type of coverage a policy provides. Each policy coverage type belongs to an even broader coverage type, and each coverage type belongs to an even broader insurance category. Below shows an example of the insurance category, coverage type, and policy coverage type relationship.
+
+
+        | InsuranceCategory | CoverageType | PolicyCoverageType |
+
+        |-------------------|--------------------|--------------------|
+
+        | Benefits | Dental | Dental |
+
+        | Benefits | Worksite/Voluntary | Critical Illness |
+
+        | Benefits | Worksite/Voluntary | Accident |
+
+        | Benefits | Worksite/Voluntary | Pet Insurance |'
+      operationId: PolicyCoverageTypes_GetPolicyCoverageType
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy coverage group id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyCoverageType'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+  /policies/v2.0/policycoveragetypes:
+    get:
+      tags:
+      - PolicyCoverageTypes
+      summary: Returns list of policy coverage types
+      description: 'Policy coverage type has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+
+        Policy coverage types describe the type of coverage a policy provides. Each policy coverage type belongs to an even broader coverage type, and each coverage type belongs to an even broader insurance category. Below shows an example of the insurance category, coverage type, and policy coverage type relationship.
+
+
+        | InsuranceCategory | CoverageType | PolicyCoverageType |
+
+        |-------------------|--------------------|--------------------|
+
+        | Benefits | Dental | Dental |
+
+        | Benefits | Worksite/Voluntary | Critical Illness |
+
+        | Benefits | Worksite/Voluntary | Accident |
+
+        | Benefits | Worksite/Voluntary | Pet Insurance |
+
+
+        The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * Id
+
+        * Description
+
+        * CoverageTypeId
+
+        * AcordCode
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: PolicyCoverageTypes_SearchPolicyCoverageTypes
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfPolicyCoverageType'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+  /policies/v2.0/preferredpolicycoveragetypes:
+    get:
+      tags:
+      - PolicyCoverageTypes
+      summary: Returns list of preferred policy coverage types (if they exist, otherwise the…
+      description: 'Policy coverage type has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+
+        Policy coverage types describe the type of coverage a policy provides. Each policy coverage type belongs to an even broader coverage type, and each coverage type belongs to an even broader insurance category. Below shows an example of the insurance category, coverage type, and policy coverage type relationship.
+
+
+        | InsuranceCategory | CoverageType | PolicyCoverageType |
+
+        |-------------------|--------------------|--------------------|
+
+        | Benefits | Dental | Dental |
+
+        | Benefits | Worksite/Voluntary | Critical Illness |
+
+        | Benefits | Worksite/Voluntary | Accident |
+
+        | Benefits | Worksite/Voluntary | Pet Insurance |
+
+
+        The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * Id
+
+        * Description
+
+        * CoverageTypeId
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: PreferredPolicyCoverageTypes_SearchPreferredPolicyCoverageTypes
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfPolicyCoverageType'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfPolicyCoverageType:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyCoverageType'
+    PolicyCoverageType:
+      allOf:
+      - $ref: '#/components/schemas/PolicyCoverageTypeInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the policy coverage type.
+            format: int32
+    PolicyCoverageTypeInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - coverageTypeId
+      - description
+      properties:
+        coverageTypeId:
+          type: integer
+          description: The unique Zywave identifier for the policy coverage type.  Has a dependency on a coverage type item.  Please use the coverage type endpoint for reference.
+          format: int32
+        description:
+          type: string
+          description: The description of the policy coverage type.
+          maxLength: 50
+          minLength: 1
+        isArchived:
+          type: boolean
+          description: Indicates whether the policy coverage type is archived.
+          default: false
+        acordCode:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the value of the ACORD line of business code
+          maxLength: 5
+          minLength: 1
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

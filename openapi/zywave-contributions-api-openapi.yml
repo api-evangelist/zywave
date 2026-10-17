@@ -1,0 +1,387 @@
+openapi: 3.2.0
+info:
+  title: Policies Contributions API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: Contributions
+paths:
+  /policies/v2.0/policies/{id}/contributions:
+    get:
+      tags:
+      - Contributions
+      summary: Gets the contributions for the policy
+      description: Contribution is influenced by Contribution Strategy.
+      operationId: Policies_GetContributions
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: A 200 OK response with the contribution records and strategy for the policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContributionRecordsWithStrategy'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+  /policies/v2.0/policies/{id}/contributions/{contributionTier}:
+    put:
+      tags:
+      - Contributions
+      summary: Inserts or updates a contribution record
+      description: Contribution is influenced by Contribution Strategy.
+      operationId: Policies_UpsertContribution
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: contributionTier
+        in: path
+        required: true
+        description: The contribution tier.
+        schema:
+          $ref: '#/components/schemas/ContributionTierOption'
+        x-position: 2
+      requestBody:
+        x-name: contributionInfo
+        description: The ContributionInfo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContributionInfo'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: Either a 200 OK (for an update) or a 201 Created (for an insert) with a ContributionRecord payload containing the computed contributions in dollars for employer and employee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContributionRecord'
+        '201':
+          description: Either a 200 OK (for an update) or a 201 Created (for an insert) with a ContributionRecord payload containing the computed contributions in dollars for employer and employee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContributionRecord'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+    delete:
+      tags:
+      - Contributions
+      summary: Deletes a contribution record
+      description: Contribution is influenced by Contribution Strategy.
+      operationId: Policies_DeleteContribution
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: contributionTier
+        in: path
+        required: true
+        description: The contribution tier.
+        schema:
+          $ref: '#/components/schemas/ContributionTierOption'
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{id}/contributionstrategies:
+    put:
+      tags:
+      - Contributions
+      summary: Inserts or updates a contribution strategy
+      description: Contribution is influenced by Contribution Strategy.
+      operationId: Policies_UpsertContributionStrategy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: contributionStrategy
+        description: The ContributionStrategyUpdateInfo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContributionStrategyUpdateInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 204 NoContent result for an update or a 201 Created for an insert.
+        '204':
+          description: A 204 NoContent result for an update or a 201 Created for an insert.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ContributionRoundingStrategyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - RoundDownEmployer
+      - RoundDownEmployee
+      enum:
+      - RoundDownEmployer
+      - RoundDownEmployee
+    ContributionStrategyInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - calculationStrategy
+      - roundingStrategy
+      properties:
+        calculationStrategy:
+          description: The strategy used for calculating monthly contributions.
+          default: EmployerDollars
+          oneOf:
+          - $ref: '#/components/schemas/ContributionCalculationStrategyOption'
+        roundingStrategy:
+          description: The strategy used for rounding.
+          default: RoundDownEmployee
+          oneOf:
+          - $ref: '#/components/schemas/ContributionRoundingStrategyOption'
+    ContributionRecord:
+      type: object
+      description: The contribution record data returned to the caller.
+      additionalProperties: false
+      properties:
+        contributionTier:
+          description: The contribution tier.
+          default: Employee
+          oneOf:
+          - $ref: '#/components/schemas/ContributionTierOption'
+        rateTotal:
+          type: number
+          description: The monthly total for rate tier (Employer $ + Employee $).
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        strategyAmount:
+          type: number
+          description: The percent or dollar amount used in calculations. E.g. 30% (a percentage strategy) or $541.32 (a dollars strategy).
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        employeeDollars:
+          type: number
+          description: Computed. The monthly dollar amount paid by the employee.
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        employerDollars:
+          type: number
+          description: Computed. The monthly dollar amount paid by the employer.
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        employeePercent:
+          type: number
+          description: Computed. The monthly percent contribution paid by the employee.
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        employerPercent:
+          type: number
+          description: Computed. The monthly percent contribution paid by the employer.
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+    ContributionInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - strategyAmount
+      - rateTotal
+      properties:
+        strategyAmount:
+          type: number
+          description: The eployee/employer percentage/dollars.
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        rateTotal:
+          type: number
+          description: The total for the contribution tier (employer $ + employee $).
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+    ContributionTierOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+      enum:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+    ContributionCalculationStrategyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - EmployerPercent
+      - EmployeePercent
+      - EmployerDollars
+      - EmployeeDollars
+      enum:
+      - EmployerPercent
+      - EmployeePercent
+      - EmployerDollars
+      - EmployeeDollars
+    ContributionStrategyUpdateInfo:
+      allOf:
+      - $ref: '#/components/schemas/ContributionStrategyInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          shouldKeepContributionRecords:
+            type:
+            - boolean
+            - 'null'
+            description: Indicates if changing the strategy should or should not keep the existing contribution records.
+            default: false
+    ContributionRecordsWithStrategy:
+      type: object
+      description: The contribution strategy and records for the policy.
+      additionalProperties: false
+      properties:
+        contributionStrategy:
+          description: The contribution strategy.
+          oneOf:
+          - $ref: '#/components/schemas/ContributionStrategyInfo'
+        contributionRecords:
+          type: array
+          description: The contribution records.
+          items:
+            $ref: '#/components/schemas/ContributionRecord'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

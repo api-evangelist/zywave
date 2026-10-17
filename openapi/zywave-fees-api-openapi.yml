@@ -1,0 +1,391 @@
+openapi: 3.2.0
+info:
+  title: Policies Fees API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: Fees
+paths:
+  /policies/v2.0/policies/{policyId}/fees/{id}:
+    delete:
+      tags:
+      - Fees
+      summary: Deletes a fee
+      description: Fee has a dependency on fee type.
+      operationId: Policies_DeleteFee
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The fee id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - Fees
+      summary: Gets a fee
+      description: Fee has a dependency on fee type.
+      operationId: Policies_GetFee
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The fee id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A 200 OK response with the fee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fee'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    put:
+      tags:
+      - Fees
+      summary: Updates a fee for a policy
+      description: Fee has a dependency on fee type.
+      operationId: Policies_PutFee
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The fee id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: feeInfo
+        description: The fee info used for the update of a fee type record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeeInfo'
+        required: true
+        x-position: 3
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/fees:
+    post:
+      tags:
+      - Fees
+      summary: Creates a fee for a policy
+      description: Fee has a dependency on fee type.
+      operationId: Policies_PostFee
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: feeInfo
+        description: The fee info used for the creation of a fee record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeeInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 CREATED response with the fee.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - Fees
+      summary: Returns a list of fee information for the policy
+      description: Fee has a dependency on fee type.
+      operationId: Policies_GetFees
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fee'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Fee:
+      allOf:
+      - $ref: '#/components/schemas/FeeInfo'
+      - type: object
+        description: A fee record
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the fee
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    FeeInfo:
+      type: object
+      description: Fee info
+      additionalProperties: false
+      required:
+      - feeTypeId
+      - frequency
+      properties:
+        amount:
+          type:
+          - number
+          - 'null'
+          description: The amount
+          format: decimal
+          maximum: 999999999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        count:
+          type:
+          - integer
+          - 'null'
+          description: The count
+          format: int32
+          maximum: 999999.0
+          minimum: 0.0
+        feeTypeId:
+          type: integer
+          description: The unique identifier of the FeeType
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        frequency:
+          description: The FrequencyOption
+          default: Annually
+          oneOf:
+          - $ref: '#/components/schemas/FrequencyOption'
+        policyId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the policy id
+          format: int32
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    FrequencyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Annually
+      - Monthly
+      enum:
+      - None
+      - Annually
+      - Monthly
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

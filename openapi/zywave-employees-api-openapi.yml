@@ -1,0 +1,481 @@
+openapi: 3.2.0
+info:
+  title: Client Engagement API v1.0 Employees API
+  version: v1.0
+servers:
+- url: https://api.zywave.com
+tags:
+- name: Employees
+paths:
+  /v3/clientEngagement/v1.0/org/{organizationId}/agency/{agencyId}/employee/{id}:
+    get:
+      tags:
+      - Employees
+      summary: Gets an employee by ID
+      operationId: Employees_GetEmployee
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Employees
+      summary: Replaces an employee
+      operationId: Employees_UpdateEmployee
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeRequest'
+        required: true
+        x-position: 4
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Employees
+      summary: Deletes an employee
+      operationId: Employees_DeleteEmployee
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v3/clientEngagement/v1.0/org/{organizationId}/agency/{agencyId}/employee:
+    get:
+      tags:
+      - Employees
+      summary: Gets employees for a given account using OData query options ($filter…
+      operationId: Employees_GetEmployees
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: accountId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: $filter
+        x-originalName: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $orderby
+        x-originalName: orderby
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: $top
+        x-originalName: top
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      - name: $skip
+        x-originalName: skip
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 7
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfEmployeeResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Employees
+      summary: Creates a new employee
+      operationId: Employees_CreateEmployee
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeRequest'
+        required: true
+        x-position: 3
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    EmployeeResponse:
+      type: object
+      description: Client-facing employee response. Exposes only fields accessible to the client â€” internal audit fields are excluded.
+      additionalProperties: false
+      required:
+      - firstName
+      - lastName
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the employee.
+          format: int32
+        accountId:
+          type: integer
+          description: The identifier of the account this employee belongs to.
+          format: int32
+          maximum: 2147483647
+          minimum: 1
+        firstName:
+          type: string
+          description: The employee's first name.
+          maxLength: 250
+          minLength: 0
+        lastName:
+          type: string
+          description: The employee's last name.
+          maxLength: 250
+          minLength: 0
+        prefix:
+          type:
+          - string
+          - 'null'
+          description: The employee's name prefix (e.g., Dr.).
+          maxLength: 50
+          minLength: 0
+        suffix:
+          type:
+          - string
+          - 'null'
+          description: The employee's name suffix (e.g., Jr.).
+          maxLength: 50
+          minLength: 0
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The employee's email address.
+          format: email
+          maxLength: 255
+          minLength: 0
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: An external system identifier for the employee.
+          maxLength: 255
+          minLength: 0
+        isArchived:
+          type: boolean
+          description: Whether the employee is archived.
+        employerUserProfileId:
+          type:
+          - integer
+          - 'null'
+          description: The employer user profile ID associated with this employee.
+          format: int32
+        employeeGroupIds:
+          type:
+          - array
+          - 'null'
+          description: The IDs of employee groups this employee belongs to.
+          items:
+            type: integer
+            format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfEmployeeResponse:
+      type: object
+      description: A page of results from a larger result set, along with paging metadata.
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: A value indicating whether the larger result set has more results.
+        skip:
+          type: integer
+          description: A value indicating how many of the previous values in the larger result set were omitted.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        take:
+          type: integer
+          description: The number of records retrieved from the larger result set.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        totalCount:
+          type: integer
+          description: The total number of records in the larger result set.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        items:
+          type: array
+          description: The records retrieved from the larger result set.
+          items:
+            $ref: '#/components/schemas/EmployeeResponse'
+    EmployeeRequest:
+      type: object
+      description: Payload for creating or updating an employee.
+      additionalProperties: false
+      required:
+      - accountId
+      - firstName
+      - lastName
+      properties:
+        accountId:
+          type: integer
+          description: The identifier of the account this employee belongs to.
+          format: int32
+          maximum: 2147483647
+          minimum: 1
+        firstName:
+          type: string
+          description: The employee's first name.
+          maxLength: 250
+          minLength: 1
+        lastName:
+          type: string
+          description: The employee's last name.
+          maxLength: 250
+          minLength: 1
+        prefix:
+          type:
+          - string
+          - 'null'
+          description: The employee's name prefix (e.g., Dr.).
+          maxLength: 50
+          minLength: 0
+        suffix:
+          type:
+          - string
+          - 'null'
+          description: The employee's name suffix (e.g., Jr.).
+          maxLength: 50
+          minLength: 0
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The employee's email address.
+          format: email
+          maxLength: 255
+          minLength: 0
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: An external system identifier for the employee.
+          maxLength: 255
+          minLength: 0
+        isArchived:
+          type: boolean
+          description: Whether the employee is archived.
+        employeeGroupIds:
+          type:
+          - array
+          - 'null'
+          description: The IDs of employee groups this employee belongs to.
+          items:
+            type: integer
+            format: int32

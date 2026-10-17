@@ -1,0 +1,402 @@
+openapi: 3.2.0
+info:
+  title: Zywave Account External Reference API
+  version: '1.0'
+  description: 'Operations tagged AccountExternalReference across 2 of this provider''s published API definitions: zywave-accounts-v2-openapi.json, zywave-accounts-v3-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.accounts
+  - api.accounts:read
+tags:
+- name: AccountExternalReference
+paths:
+  /accounts/v2.0/accountexternalreference:
+    get:
+      tags:
+      - AccountExternalReference
+      summary: Search for external account reference
+      description: 'An external reference is a relationship that links a Zywave account to an external account stored outside of Zywave. External references are often used to link a Zywave account to another system''s account for integration purposes.
+
+
+        The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * AccountId
+
+        * ExternalId
+
+        * SourceName
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: AccountExternalReference_SearchAccountExternalReferences
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccountExternalReference'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    servers:
+    - url: https://api.zywave.com
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountexternalreference:
+    get:
+      tags:
+      - AccountExternalReference
+      summary: Search for external account reference
+      description: 'An external reference is a relationship that links a Zywave account to an external account stored outside of Zywave. External references are often used to link a Zywave account to another system''s account for integration purposes.
+
+
+        The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * AccountId
+
+        * ExternalId
+
+        * SourceName
+
+        * SourceId
+
+        * SourceType
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: getV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountexternalreference
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 5
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccountExternalReference'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: AccountExternalReference_SearchAccountExternalReferences
+    servers:
+    - url: https://api.zywave.com
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AccountExternalReference:
+      type: object
+      description: An external reference is a relationship that links a Zywave account to an external account stored outside of Zywave. External references are often used to link a Zywave account to another system's account for integration purposes.
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: The unique Zywave identifier for the external reference.
+          format: int32
+        accountId:
+          type: integer
+          description: The unique Zywave identifier for the account.
+          format: int32
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: The unique account identifier of the external system.
+        sourceName:
+          type:
+          - string
+          - 'null'
+          description: The name of the external system the external identifier is associated with.
+    PagedResultOfAccountExternalReference:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountExternalReference'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    ProblemDetails_2:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AccountExternalReference_2:
+      type: object
+      additionalProperties: false
+      required:
+      - accountId
+      - externalId
+      properties:
+        id:
+          type: integer
+          format: int32
+        accountId:
+          type: integer
+          format: int32
+        externalId:
+          type: string
+          maxLength: 255
+          minLength: 1
+        sourceName:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        sourceId:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        sourceType:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+    ValidationProblemDetails_2:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    HttpValidationProblemDetails_2:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-refined-from:
+- zywave-accounts-v2-openapi.json
+- zywave-accounts-v3-openapi.json
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

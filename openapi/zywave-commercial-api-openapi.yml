@@ -1,0 +1,458 @@
+openapi: 3.2.0
+info:
+  title: Lead Insights Commercial API
+  version: v3.0
+servers:
+- url: https://api.zywave.com
+security:
+- bearerAuth: []
+tags:
+- name: Commercial
+paths:
+  /v3/companies/v1.0/company/{id}/commercial/details:
+    get:
+      tags:
+      - Commercial
+      summary: Commercial Details
+      description: Get details for commercial companies
+      parameters:
+      - in: path
+        name: id
+        description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+        required: true
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommercialDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV3CompaniesV10CompanyByIdCommercialDetails
+      x-operation-id-source: derived
+  /v3/companies/v1.0/company/{id}/commercial/summary:
+    get:
+      tags:
+      - Commercial
+      summary: Commercial Summary
+      description: Get a summary for commercial companies
+      parameters:
+      - in: path
+        name: id
+        description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+        required: true
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommercialSummary'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV3CompaniesV10CompanyByIdCommercialSummary
+      x-operation-id-source: derived
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        exceptionSource:
+          type:
+          - string
+          - 'null'
+        additionalInfo:
+          type:
+          - string
+          - 'null'
+    CommercialCarrierPolicies:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Insurance of USA
+        normalizedName:
+          type: string
+          example: Insurance of USA
+    id:
+      description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+      type: string
+      example: M84000053215022
+    CommercialSummary:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        broker:
+          type: object
+          properties:
+            name:
+              type: string
+              example: USA INC.
+            normalizedName:
+              type: string
+              example: USA INC.
+            city:
+              type: string
+              example: NEW YORK
+            state:
+              type: string
+              example: NY
+        policies:
+          type: array
+          items:
+            type: object
+            properties:
+              carrier:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: AIU Ins
+                  normalizedName:
+                    type: string
+                    example: AIG
+              expirationDate:
+                type: string
+                format: date
+                example: '2023-01-01'
+              governingCode:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: '8037'
+                  description:
+                    type: array
+                    items:
+                      example: Store, Superstores and Warehouse Clubs
+        experienceMod:
+          type: object
+          properties:
+            exMod:
+              type: number
+              format: float
+              example: 1.13
+        leadPeo:
+          type: object
+          properties:
+            name:
+              type: string
+              example: AIU Ins
+            normalizedName:
+              type: string
+              example: AIU Ins
+        dotSummary:
+          type: object
+          properties:
+            accidents:
+              type: integer
+              example: 1255
+            cargo:
+              type: string
+              example: chemicals
+            classifications:
+              type: string
+              example: private property
+            drivers:
+              type: integer
+              example: 90999
+            inspections:
+              type: integer
+              example: 24926
+            lastFatality:
+              type: string
+              format: date
+              example: '2023-06-03'
+            lastIncident:
+              type: string
+              format: date
+              example: '2023-06-03'
+            mileage:
+              type: integer
+              example: 1080549047
+            numbers:
+              type: array
+              items:
+                type: integer
+              example:
+              - 1802579
+              - 63585
+              - 2912719
+            oosPercent:
+              type: integer
+              example: 2
+            operation:
+              type: string
+              example: private property
+            vehicles:
+              type: integer
+              example: 6621
+            violations:
+              type: integer
+              example: 3793
+        oshaSummary:
+          type: object
+          properties:
+            fiveYearAccident:
+              type: integer
+              example: 33
+            fiveYearInspections:
+              type: integer
+              example: 344
+            fiveYearViolations:
+              type: integer
+              example: 276
+            lastAccidentDate:
+              type: string
+              format: date
+              example: '2023-07-05'
+            lastInspectionDate:
+              type: string
+              format: date
+              example: '2023-07-05'
+            lastViolation:
+              type: string
+              format: date
+              example: '2023-07-05'
+            lastFatalityDate:
+              type: string
+              format: date
+              example: '2023-07-05'
+        whdSummary:
+          type: object
+          properties:
+            actions:
+              type: integer
+              example: 85
+            lastIncident:
+              type: string
+              format: date
+              example: '2023-07-05'
+            lastPenalty:
+              type: string
+              format: date
+              example: '2023-07-05'
+    CommercialDetails:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        workerCompPolicies:
+          type: array
+          items:
+            properties:
+              policyNumber:
+                type: string
+                example: WXM045886790
+              expirationDate:
+                type: string
+                format: date
+                example: '2021-01-01'
+              state:
+                type: string
+                example: NY
+              carrier:
+                $ref: '#/components/schemas/CommercialCarrierPolicies'
+              broker:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: MARSH USA INC
+                  nameNormalized:
+                    type: string
+                    example: MARSH USA INC
+                  city:
+                    type: string
+                    example: NEW YORK
+                  state:
+                    type: string
+                    example: NY
+              estimateAnnualPremium:
+                type: integer
+                example: 898
+              selfFunded:
+                type: boolean
+                example: 'false'
+              governingClassCode:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: '8037'
+                  description:
+                    type: array
+                    items:
+                      example: Store, Superstores and Warehouse Clubs
+        assignedRisk:
+          type: boolean
+          example: 'false'
+        peos:
+          type: array
+          items:
+            properties:
+              name:
+                type: string
+                example: ADP TOTALSOURCE FL INC
+              normalizedName:
+                type: string
+                example: ADP TOTAL SOURCE
+        bipdPolicies:
+          type: array
+          items:
+            properties:
+              carrier:
+                $ref: '#/components/schemas/CommercialCarrierPolicies'
+              expirationDate:
+                type: string
+                format: date
+                example: '2023-01-01'
+        bipdExcessPolicies:
+          type: array
+          items:
+            properties:
+              carrier:
+                $ref: '#/components/schemas/CommercialCarrierPolicies'
+              expirationDate:
+                type: string
+                format: date
+                example: '2023-01-01'
+        cargoPolicies:
+          type: array
+          items:
+            properties:
+              carrier:
+                $ref: '#/components/schemas/CommercialCarrierPolicies'
+              expirationDate:
+                type: string
+                format: date
+                example: '2023-01-01'
+        bondPolicies:
+          type: array
+          items:
+            properties:
+              carrier:
+                $ref: '#/components/schemas/CommercialCarrierPolicies'
+              expirationDate:
+                type: string
+                format: date
+                example: '2023-01-01'
+        businessTravelPolicies:
+          type: array
+          items:
+            properties:
+              carrier:
+                $ref: '#/components/schemas/CommercialCarrierPolicies'
+              expirationDate:
+                type: string
+                format: date
+                example: '2023-01-01'
+        dotNumbers:
+          type: array
+          items:
+            type: integer
+          example:
+          - 123123
+          - 123123
+          - 123123
+          - 132312
+        experienceMods:
+          type: array
+          items:
+            properties:
+              state:
+                type: string
+                example: NJ
+              bureauNumber:
+                type: string
+                example: '8797987'
+              exModDetails:
+                type: array
+                items:
+                  properties:
+                    experienceMod:
+                      type: number
+                      format: float
+                      example: 0.788
+                    experienceModChange:
+                      type: string
+                      example: R
+                    year:
+                      type: integer
+                      example: 2023
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter your token in the text input below

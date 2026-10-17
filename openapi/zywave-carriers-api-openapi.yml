@@ -1,0 +1,507 @@
+openapi: 3.2.0
+info:
+  title: BKB Carriers API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: Carriers
+paths:
+  /bkb/v2.0/carriers/search:
+    post:
+      tags:
+      - Carriers
+      summary: Search for carriers based on the criteria
+      operationId: Carriers_SearchCarriers
+      requestBody:
+        x-name: carrierSearchModel
+        description: The CarrierSearchModel.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarrierSearchModel'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCarrier'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/carriers/carriercontacts/{carrierContactId}:
+    get:
+      tags:
+      - Carriers
+      summary: Gets the carrier contact by id
+      operationId: Carriers_GetCarrierContactById
+      parameters:
+      - name: carrierContactId
+        in: path
+        required: true
+        description: The carrier contact id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarrierContact'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/carriers/carriercodes/search:
+    post:
+      tags:
+      - Carriers
+      summary: Search for carrier codes based on the criteria
+      operationId: Carriers_SearchCarrierCodes
+      requestBody:
+        x-name: carrierCodeSearchModel
+        description: The CarrierCodeSearchModel.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarrierCodeSearchModel'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCarrierCode'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    IdListSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+    CarrierContact:
+      type: object
+      description: Carrier Contact
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets the unique ID for this carrier contact.
+          format: int32
+        carrierId:
+          type:
+          - integer
+          - 'null'
+          description: Gets the unique ID for this carrier.
+          format: int32
+        firstName:
+          type: string
+          description: Gets the first name of the carrier contact.
+        lastName:
+          type: string
+          description: Gets the last name of the carrier contact.
+        department:
+          type: string
+          description: Gets the department this carrier contact is a part of.
+        jobDesc:
+          type: string
+          description: Gets the job description for this carrier contact.
+        phone:
+          type: string
+          description: Gets the phone number for this carrier contact.
+        phone2:
+          type: string
+          description: Gets the phone number for this carrier contact.
+        phoneExtension:
+          type: string
+          description: Gets the phone extension for this carrier contact.
+        phoneExtension2:
+          type: string
+          description: Gets the phone extension for this carrier contact.
+        fax:
+          type: string
+          description: Gets the fax number for this carrier contact.
+        email:
+          type: string
+          description: Gets the e-mail address for this carrier contact.
+        defaultContact:
+          type:
+          - boolean
+          - 'null'
+          description: Gets a value that indicates if the contact is the default contact.
+        address:
+          type: string
+          description: Gets the street address for this carrier contact.
+        address2:
+          type: string
+          description: Gets the second address line for this carrier contact.
+        city:
+          type: string
+          description: Gets the city for this carrier contact location.
+        state:
+          type: string
+          description: Gets the two-letter abbreviation for U.S. state/territory, Canadian, Carribbean or Mexican province.
+        zip:
+          type: string
+          description: Gets the ZIP for this carrier contact location.
+        isDeleted:
+          type: boolean
+          description: Gets a value indicating whether this carrier contact has been deleted.
+        roleId:
+          type:
+          - integer
+          - 'null'
+          description: Gets the unique role ID for this carrier contact.
+          format: int32
+        lastUpdateDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date on which this carrier contact was last updated.
+          format: date-time
+    PagedResultOfCarrier:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Carrier'
+    CarrierSearchCriteria:
+      type: object
+      description: Criteria used to search for BrokerageBuilder carriers
+      additionalProperties: false
+      properties:
+        amBestRating:
+          description: Gets or sets the search criteria used to find a carrier by A.M. Best rating.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        id:
+          description: Gets or sets the search criteria used to find a carrier by ID.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        name:
+          description: Gets or sets the search criteria used to find a carrier by carrier name.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        websiteUrl:
+          description: Gets or sets the search criteria used to find a carrier using the Web site URL.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    IdListSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/IdListSearchType'
+          value:
+            type: integer
+            format: int32
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              type: integer
+              format: int32
+          inclusiveNulls:
+            type: boolean
+    SearchCriteriaBase:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        sort:
+          $ref: '#/components/schemas/SortType'
+        sortOrder:
+          type: integer
+          format: int32
+    SearchOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    CarrierSearchModel:
+      type: object
+      additionalProperties: false
+      properties:
+        searchCriteria:
+          oneOf:
+          - $ref: '#/components/schemas/CarrierSearchCriteria'
+        searchOptions:
+          oneOf:
+          - $ref: '#/components/schemas/SearchOptions'
+    CarrierCodeSearchCriteria:
+      type: object
+      description: The search criteria used to find a business entity or carrier in BrokerageBuilder by the linked internal codes.
+      additionalProperties: false
+      properties:
+        alternateName:
+          description: Gets or sets the search criteria used to find a business entity or carrier by alternate carrier name.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        code:
+          description: Gets or sets the search criteria used to find a business entity or carrier by AMS carrier code.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        carrierId:
+          description: Gets or sets the search criteria used to find a business entity or carrier by carrier ID.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        id:
+          description: Gets or sets the search criteria used to find a business entity or carrier by carrier code ID.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+    CarrierCode:
+      type: object
+      description: Gets the BrokerageBuilder carrier along with the internal code.
+      additionalProperties: false
+      properties:
+        alternateName:
+          type:
+          - string
+          - 'null'
+          description: Gets the alternate name of the carrier with the code.
+        code:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the carrier code - the carrier ID as entered in a third-party system.
+        carrierId:
+          type: integer
+          description: Gets the unique ID for this BrokerageBuilder carrier.
+          format: int32
+        id:
+          type: integer
+          description: Gets the unique code ID.
+          format: int32
+        isDeleted:
+          type: boolean
+          description: Gets a value indicating whether this carrier code has been deleted.
+    StringSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/StringSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+    Carrier:
+      type: object
+      description: Gets the BrokerageBuilder carrier.
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique ID for this BrokerageBuilder carrier.
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the name of the carrier.
+        isDeleted:
+          type: boolean
+          description: Gets or sets a value indicating whether this carrier has been deleted.
+        amBestRating:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the financial strength rating as designated by A.M. Best Co. for this carrier.
+        websiteUrl:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the Web site URL for this carrier.
+    SortType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Ascending
+      - Descending
+      enum:
+      - None
+      - Ascending
+      - Descending
+    CarrierCodeSearchModel:
+      type: object
+      additionalProperties: false
+      properties:
+        searchCriteria:
+          oneOf:
+          - $ref: '#/components/schemas/CarrierCodeSearchCriteria'
+        searchOptions:
+          oneOf:
+          - $ref: '#/components/schemas/SearchOptions'
+    PagedResultOfCarrierCode:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarrierCode'
+    StringSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

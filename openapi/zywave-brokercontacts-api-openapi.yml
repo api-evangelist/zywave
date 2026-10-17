@@ -1,0 +1,237 @@
+openapi: 3.2.0
+info:
+  title: BKB Broker Contacts API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: BrokerContacts
+paths:
+  /bkb/v2.0/brokercontacts/all:
+    get:
+      tags:
+      - BrokerContacts
+      summary: Gets all contacts for an agency
+      operationId: BrokerContacts_GetAll
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BrokerContact'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/brokercontacts/active:
+    get:
+      tags:
+      - BrokerContacts
+      summary: Gets active contacts for an agency
+      operationId: BrokerContacts_GetActive
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BrokerContact'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    BrokerContact:
+      type: object
+      additionalProperties: false
+      properties:
+        amsCsrid:
+          type:
+          - string
+          - 'null'
+        amsProducerID:
+          type:
+          - string
+          - 'null'
+        allowAccountAdd:
+          type: boolean
+        allowAccountDelete:
+          type: boolean
+        allowAdminMenuManagement:
+          type: boolean
+        allowCarrierManagement:
+          type: boolean
+        allowDeleteFiles:
+          type: boolean
+        altMailingAddressId:
+          type: integer
+          format: int32
+        brokerId:
+          type: integer
+          format: int32
+        designation:
+          type:
+          - string
+          - 'null'
+        emailAddress:
+          type:
+          - string
+          - 'null'
+        faxNumber:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        hasBKBAccess:
+          type: boolean
+        hasGlobalAccess:
+          type: boolean
+        homePageViewID:
+          $ref: '#/components/schemas/HomePageViews'
+        id:
+          type: integer
+          format: int32
+        isBuilderAdministrator:
+          type: boolean
+        isDeleted:
+          type: boolean
+        lastName:
+          type:
+          - string
+          - 'null'
+        lineOfBusinessId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        middleInitial:
+          type:
+          - string
+          - 'null'
+        numberOfActivitiesShown:
+          type: integer
+          format: int32
+        parentBrokerContactId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+        reportAccess:
+          $ref: '#/components/schemas/Permission'
+        roleId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        salutation:
+          type:
+          - string
+          - 'null'
+        suppressFromClients:
+          type: boolean
+        title:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        viewAgreementDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    HomePageViews:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotSet
+      - Account
+      - Sales
+      enum:
+      - NotSet
+      - Account
+      - Sales
+    Permission:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Team
+      - All
+      enum:
+      - None
+      - Team
+      - All
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

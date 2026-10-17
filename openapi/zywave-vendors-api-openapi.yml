@@ -1,0 +1,536 @@
+openapi: 3.2.0
+info:
+  title: Policies Vendors API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: Vendors
+paths:
+  /policies/v2.0/vendors/{id}:
+    get:
+      tags:
+      - Vendors
+      summary: Gets the vendor by id
+      operationId: Vendors_GetVendor
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The vendor id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: A 200 OK response with the Vendor record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+    put:
+      tags:
+      - Vendors
+      summary: Updates the existing vendor information for the vendor id specified
+      operationId: Vendors_PutVendor
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The id of the vendor to update
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: vendorInfo
+        description: The information to update on the vendor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 No Content response
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/vendors:
+    get:
+      tags:
+      - Vendors
+      summary: Search for vendor
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * Id
+
+        * SourceId
+
+        * SourceType
+
+        * SourceEntityName
+
+        * CustomName
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: Vendors_SearchVendors
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: A 200 OK response with the list of vendors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfVendor'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+    post:
+      tags:
+      - Vendors
+      summary: Creates a vendor
+      operationId: Vendors_PostVendor
+      requestBody:
+        x-name: vendorInfo
+        description: The vendor info to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: A 201 Created response containing the id of the created vendor.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/vendors/{id}/name:
+    get:
+      tags:
+      - Vendors
+      summary: Gets the vendor custom name for the vendor id specified
+      description: A 404 response is returned both when the vendor does not exist and when the vendor exists but does not have a custom name.
+      operationId: Vendors_GetVendorName
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The vendor id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: A 200 OK response with the VendorName record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorName'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+    put:
+      tags:
+      - Vendors
+      summary: Updates the vendor custom name for the vendor id specified
+      operationId: Vendors_PutVendorName
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The id of the vendor to update.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: vendorNameInfo
+        description: The vendor custom name information to update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorNameInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 No Content response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/vendors/custom:
+    post:
+      tags:
+      - Vendors
+      summary: Creates a custom vendor with the specified custom name
+      description: The source identity fields (source id, source type, and source entity name) are assigned by the service and must not be supplied.
+      operationId: Vendors_PostCustomVendor
+      requestBody:
+        x-name: vendorNameInfo
+        description: The vendor custom name info to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorNameInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: A 201 Created response containing the id of the created vendor.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+components:
+  schemas:
+    VendorNameInfo:
+      type: object
+      description: Vendor name info
+      additionalProperties: false
+      required:
+      - customName
+      properties:
+        customName:
+          type: string
+          description: The custom vendor name
+          maxLength: 255
+          minLength: 1
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Vendor:
+      allOf:
+      - $ref: '#/components/schemas/VendorInfo'
+      - type: object
+        description: A vendor record
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the vendor
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+          customName:
+            type:
+            - string
+            - 'null'
+            description: The vendor name
+            maxLength: 255
+    VendorName:
+      allOf:
+      - $ref: '#/components/schemas/VendorNameInfo'
+      - type: object
+        description: A vendor name record
+        additionalProperties: false
+        required:
+        - vendorId
+        properties:
+          vendorId:
+            type: integer
+            description: The unique Zywave identifier for the vendor
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    VendorInfo:
+      type: object
+      description: Vendor info
+      additionalProperties: false
+      required:
+      - sourceId
+      - sourceType
+      - sourceEntityName
+      properties:
+        sourceId:
+          type: string
+          description: Id of vendor in source
+          maxLength: 36
+          minLength: 1
+        sourceType:
+          type: string
+          description: Type of source
+          maxLength: 32
+          minLength: 1
+        sourceEntityName:
+          type: string
+          description: Entity name in source
+          maxLength: 32
+          minLength: 1
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    PagedResultOfVendor:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vendor'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

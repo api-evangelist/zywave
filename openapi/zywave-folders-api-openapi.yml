@@ -1,0 +1,798 @@
+openapi: 3.2.0
+info:
+  title: BKB Folders API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: Folders
+paths:
+  /bkb/v2.0/folder:
+    get:
+      tags:
+      - Folders
+      summary: Returns all active folders for an entity.
+      operationId: Folder_GetFolders
+      parameters:
+      - name: entityId
+        in: query
+        description: Required positive integer; entity's unique identifier
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: entityType
+        in: query
+        description: Required enum; Account, Carrier, or General
+        schema:
+          $ref: '#/components/schemas/EntityType'
+        x-position: 2
+      responses:
+        '200':
+          description: Returns the collection of folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+        '400':
+          description: Bad Request - invalid entity type provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized - authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden - insufficient permissions to access folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found - entity does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Folders
+      summary: Creates a folder for an Account or Carrier entity.
+      operationId: Folder_Create
+      requestBody:
+        x-name: request
+        description: Body; entityId, entityType, name required; parentFolderId optional
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFolderRequest'
+        x-position: 1
+      responses:
+        '201':
+          description: Folder created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderResponse'
+        '400':
+          description: Bad Request - missing or invalid required field.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized - authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden - insufficient scope; requires api.bkb.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found - feature flag disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: Conflict - idempotency key already used for an in-flight request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: ''
+        '502':
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/folder/{folderIdentifier}:
+    put:
+      tags:
+      - Folders
+      summary: Renames a folder by its GUID using full replacement semantics.
+      operationId: Folder_RenameFolder
+      parameters:
+      - name: folderIdentifier
+        in: path
+        required: true
+        description: Folder GUID route param; identifies folder to rename.
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: entityType
+        in: query
+        description: 'Entity type: Account, Carrier, or General.'
+        schema:
+          $ref: '#/components/schemas/EntityType'
+        x-position: 3
+      - name: entityId
+        in: query
+        description: Entity integer ID owning this folder.
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      requestBody:
+        x-name: request
+        description: Body; name field required; 1-255 characters.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameFolderRequest'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Returns the renamed folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderResponse'
+        '400':
+          description: Bad Request - invalid input or folder name.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized - authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden - insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found - folder does not exist or file management is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: Conflict - folder name already in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    patch:
+      tags:
+      - Folders
+      summary: Archives a folder via JSON Patch replace on /status with value archive.
+      operationId: Folder_PatchFolder
+      parameters:
+      - name: folderIdentifier
+        in: path
+        required: true
+        description: Folder GUID route param; identifies folder to archive.
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: entityType
+        in: query
+        description: 'Entity type: Account, Carrier, or General.'
+        schema:
+          $ref: '#/components/schemas/EntityType'
+        x-position: 3
+      - name: entityId
+        in: query
+        description: Entity integer ID owning this folder.
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      - name: X-Idempotency-Key
+        x-originalName: idempotencyKey
+        in: header
+        description: Optional UUID v4; 24-hour deduplication window.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      requestBody:
+        x-name: patchDoc
+        description: Replace /status with value "archive" only.
+        content:
+          application/json;odata.metadata=minimal;odata.streaming=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=true;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=true;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=false;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=false;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/merge-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Returns the archived folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderResponse'
+        '202':
+          description: Accepted - duplicate request; prior response not yet available.
+        '400':
+          description: Bad Request - invalid patch operation or folder cannot be archived.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized - authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden - insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found - folder does not exist or file management is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Folders
+      summary: Permanently deletes an empty folder.
+      operationId: Folder_DeleteFolder
+      parameters:
+      - name: folderIdentifier
+        in: path
+        required: true
+        description: Folder GUID route param; two-factor deletion confirmation.
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: entityId
+        in: query
+        description: Entity integer ID owning this folder.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: entityType
+        in: query
+        description: 'Entity type: Account, Carrier, or General.'
+        schema:
+          $ref: '#/components/schemas/EntityType2'
+        x-position: 3
+      responses:
+        '204':
+          description: Folder deleted successfully.
+        '400':
+          description: Bad Request - the request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized - authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden - insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found - folder does not exist or belongs to another tenant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: Conflict - folder contains one or more files and cannot be deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    Operation:
+      allOf:
+      - $ref: '#/components/schemas/OperationBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          value: {}
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    Folder:
+      type: object
+      additionalProperties: false
+      properties:
+        folderIdentifier:
+          type:
+          - string
+          - 'null'
+          format: guid
+        childFolders:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Folder'
+        defaultFolderId:
+          type: integer
+          format: int32
+        isRoot:
+          type: boolean
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/User'
+        createDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedBy:
+          oneOf:
+          - $ref: '#/components/schemas/User'
+        updatedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+        parentId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    CreateFolderRequest:
+      type: object
+      description: New folder creation request.
+      additionalProperties: false
+      required:
+      - entityId
+      - name
+      properties:
+        entityId:
+          type: integer
+          description: Owner entity integer ID.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        entityType:
+          description: Account or Carrier only.
+          oneOf:
+          - $ref: '#/components/schemas/EntityType2'
+        name:
+          type: string
+          description: Unique folder name.
+          minLength: 1
+        parentFolderId:
+          type:
+          - integer
+          - 'null'
+          description: Parent folder integer ID.
+          format: int32
+    FolderResponse:
+      type: object
+      description: Folder resource response model.
+      additionalProperties: false
+      properties:
+        folderId:
+          type: integer
+          description: Folder integer ID.
+          format: int32
+        folderIdentifier:
+          type: string
+          description: Folder GUID identifier.
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+          description: Folder display name.
+        parentFolderId:
+          type:
+          - integer
+          - 'null'
+          description: Parent folder integer ID.
+          format: int32
+        entityId:
+          type: integer
+          description: Owner entity ID.
+          format: int32
+        entityType:
+          description: Account, Carrier, or General.
+          oneOf:
+          - $ref: '#/components/schemas/EntityType2'
+        status:
+          type: string
+          description: Active or Archived.
+        createdAt:
+          type:
+          - string
+          - 'null'
+          description: UTC creation timestamp.
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          description: UTC update timestamp.
+          format: date-time
+    RenameFolderRequest:
+      type: object
+      description: Rename folder request.
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: New folder name.
+          maxLength: 255
+          minLength: 1
+    EntityType:
+      type: string
+      description: ''
+      x-enumNames:
+      - General
+      - Account
+      - Carrier
+      enum:
+      - General
+      - Account
+      - Carrier
+    User:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        type:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+    OperationBase:
+      type: object
+      additionalProperties: false
+      properties:
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+    EntityType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - General
+      - Account
+      - Carrier
+      enum:
+      - General
+      - Account
+      - Carrier
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

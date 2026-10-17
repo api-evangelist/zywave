@@ -1,0 +1,240 @@
+openapi: 3.2.0
+info:
+  title: Policies ETL after Commission Period API
+  version: v2.0
+  description: 'When importing data via the API, these operations should be performed after the referenced policy''s commission periods have been created. NOTE: each policy has a default commission period -- so if there is only one period for the policy, you can either skip importing it (preferred) -OR- make its start date one(1) day AFTER the effective date of the policy.'
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: ETL after Commission Period
+  description: 'When importing data via the API, these operations should be performed after the referenced policy''s commission periods have been created. NOTE: each policy has a default commission period -- so if there is only one period for the policy, you can either skip importing it (preferred) -OR- make its start date one(1) day AFTER the effective date of the policy.'
+paths:
+  /policies/v2.0/policies/{policyId}/commissionperiods/{commissionPeriodId}/commissionsplits:
+    post:
+      tags:
+      - ETL after Commission Period
+      summary: Creates, updated, or deletes a Commission Split for a policy based on the…
+      description: 'auditInfo Delta follows the following validation rules
+
+
+        | Action | Id | Info |
+
+        |---------|--------|--------|
+
+        | Create | Never | Always |
+
+        | Update | Always | Always |
+
+        | Delete | Always | Never |'
+      operationId: Policies_PostCommissionSplit
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: commissionPeriodId
+        in: path
+        required: true
+        description: The commission period id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: auditInfo
+        description: The info used to create or update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommissionSplitAuditInfo'
+        required: true
+        x-position: 3
+      responses:
+        '201':
+          description: Either 201 for a CREATE message or a 204 for an UPDATE or DELETE message.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '204':
+          description: Either 201 for a CREATE message or a 204 for an UPDATE or DELETE message.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CommissionSplitInfo:
+      type: object
+      description: Commission Split info
+      additionalProperties: false
+      properties:
+        payeeId:
+          type:
+          - string
+          - 'null'
+          description: "The id for the payee. Example: \"5003000000D8cuIQAA\".\n\nThis id is intended for use by a caller in conjunction with the values in the `PayeeIdSource*` properties.\n            \nUniqueness is enforced over PayeeId, PayeeIdSourceType, and PayeeIdSourceEntityName as a tuple.\n            \nNOTE TO IMPLEMENTERS: If your source system potentially has multiple \"versions\" of the same ID\n(e.g. Salesforce which offers both 15-character and 18-character IDs),\nit is your responsibility to consistently use the same \"version\"."
+          maxLength: 36
+        payeeIdSourceType:
+          type:
+          - string
+          - 'null'
+          description: "The source type of the id used for the payee. Example: \"Salesforce\".\n\nThis id is intended for use by a caller in conjunction with the values in the `PayeeIdSource*` properties.\n            \nUniqueness is enforced over PayeeId, PayeeIdSourceType, and PayeeIdSourceEntityName as a tuple."
+          maxLength: 32
+        payeeIdSourceEntityName:
+          type:
+          - string
+          - 'null'
+          description: "The name of the source entity of the id used for the payee. Example: \"Contact\".\n\nThis id is intended for use by a caller in conjunction with the values in the `PayeeIdSource*` properties.\n            \nUniqueness is enforced over PayeeId, PayeeIdSourceType, and PayeeIdSourceEntityName as a tuple."
+          maxLength: 32
+        commissionPeriodId:
+          type:
+          - integer
+          - 'null'
+          description: 'The id of the CommissionPeriod that is the parent of this record.
+
+
+            CommissionSplit is dependent on CommissionPeriod.'
+          format: int32
+        amount:
+          type:
+          - number
+          - 'null'
+          description: "The amount to be paid to the payee.\n            \nThe amount is used with the CommissionCalculationStrategy and the CommissionCalculationStrategy.\n            \nOnly two(2) significant decimal places are supported."
+          format: decimal
+          maximum: 999999.0
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        generation:
+          type:
+          - integer
+          - 'null'
+          description: "Indicates the \"generation\" in which the payee's payment amount is calculated.\n\nPayments within a period are calculated by \"generation\": the amounts for payees in the generation with the smallest value are calculated first. Successive generations are calculated from the amount left after the previous generation has been calculated.\n            \nThis allows for scenarios where there is an outside producer who is paid against the gross and internal producers who are paid against the remaining amount.\n            \nGeneration zero(0) is recommended for internal producers.\n            \nIt is recommended that \"space\" be left between generation values(e.g. -200, -100, 0) so that the addition of a generation between two existing generations does not require modifying those records."
+          format: int32
+          default: 0
+          maximum: 0.0
+          minimum: -2147483648.0
+    CommissionSplitAuditInfo:
+      allOf:
+      - $ref: '#/components/schemas/AuditInfoOfCommissionSplitInfo'
+      - type: object
+        description: Audit info for commission split
+        additionalProperties: false
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    DeltaOfCommissionSplitInfo:
+      type: object
+      description: A wrapper for values to be used for updating or creating a record.
+      additionalProperties: false
+      properties:
+        updateOrCreateInformation:
+          description: The information to use for updating or creating.  Null values are ignored.
+          oneOf:
+          - $ref: '#/components/schemas/CommissionSplitInfo'
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    AuditInfoOfCommissionSplitInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - entityAction
+      properties:
+        entityId:
+          type:
+          - integer
+          - 'null'
+          description: Required for Update and Delete. It is invalid to provide an id for a Create.
+          format: int32
+        entityAction:
+          $ref: '#/components/schemas/EntityActionOption'
+        info:
+          description: The information used to create or update an entity. It is invalid to provide this for a Delete.
+          oneOf:
+          - $ref: '#/components/schemas/DeltaOfCommissionSplitInfo'
+    EntityActionOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Create
+      - Update
+      - Delete
+      enum:
+      - Create
+      - Update
+      - Delete
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

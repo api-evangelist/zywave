@@ -1,0 +1,124 @@
+openapi: 3.2.0
+info:
+  title: Content File API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.content
+  - api.content:read
+tags:
+- name: File
+paths:
+  /content/v2.0/file/{id}:
+    get:
+      tags:
+      - File
+      summary: Returns the file for the id sent in the request
+      operationId: File_GetFile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the file
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: contentId
+        in: query
+        description: The ID of the content item
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: The desired file.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    File:
+      allOf:
+      - $ref: '#/components/schemas/FileInfo'
+      - type: object
+        description: An file lives underneath a piece of content and represents a single file or body of content.
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the file.
+            format: int32
+    FileInfo:
+      type: object
+      description: File represents the editable properties of a file.
+      additionalProperties: false
+      properties:
+        contentId:
+          type:
+          - integer
+          - 'null'
+          description: The content identifier to add the file under.  Passing in null will create a new piece of content alongside the file
+          format: int32
+        fileId:
+          type: string
+          description: The unique file id that is associated to a file stored in the system. Generate a new guid if creating a new file.
+          format: guid
+        language:
+          type:
+          - string
+          - 'null'
+          description: "The language code for the file. Defaults to US English \"en-us\". \nThere is no restrictions, but it is recommended that the value be set to the ISO 639-1 Language Code (https://www.andiamo.co.uk/resources/iso-language-codes/)."
+        fileData:
+          type:
+          - string
+          - 'null'
+          description: The file data.
+          format: binary
+  securitySchemes:
+    oidc:
+      type: oauth2
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.content: Full access to all agency operations
+            api.content:read: Read-only access to agencies
+x-generator: NSwag v14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))

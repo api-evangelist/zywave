@@ -1,0 +1,1421 @@
+openapi: 3.2.0
+info:
+  title: Zywave Account API
+  version: '1.0'
+  description: 'Operations tagged Account across 2 of this provider''s published API definitions: zywave-accounts-v2-openapi.json, zywave-accounts-v3-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.accounts
+  - api.accounts:read
+tags:
+- name: Account
+paths:
+  /accounts/v2.0/account/{id}:
+    get:
+      tags:
+      - Account
+      summary: Gets a specific business or personal account by id
+      operationId: Account_GetAccount
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Account
+      summary: Updates a business or personal account
+      operationId: Account_PutAccount
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: accountInfo
+        description: An object representing the account information. All fields will be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Account
+      summary: Delete a business or personal account
+      operationId: Account_DeleteAccount
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: ''
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    servers:
+    - url: https://api.zywave.com
+  /accounts/v2.0/account/matches:
+    get:
+      tags:
+      - Account
+      summary: Finds existing accounts using specified criteria and our standard matching…
+      description: 'The Zywave API duplicate search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response. At least one criteria marked with double asterisks is required
+
+        * msid (miEdge system ID) **
+
+        * name **
+
+        * addressLine1 **
+
+        * addressLine2
+
+        * state
+
+        * postalCode
+
+        * phoneNumber **
+
+        * classification
+
+        * updatedDateTime
+
+        * industryId
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: Account_FindAccountMatches
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: includeArchived
+        in: query
+        description: Include archived accounts when finding matches
+        schema:
+          type: boolean
+          default: false
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccount'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    servers:
+    - url: https://api.zywave.com
+  /accounts/v2.0/account:
+    get:
+      tags:
+      - Account
+      summary: Search for business and personal accounts
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * id
+
+        * classification
+
+        * name
+
+        * phoneNumber
+
+        * state
+
+        * updatedDateTime
+
+        * isActive
+
+        * isArchived
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: Account_SearchAccounts
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is divisible by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccount'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Account
+      summary: Creates a business or personal account
+      operationId: Account_PostAccount
+      requestBody:
+        x-name: accountInfo
+        description: An object representing the account information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    servers:
+    - url: https://api.zywave.com
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/account/{id}:
+    get:
+      tags:
+      - Account
+      summary: Gets a specific business or personal account by id
+      operationId: getV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountById
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: Account_GetAccount
+    put:
+      tags:
+      - Account
+      summary: Updates a business or personal account
+      operationId: putV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountById
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      requestBody:
+        x-name: accountInfo
+        description: An object representing the account information. All fields will be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInfo_2'
+        required: true
+        x-position: 4
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: Account_PutAccount
+    patch:
+      tags:
+      - Account
+      summary: Partially updates a business or personal account
+      operationId: Account_PatchAccount
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      requestBody:
+        x-name: patch
+        description: A JSON Patch document (RFC 6902) describing the fields to update.
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+          application/json-patch+json:
+            schema:
+              type: object
+        required: true
+        x-position: 4
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+    delete:
+      tags:
+      - Account
+      summary: Delete a business or personal account
+      operationId: deleteV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccountById
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: id
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: Account_DeleteAccount
+    servers:
+    - url: https://api.zywave.com
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/account:
+    get:
+      tags:
+      - Account
+      summary: Search for business and personal accounts
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * id
+
+        * name
+
+        * addressLine1
+
+        * addressLine2
+
+        * state
+
+        * postalCode
+
+        * city
+
+        * classification
+
+        * updatedDateTime
+
+        * phoneNumber
+
+        * isActive
+
+        * isArchived
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: getV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccount
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 5
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is divisible by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      - name: $search
+        x-originalName: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccount'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: Account_SearchAccounts
+    post:
+      tags:
+      - Account
+      summary: Creates a business or personal account
+      operationId: postV3AccountsV30OrgByOrgIdAgencyByAgencyIdAccount
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: batchId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        x-position: 4
+      requestBody:
+        x-name: accountInfo
+        description: An object representing the account information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInfo_2'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: Account_PostAccount
+    servers:
+    - url: https://api.zywave.com
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Account:
+      allOf:
+      - $ref: '#/components/schemas/AccountInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the account.
+            format: int32
+          createdDateTime:
+            type: string
+            description: The date in which the account was created.
+            format: date-time
+          updatedDateTime:
+            type: string
+            description: The date in which the account was last updated.
+            format: date-time
+          msid:
+            type:
+            - string
+            - 'null'
+            description: The MiEdge MSID for this account.
+    ClientSize:
+      type: string
+      description: ''
+      x-enumNames:
+      - From0To25
+      - From26To50
+      - From51To99
+      - From100To499
+      - From500To999
+      - From1000To2499
+      - From2500To4999
+      - MoreThan4999
+      enum:
+      - From0To25
+      - From26To50
+      - From51To99
+      - From100To499
+      - From500To999
+      - From1000To2499
+      - From2500To4999
+      - MoreThan4999
+    AccountClassification:
+      type: string
+      description: ''
+      x-enumNames:
+      - Personal
+      - Commercial
+      enum:
+      - Personal
+      - Commercial
+    AccountRelationship:
+      type: string
+      description: ''
+      x-enumNames:
+      - BenefitProspect
+      - BenefitClient
+      - PcProspect
+      - PcClient
+      enum:
+      - BenefitProspect
+      - BenefitClient
+      - PcProspect
+      - PcClient
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    AccountInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        isArchived:
+          type: boolean
+          description: Indicates whether the account is archived.
+          default: false
+        name:
+          type: string
+          description: The name of the account.
+          maxLength: 255
+          minLength: 1
+        addressLine1:
+          type:
+          - string
+          - 'null'
+          description: Line 1 of the primary address for the account.
+          maxLength: 255
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: Line 2 of the primary address for the account.
+          maxLength: 255
+        addressLine3:
+          type:
+          - string
+          - 'null'
+          description: Line 3 of the primary address for the account.
+          maxLength: 100
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city of the primary address for the account.
+          maxLength: 75
+        county:
+          type:
+          - string
+          - 'null'
+          description: The county of the primary address for the account.
+          maxLength: 150
+        state:
+          type:
+          - string
+          - 'null'
+          description: The state of the primary address for the account.
+          maxLength: 4
+        country:
+          type:
+          - string
+          - 'null'
+          description: The country of the primary address for the account.
+          maxLength: 2
+        postalCode:
+          type:
+          - string
+          - 'null'
+          description: The zip code or postal code of the primary address for the account.
+          maxLength: 50
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number for a business account.
+          maxLength: 50
+        faxNumber:
+          type:
+          - string
+          - 'null'
+          description: The fax number for the account.
+          maxLength: 50
+        url:
+          type:
+          - string
+          - 'null'
+          description: The website for a business account.
+          maxLength: 255
+        numberOfEmployees:
+          type:
+          - integer
+          - 'null'
+          description: The number of employees for a business account.
+          format: int32
+        numberOfRetirees:
+          type:
+          - integer
+          - 'null'
+          description: The number of retirees for a business account.
+          format: int32
+        yearFounded:
+          type:
+          - integer
+          - 'null'
+          description: The year in which a business account was founded.
+          format: int32
+        sicCode:
+          type:
+          - string
+          - 'null'
+          description: The standard industry classification code for a business account. This code is used to classify the industry area of a business.
+          maxLength: 4
+        naicsCodes:
+          type:
+          - array
+          - 'null'
+          description: A list of North American Classification Systems codes applicable to a business account. This code is used to classify a business for the purposes of collecting, analyzing and publishing data related to the US business economy. The code must be a 2- to 6-digit code. If a NAICS code isn't applicable to the most recent set of codes, you may optionally indicate the year it was applicable followed by a "|" before the standard 2- to 6-digit code. For example, 2012|212234 can be sent to represent the industry "Copper Ore and Nickel Ore Mining", although this code is not applicable to the 2017 set. The year must be a valid NAICS versioning year (e.g. 1997, or 2002, or 2007, etc.). For a list of all standardized NAICS codes, see https://www.census.gov/eos/www/naics/.
+          items:
+            type: string
+        classification:
+          description: Specifies whether the account is a business account or personal account.
+          oneOf:
+          - $ref: '#/components/schemas/AccountClassification'
+        relationships:
+          type:
+          - array
+          - 'null'
+          description: A list of relationships a broker has with a client distinguishing whether the account is a current client or prospect for both the employee benefits and property and casualty units within the broker.
+          items:
+            $ref: '#/components/schemas/AccountRelationship'
+        clientSize:
+          description: Specifies a client size range for business accounts.
+          oneOf:
+          - $ref: '#/components/schemas/ClientSize'
+        isActive:
+          type: boolean
+          description: Determines whether the account is active throughout the Zywave product suite. If this is set to false the contacts for the account will also be marked as inactive and the account will not appear throughout the Zywave product suite. If not sent in the request isActive will be set to true.
+          default: true
+        industryId:
+          type:
+          - integer
+          - 'null'
+          description: The unique Zywave identifier for the industry associated with the account.
+          format: int32
+    PagedResultOfAccount:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+    ProblemDetails_2:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Account_2:
+      allOf:
+      - $ref: '#/components/schemas/AccountInfo_2'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            format: int32
+          msid:
+            type:
+            - string
+            - 'null'
+          createdDateTime:
+            type: string
+            format: date-time
+          updatedDateTime:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    AccountAddress:
+      allOf:
+      - $ref: '#/components/schemas/AddressInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            format: int32
+          accountId:
+            type: integer
+            format: int32
+    HttpValidationProblemDetails_2:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    IndustryClassification:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - NAICS
+      - SIC
+      - UKSIC
+      - ISO
+      - WCCode
+      enum:
+      - Unknown
+      - NAICS
+      - SIC
+      - UKSIC
+      - ISO
+      - WCCode
+    RelationshipType:
+      type: object
+      additionalProperties: false
+      required:
+      - relationship
+      properties:
+        id:
+          type: integer
+          format: int32
+        relationship:
+          type: string
+          maxLength: 50
+          minLength: 1
+    AddressType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Home
+      - Mailing
+      - Office
+      - Billing
+      - Business
+      enum:
+      - None
+      - Home
+      - Mailing
+      - Office
+      - Billing
+      - Business
+    ValidationProblemDetails_2:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    IndustryData:
+      type: object
+      additionalProperties: false
+      required:
+      - code
+      properties:
+        id:
+          type: integer
+          format: int32
+        classification:
+          $ref: '#/components/schemas/IndustryClassification'
+        code:
+          type: string
+          minLength: 1
+    AddressInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        addressLine1:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        addressLine3:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        city:
+          type:
+          - string
+          - 'null'
+          maxLength: 75
+        country:
+          type:
+          - string
+          - 'null'
+          maxLength: 2
+        county:
+          type:
+          - string
+          - 'null'
+          maxLength: 150
+        isPrimary:
+          type: boolean
+        postalCode:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        state:
+          type:
+          - string
+          - 'null'
+          maxLength: 4
+        type:
+          $ref: '#/components/schemas/AddressType'
+    AccountInfo_2:
+      type: object
+      additionalProperties: false
+      properties:
+        isArchived:
+          type: boolean
+          default: false
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        url:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        numberOfEmployees:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        numberOfRetirees:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        yearFounded:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        industryData:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IndustryData'
+        classification:
+          oneOf:
+          - $ref: '#/components/schemas/AccountClassification'
+        relationships:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          x-deprecatedMessage: Use LinesOfBusiness instead
+          items:
+            $ref: '#/components/schemas/AccountRelationship'
+        clientSize:
+          oneOf:
+          - $ref: '#/components/schemas/ClientSize'
+        isActive:
+          type: boolean
+          default: true
+        addresses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AccountAddress'
+        phones:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AccountPhone'
+        groups:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        labels:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        linesOfBusiness:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RelationshipType'
+    PhoneInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        extension:
+          type:
+          - string
+          - 'null'
+          maxLength: 10
+        isPrimary:
+          type: boolean
+        number:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        type:
+          $ref: '#/components/schemas/PhoneType'
+    PhoneType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Mobile
+      - Work
+      - Home
+      - Fax
+      enum:
+      - None
+      - Mobile
+      - Work
+      - Home
+      - Fax
+    AccountPhone:
+      allOf:
+      - $ref: '#/components/schemas/PhoneInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            format: int32
+          accountId:
+            type: integer
+            format: int32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-refined-from:
+- zywave-accounts-v2-openapi.json
+- zywave-accounts-v3-openapi.json
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

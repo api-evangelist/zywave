@@ -1,0 +1,161 @@
+openapi: 3.2.0
+info:
+  title: BKB Roles API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: Roles
+paths:
+  /bkb/v2.0/accounts/{accountId}/roles:
+    get:
+      tags:
+      - Roles
+      summary: Get roles for a specific account id
+      operationId: Accounts_GetAccountRoles
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        description: The account id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssignedRole'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/roles:
+    get:
+      tags:
+      - Roles
+      summary: Get all user roles for an agency
+      operationId: Roles_GetRoles
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserRole'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    UserRole:
+      type: object
+      description: Represents a role a user may have on an account.
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique ID for this role.
+          format: int32
+        brokerId:
+          type: integer
+          description: Gets or sets the unique broker ID for this role.
+          format: int32
+        name:
+          type: string
+          description: Gets or sets the role name.
+    AssignedRole:
+      type: object
+      description: Represents the role an agency user has on an account.
+      additionalProperties: false
+      properties:
+        accountId:
+          type: integer
+          description: Gets or sets the unique ID for this account.
+          format: int32
+        roleId:
+          type: integer
+          description: Gets or sets the unique ID for this role.
+          format: int32
+        brokerContactId:
+          type: integer
+          description: Gets or sets the unique ID for this broker contact.
+          format: int32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

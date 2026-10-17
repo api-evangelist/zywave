@@ -1,0 +1,1103 @@
+openapi: 3.2.0
+info:
+  title: BKB Files API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: Files
+paths:
+  /bkb/v2.0/file/download:
+    get:
+      tags:
+      - Files
+      summary: Downloads the binary content of a file attached to an entity as octet-stream.
+      operationId: File_Download
+      parameters:
+      - name: Id
+        in: query
+        description: Entity integer ID owning the file.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: FileId
+        in: query
+        description: UUID of the file to download.
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/file/{fileId}:
+    patch:
+      tags:
+      - Files
+      summary: Moves a file to another folder or archives it via JSON Patch RFC 6902.
+      operationId: File_PatchFile
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        description: UUID of file to patch; route parameter
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: X-Idempotency-Key
+        x-originalName: idempotencyKey
+        in: header
+        description: Optional UUID v4; deduplicates retries 24 hours
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      requestBody:
+        x-name: patchDoc
+        description: 'The JSON Patch operations (RFC 6902) to apply. Supported:
+
+          [{ "op": "replace", "path": "/folderId", "value": "<folderId>" }] -- moves the file.
+
+          [{ "op": "replace", "path": "/status", "value": "archive" }] -- archives the file.'
+        content:
+          application/json;odata.metadata=minimal;odata.streaming=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;odata.streaming=false;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=minimal;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=true;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;odata.streaming=false;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=full;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=true;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;odata.streaming=false;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.metadata=none;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=true;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=true;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=false;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;odata.streaming=false;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;IEEE754Compatible=false:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json;IEEE754Compatible=true:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/merge-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: File updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        '400':
+          description: Bad Request - unsupported or malformed patch document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized - authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found - file does not exist or feature is disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '422':
+          description: Unprocessable Entity - operation cannot be applied to the current file state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Files
+      summary: Soft-deletes a file by moving it to the recycle bin.
+      operationId: File_RecycleFile
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        description: UUID of active file to recycle
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '502':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Files
+      summary: Updates file name, folder assignment, or access level without re-uploading…
+      operationId: File_UpdateFileMetadata
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        description: UUID of file to update; route
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: If-Match
+        x-originalName: ifMatch
+        in: header
+        description: Optional ETag; prevents lost-update race conditions
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      requestBody:
+        x-name: request
+        description: Body with optional name, folderId, accessLevel fields
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFileMetadataRequest'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileMetadataResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '412':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/file:
+    post:
+      tags:
+      - Files
+      summary: Searches active files for an entity by type, ID, with an optional folder or…
+      operationId: File_GetFiles
+      requestBody:
+        x-name: criteria
+        description: Body with entityId + entityType required; folderId and search are optional, and search takes precedence when both are set
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchFilesCriteria'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttachmentFile'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/file/upload:
+    post:
+      tags:
+      - Files
+      summary: Uploads a file as multipart/form-data to an entity.
+      operationId: File_Create
+      parameters:
+      - name: X-Idempotency-Key
+        x-originalName: idempotencyKey
+        in: header
+        description: Required UUID v4; prevents duplicate uploads 24 hours
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                File:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                Description:
+                  type:
+                  - string
+                  - 'null'
+                EntityId:
+                  type:
+                  - string
+                  - 'null'
+                EntityType:
+                  $ref: '#/components/schemas/EntityType'
+                FolderId:
+                  type:
+                  - string
+                  - 'null'
+                AccessLevel:
+                  $ref: '#/components/schemas/FileAccessLevel'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '413':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '502':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    BaseActivityType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Account
+      - Carrier
+      - Basic
+      enum:
+      - None
+      - Account
+      - Carrier
+      - Basic
+    ActivityInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        baseType:
+          $ref: '#/components/schemas/BaseActivityType'
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    SearchFilesCriteria:
+      type: object
+      additionalProperties: false
+      properties:
+        skip:
+          type: integer
+          description: Records to skip; zero means no skip.
+          format: int32
+        top:
+          type: integer
+          description: Max records to return; zero means all.
+          format: int32
+        entityType:
+          description: Required; Account, Carrier, or General enum.
+          oneOf:
+          - $ref: '#/components/schemas/EntityType'
+        entityId:
+          type: integer
+          description: Required; entity positive integer identifier.
+          format: int32
+        folderId:
+          type:
+          - integer
+          - 'null'
+          description: Filter to this folder integer ID; optional.
+          format: int32
+        search:
+          type:
+          - string
+          - 'null'
+          description: Partial filename match; case-insensitive; optional.
+        dateFrom:
+          type:
+          - string
+          - 'null'
+          description: Activity date lower bound; ISO 8601 format.
+          format: date-time
+        dateTo:
+          type:
+          - string
+          - 'null'
+          description: Activity date upper bound; ISO 8601 format.
+          format: date-time
+    FileType:
+      type: string
+      description: ''
+      x-enumNames:
+      - File
+      - Folder
+      - ArchiveFile
+      - RecycleFile
+      enum:
+      - File
+      - Folder
+      - ArchiveFile
+      - RecycleFile
+    User:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        type:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+    UpdateFileMetadataRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Optional new filename; include extension; non-empty.
+        folderId:
+          type:
+          - integer
+          - 'null'
+          description: Optional folder ID; null retains current folder.
+          format: int32
+        accessLevel:
+          description: Optional; Unrestricted, BenefitTeamOnly, PcTeamOnly, BothTeams.
+          oneOf:
+          - $ref: '#/components/schemas/FileAccessLevel'
+    FileAccessLevel:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unrestricted
+      - BothTeams
+      - BenefitTeamOnly
+      - PcTeamOnly
+      enum:
+      - Unrestricted
+      - BothTeams
+      - BenefitTeamOnly
+      - PcTeamOnly
+    FileStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Exists
+      - Failed
+      - Quarantined
+      - Uploading
+      enum:
+      - Exists
+      - Failed
+      - Quarantined
+      - Uploading
+    Attachment:
+      type: object
+      additionalProperties: false
+      properties:
+        isOpen:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/AttachmentType'
+        description:
+          type:
+          - string
+          - 'null'
+        activityInfo:
+          oneOf:
+          - $ref: '#/components/schemas/ActivityInfo'
+        builderFileId:
+          type: integer
+          format: int32
+        attachedToId:
+          type: integer
+          format: int32
+    EntityType:
+      type: string
+      description: ''
+      x-enumNames:
+      - General
+      - Account
+      - Carrier
+      enum:
+      - General
+      - Account
+      - Carrier
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    AttachmentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - RFP
+      - RFPCarrier
+      - RFPEmail
+      - Activity
+      - CarrierQuestionnaire
+      - ProposalAttachment
+      - PlanAttachment
+      enum:
+      - RFP
+      - RFPCarrier
+      - RFPEmail
+      - Activity
+      - CarrierQuestionnaire
+      - ProposalAttachment
+      - PlanAttachment
+    AttachmentFile:
+      allOf:
+      - $ref: '#/components/schemas/File'
+      - type: object
+        additionalProperties: false
+        properties:
+          extension:
+            type:
+            - string
+            - 'null'
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    OperationBase:
+      type: object
+      additionalProperties: false
+      properties:
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+    Operation:
+      allOf:
+      - $ref: '#/components/schemas/OperationBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          value: {}
+    File:
+      type: object
+      additionalProperties: false
+      properties:
+        accessLevel:
+          $ref: '#/components/schemas/FileAccessLevel'
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Attachment'
+        description:
+          type:
+          - string
+          - 'null'
+        fileId:
+          type: string
+          format: guid
+        fileSize:
+          type: integer
+          format: int32
+        lastAccessedBy:
+          oneOf:
+          - $ref: '#/components/schemas/User'
+        lastAccessedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        location:
+          type:
+          - string
+          - 'null'
+        removedBy:
+          oneOf:
+          - $ref: '#/components/schemas/User'
+        removedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          $ref: '#/components/schemas/FileStatus'
+        updatedBy:
+          oneOf:
+          - $ref: '#/components/schemas/User'
+        updatedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        id:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        createdBy:
+          oneOf:
+          - $ref: '#/components/schemas/User'
+        createDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+        fileType:
+          $ref: '#/components/schemas/FileType'
+        parentId:
+          type: integer
+          format: int32
+        isPermanentlyDeletable:
+          type: boolean
+    FileResponse:
+      type: object
+      description: Single file resource response.
+      additionalProperties: false
+      properties:
+        fileId:
+          type:
+          - string
+          - 'null'
+          description: Unique file GUID.
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+          description: Filename with extension.
+        folderId:
+          type:
+          - integer
+          - 'null'
+          description: Parent folder ID.
+          format: int32
+        entityId:
+          type:
+          - integer
+          - 'null'
+          description: Owner entity ID.
+          format: int32
+        entityType:
+          type:
+          - string
+          - 'null'
+          description: Account, Carrier, or General.
+        accessLevel:
+          type:
+          - string
+          - 'null'
+          description: Team visibility restriction.
+        status:
+          type:
+          - string
+          - 'null'
+          description: Active or Archived.
+        contentType:
+          type:
+          - string
+          - 'null'
+          description: MIME type string.
+        sizeBytes:
+          type:
+          - integer
+          - 'null'
+          description: File size bytes.
+          format: int64
+        createdAt:
+          type:
+          - string
+          - 'null'
+          description: UTC creation timestamp.
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          description: UTC update timestamp.
+          format: date-time
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    FileMetadataResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        fileId:
+          type: string
+          description: UUID public identifier; use in download URL.
+          format: guid
+        id:
+          type: integer
+          description: Internal integer ID; use in legacy operations.
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+          description: Display filename including extension.
+        folderId:
+          type:
+          - integer
+          - 'null'
+          description: Containing folder ID; null means root level.
+          format: int32
+        accessLevel:
+          description: Unrestricted, BenefitTeamOnly, PcTeamOnly, BothTeams.
+          oneOf:
+          - $ref: '#/components/schemas/FileAccessLevel'
+        entityId:
+          type:
+          - integer
+          - 'null'
+          description: Owning entity integer identifier.
+          format: int32
+        updatedDate:
+          type:
+          - string
+          - 'null'
+          description: UTC last-modified timestamp; null if unchanged.
+          format: date-time
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

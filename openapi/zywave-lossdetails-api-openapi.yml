@@ -1,0 +1,338 @@
+openapi: 3.2.0
+info:
+  title: CommercialPolicyBenchmark Loss Details API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.commercialpolicybenchmark
+  - api.commercialpolicybenchmark:read
+tags:
+- name: LossDetails
+paths:
+  /commercialpolicybenchmark/v2.0/lossdetails/{lossEventId}:
+    get:
+      tags:
+      - LossDetails
+      summary: return loss details
+      operationId: LossDetails_GetLossDetails
+      parameters:
+      - name: lossEventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LossEventDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /commercialpolicybenchmark/v2.0/lossdetails/getlimitadequacydata:
+    post:
+      tags:
+      - LossDetails
+      summary: return limit adequacy chart data
+      operationId: LossDetails_GetLimitAdequacy
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LossAssessmentSearchRequest'
+            example:
+              ClientLimit: null
+              MostRecentLossYear: null
+              OldestLossYear: null
+              Naics: null
+              CoverageId: 0
+              LineOfBusinessId: null
+              ExposureType: null
+              ExposureRangeLow: 0.0
+              ExposureRangeHigh: 0.0
+              OrganizationType: null
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LossEventData'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    LossEventData:
+      type: object
+      description: LossEventData class.
+      additionalProperties: false
+      properties:
+        clientLimit:
+          type:
+          - number
+          - 'null'
+          description: ClientLimit property.
+          format: decimal
+        medianLimit:
+          type:
+          - integer
+          - 'null'
+          description: MedianLimit property.
+          format: int32
+        percentCovered:
+          type: integer
+          description: PercentCovered property.
+          format: int32
+        maxLoss:
+          type: number
+          description: MaxLoss property.
+          format: decimal
+        averageLoss:
+          type: integer
+          description: AverageLoss property.
+          format: int32
+        listOfCases:
+          type:
+          - array
+          - 'null'
+          description: ListOfCases property.
+          items:
+            $ref: '#/components/schemas/ListOfCases'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ListOfCases:
+      type: object
+      description: ListOfCases class.
+      additionalProperties: false
+      properties:
+        lossEventID:
+          type: integer
+          description: LossEventID property.
+          format: int32
+        lossAmount:
+          type:
+          - number
+          - 'null'
+          description: LossAmount property.
+          format: decimal
+    LossAssessmentSearchRequest:
+      allOf:
+      - $ref: '#/components/schemas/AssessmentSearchRequest'
+      - type: object
+        description: LossAssessmentSearchRequest class.
+        additionalProperties: false
+        properties:
+          clientLimit:
+            type:
+            - number
+            - 'null'
+            description: 'Default value is 0.
+
+              ClientLimit nullable property.'
+            format: decimal
+            default: 0
+          mostRecentLossYear:
+            type:
+            - integer
+            - 'null'
+            description: MostRecentLossYear nullable property.
+            format: int32
+          oldestLossYear:
+            type:
+            - integer
+            - 'null'
+            description: OldestLossYear nullable property.
+            format: int32
+    LossEventDetails:
+      type: object
+      description: LossEventDetails class.
+      additionalProperties: false
+      properties:
+        lossName:
+          type:
+          - string
+          - 'null'
+          description: LossName property.
+        lossCategory:
+          type:
+          - string
+          - 'null'
+          description: LossCategory property.
+        lossType:
+          type:
+          - string
+          - 'null'
+          description: LossType property.
+        lossCoverage:
+          type:
+          - string
+          - 'null'
+          description: LossCoverage property.
+        lossLOB:
+          type:
+          - string
+          - 'null'
+          description: LossLOB property.
+        accidentDate:
+          type:
+          - string
+          - 'null'
+          description: AccidentDate property.
+          format: date-time
+        filingDate:
+          type:
+          - string
+          - 'null'
+          description: FilingDate property.
+          format: date-time
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status property.
+        totalAmount:
+          type:
+          - number
+          - 'null'
+          description: TotalAmount property.
+          format: decimal
+        lossDetailsDescription:
+          type:
+          - string
+          - 'null'
+          description: LossDetailsDescription property.
+    AssessmentSearchRequest:
+      type: object
+      description: AssessmentSearchRequest class.
+      additionalProperties: false
+      properties:
+        naics:
+          type:
+          - array
+          - 'null'
+          description: 'BindRequired.
+
+            Naics property.'
+          items:
+            type: string
+        coverageId:
+          type: integer
+          description: 'BindRequired.
+
+            CoverageId property.'
+          format: int32
+        lineOfBusinessId:
+          type:
+          - array
+          - 'null'
+          description: 'BindRequired.
+
+            LineOfBusinessId property.'
+          items:
+            type: integer
+            format: int32
+        exposureType:
+          type:
+          - string
+          - 'null'
+          description: 'BindRequired.
+
+            Default value is "Revenues".
+
+            ExposureType property.'
+          default: Revenues
+        exposureRangeLow:
+          type: number
+          description: 'BindRequired.
+
+            ExposureRangeLow property.'
+          format: decimal
+        exposureRangeHigh:
+          type: number
+          description: 'BindRequired.
+
+            ExposureRangeHigh property.'
+          format: decimal
+        organizationType:
+          type:
+          - array
+          - 'null'
+          description: OrganizationType property.
+          default: All
+          items:
+            type: string
+  securitySchemes:
+    oidc:
+      type: oauth2
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.commercialpolicybenchmark: Full access to all api operations
+            api.commercialpolicybenchmark:read: Read-only access to api
+x-generator: NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))

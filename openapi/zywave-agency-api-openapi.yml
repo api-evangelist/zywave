@@ -1,0 +1,221 @@
+openapi: 3.2.0
+info:
+  title: Agencies API v2.0 Agency API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.agencies
+  - api.agencies:read
+tags:
+- name: Agency
+paths:
+  /agencies/v2.0/agency:
+    get:
+      tags:
+      - Agency
+      summary: Returns agency information for the agency user associated with the profile…
+      operationId: Agency_GetAgencies
+      parameters:
+      - name: $skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 1
+      - name: $top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A collection of agencies that the profile identity is permitted to view.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgencyCollection'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+  /agencies/v2.0/agency/{id}:
+    get:
+      tags:
+      - Agency
+      summary: Returns agency information for the agency ID specified
+      operationId: Agency_GetAgency
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the desired agency
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: The desired agency.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agency'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgencyInfo:
+      type: object
+      description: AgencyInfo represents the editable properties of an agency.
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        address:
+          type:
+          - string
+          - 'null'
+          description: The primary address for the agency.
+          maxLength: 500
+        alias:
+          type:
+          - string
+          - 'null'
+          description: An abbreviated or informal name of the agency.
+          maxLength: 255
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city of the primary address for the agency.
+          maxLength: 255
+        countryCode:
+          type:
+          - string
+          - 'null'
+          description: The country of the primary address for the agency.
+          maxLength: 2
+        isEnabled:
+          type: boolean
+          description: Determines whether the agency is an active agency. If the agency is not active they will not have access to functionality throughout the Zywave platform.
+        faxNumber:
+          type:
+          - string
+          - 'null'
+          description: The fax number for the agency.
+          format: phone
+          maxLength: 15
+        name:
+          type: string
+          description: The primary name that is used to identify the agency.
+          maxLength: 255
+          minLength: 1
+        organizationalUnitId:
+          type: string
+          description: The unique Zywave identifier for the organization unit that the agency belongs to.
+          format: guid
+        organizationId:
+          type: string
+          description: The unique Zywave identifier for the organization that the agency belongs to.
+          format: guid
+        parentId:
+          type:
+          - integer
+          - 'null'
+          description: The unique Zywave identifier for a parent agency if this is a child agency.
+          format: int32
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The primary phone number for the agency.
+          format: phone
+          maxLength: 15
+        postalCode:
+          type:
+          - string
+          - 'null'
+          description: The zip code or postal code of the primary address for the agency.
+          maxLength: 10
+        subdivisionCode:
+          type:
+          - string
+          - 'null'
+          description: The state or province of the primary address for the agency.
+          maxLength: 4
+        website:
+          type:
+          - string
+          - 'null'
+          description: The website for the agency.
+          maxLength: 255
+    Agency:
+      allOf:
+      - $ref: '#/components/schemas/AgencyInfo'
+      - type: object
+        description: An agency is a standard tenant type within the Zywave platform and represents an insurance agency or related entity.
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the agency.
+            format: int32
+    AgencyCollection:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Agency'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

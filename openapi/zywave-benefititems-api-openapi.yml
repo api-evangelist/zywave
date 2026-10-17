@@ -1,0 +1,908 @@
+openapi: 3.2.0
+info:
+  title: Zywave Benefit Items API
+  version: v2.0
+  description: 'Operations tagged BenefitItems across 2 of this provider''s published API definitions: zywave-bkb-v2-openapi.json, zywave-policies-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.zywave.com
+tags:
+- name: BenefitItems
+paths:
+  /bkb/v2.0/plans/{planId}/benefititemvalues:
+    get:
+      tags:
+      - BenefitItems
+      summary: Get the benefit item values for a plan
+      operationId: BenefitItems_GetBenefitItemValuesForPlan
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: the plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BenefitItemValue'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    post:
+      tags:
+      - BenefitItems
+      summary: Creates a benefit item value under a given plan
+      operationId: BenefitItems_PostBenefitItemValue
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: benefitItemValueInfo
+        description: The BenefitItemValueInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BenefitItemValueInfo2'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/{planId}/benefititemvalues/{benefitItemValueId}:
+    get:
+      tags:
+      - BenefitItems
+      summary: Gets a benefit item value for a given plan
+      operationId: BenefitItems_GetBenefitItemValue
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: benefitItemValueId
+        in: path
+        required: true
+        description: The benefit item value id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BenefitItemValue'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    put:
+      tags:
+      - BenefitItems
+      summary: Updates a benefit item value under a given plan
+      operationId: BenefitItems_PutBenefitItemValue
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: benefitItemValueId
+        in: path
+        required: true
+        description: The benefit item value id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: benefitItemValueUpdateInfo
+        description: The BenefitItemValueUpdateInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BenefitItemValueUpdateInfo'
+        required: true
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    delete:
+      tags:
+      - BenefitItems
+      summary: Deletes a benefit item value under a given plan
+      operationId: BenefitItems_DeleteBenefitItemValue
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: benefitItemValueId
+        in: path
+        required: true
+        description: The benefit item value id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/plantypes/{planTypeId}/benefititems:
+    get:
+      tags:
+      - BenefitItems
+      summary: Get the benefit items for a plan type
+      operationId: BenefitItems_GetBenefitItemsByPlanType
+      parameters:
+      - name: planTypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BenefitItem'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/plantypes/{planTypeId}/plantypebenefititemtiers:
+    get:
+      tags:
+      - BenefitItems
+      summary: Get the plan type benefit item tiers for a plan type
+      operationId: BenefitItems_GetPlanTypeBenefitItemTiersByPlanType
+      parameters:
+      - name: planTypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanTypeBenefitItemTier'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/benefititems/benefititemvaluetypes:
+    get:
+      tags:
+      - BenefitItems
+      summary: Returns the list of benefit item value types
+      operationId: BenefitItems_GetBenefitItemValueTypes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BenefitItemValueType'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /policies/v2.0/benefititems/{id}:
+    get:
+      tags:
+      - BenefitItems
+      summary: Gets a benefit item by id
+      operationId: BenefitItems_GetBenefitItem
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The benefit item id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BenefitItem_2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      security:
+      - oidc:
+        - api.policies:readFull
+    servers:
+    - url: https://api.zywave.com
+  /policies/v2.0/benefititems:
+    get:
+      tags:
+      - BenefitItems
+      summary: Search for benefit item
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * PolicyCoverageTypeId
+
+        * SortOrder
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: BenefitItems_SearchBenefitItems
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfBenefitItem'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      security:
+      - oidc:
+        - api.policies:readFull
+    servers:
+    - url: https://api.zywave.com
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    BenefitItem:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        isRequired:
+          type: boolean
+        isImportant:
+          type: boolean
+        sortOrder:
+          type: integer
+          format: int32
+        isArchived:
+          type: boolean
+        updatedDateTime:
+          type: string
+          format: date-time
+        updatedUserId:
+          type: string
+          format: guid
+        name:
+          type: string
+        planTypeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        benefitItemTypeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        parentBenefitItemId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    BenefitItemValue:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemValueInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - benefitItemValueId
+        properties:
+          benefitItemValueId:
+            type: integer
+            format: int32
+    BenefitItemValueType:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - sortOrder
+      - defaultFormat
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          maxLength: 100
+          minLength: 1
+        sortOrder:
+          type: integer
+          format: int32
+        defaultFormat:
+          type: string
+          maxLength: 50
+          minLength: 1
+    BenefitItemValueInfo2:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemValueUpdateInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          benefitItemId:
+            type: integer
+            format: int32
+          planTypeBenefitItemTierId:
+            type: integer
+            format: int32
+          benefitItemValueTypeId:
+            type: integer
+            format: int32
+    BenefitItemValueInfo:
+      allOf:
+      - $ref: '#/components/schemas/BulkBenefitItemValueInfo'
+      - type: object
+        additionalProperties: false
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    PlanTypeBenefitItemTier:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        planTypeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        name:
+          type: string
+        benefitItemTierId:
+          type: integer
+          format: int32
+        sortOrder:
+          type: integer
+          format: int32
+        isArchived:
+          type: boolean
+    BulkBenefitItemValueInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - benefitItemId
+      - planTypeBenefitItemTierId
+      - planId
+      - benefitItemValueTypeId
+      - updatedUserId
+      properties:
+        benefitItemId:
+          type: integer
+          format: int32
+        planTypeBenefitItemTierId:
+          type: integer
+          format: int32
+        planId:
+          type: integer
+          format: int32
+        benefitItemValueTypeId:
+          type: integer
+          format: int32
+        customText:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        value:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        effectiveDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedUserId:
+          type: string
+          format: guid
+        updatedDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    BenefitItemValueUpdateInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        customText:
+          type:
+          - string
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+        effectiveDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails_2:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    BenefitItemInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: The name of the benefit item.
+          maxLength: 255
+          minLength: 1
+        defaultBenefitItemValueType:
+          $ref: '#/components/schemas/BenefitItemValueType_2'
+        benefitItemOptionTypeId:
+          type:
+          - integer
+          - 'null'
+          description: Must be not blank when DefaultBenefitItemValueType is 'Options'. Otherwise must stay blank.
+          format: int32
+        allowsMultipleValues:
+          type: boolean
+        isHeader:
+          type: boolean
+        parentBenefitItemId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sortOrder:
+          type: integer
+          description: The index in which the benefit item is in the list
+          format: int32
+    PagedResultOfBenefitItem:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BenefitItem_2'
+    BenefitItem_2:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemCreateInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the benefit item.
+            format: int32
+    BenefitItemValueType_2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Percent
+      - Dollar
+      - DollarOrPercent
+      - Boolean
+      - Numeric
+      - Options
+      - Text
+      enum:
+      - Percent
+      - Dollar
+      - DollarOrPercent
+      - Boolean
+      - Numeric
+      - Options
+      - Text
+    BenefitItemCreateInfo:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          policyCoverageTypeId:
+            type: integer
+            format: int32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-refined-from:
+- zywave-bkb-v2-openapi.json
+- zywave-policies-v2-openapi.json
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

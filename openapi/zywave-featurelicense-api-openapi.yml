@@ -1,0 +1,165 @@
+openapi: 3.2.0
+info:
+  title: Licenses API v2.0 Feature License API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.licenses
+  - api.licenses:read
+tags:
+- name: FeatureLicense
+paths:
+  /licenses/v2.0/featurelicense:
+    get:
+      tags:
+      - FeatureLicense
+      summary: Gets a dictionary of feature and license data for the active profile
+      operationId: FeatureLicense_GetFeatureLicenses
+      parameters:
+      - name: effectiveDateTime
+        in: query
+        description: Restricts feature and license data to only licenses active at the specified time. If omitted, all feature and license data is returned.
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 1
+      - name: includeDisabled
+        in: query
+        description: Determines if disabled features are to be included. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        x-position: 2
+      responses:
+        '200':
+          description: A dictionary of feature and license data for the active profile.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/FeatureLicense'
+              example:
+                d597bec5-4aa2-4ce3-b8f2-51fed13147a3:
+                  Licenses:
+                  - EndDateTime: '2026-08-12T09:12:30.3721545+00:00'
+                    Id: 0
+                    Name: string
+                    Quantity: 10
+                    QuantityTypeId: null
+                    StartDateTime: '2026-08-05T09:12:30.3721703+00:00'
+                  Description: string
+                  Id: 0
+                  IsEnabled: true
+                  Key: 59078c2d-1bef-4821-9ff8-f0fbcc54bc19
+                  Name: string
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    License:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        endDateTime:
+          type:
+          - string
+          - 'null'
+          description: The effective end time for the license.
+          format: date-time
+        id:
+          type: integer
+          description: The license identifier.
+          format: int32
+        name:
+          type: string
+          description: The license name.
+        quantity:
+          type: integer
+          description: The quantity supplied by the license, if applicable.
+          format: int32
+        startDateTime:
+          type: string
+          description: The effective start time for the license.
+          format: date-time
+    Feature:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: The feature description.
+        id:
+          type: integer
+          description: The feature identifier.
+          format: int32
+        isEnabled:
+          type: boolean
+          description: Specifies whether the feature is enabled.
+        key:
+          type: string
+          description: The unique feature key.
+          format: guid
+        name:
+          type: string
+          description: The feature name.
+        tags:
+          type: array
+          description: All tags associated with the feature.
+          items:
+            type: string
+    FeatureLicense:
+      allOf:
+      - $ref: '#/components/schemas/Feature'
+      - type: object
+        additionalProperties: false
+        properties:
+          licenses:
+            type: array
+            description: All licenses that have granted the feature.
+            items:
+              $ref: '#/components/schemas/License'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

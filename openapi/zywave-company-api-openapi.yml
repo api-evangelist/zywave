@@ -1,0 +1,833 @@
+openapi: 3.2.0
+info:
+  title: Zywave Company API
+  version: '1.0'
+  description: 'Operations tagged Company across 2 of this provider''s published API definitions: zywave-commercial-policy-benchmark-v2-openapi.json, zywave-lead-insights-v3-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.zywave.com
+tags:
+- name: Company
+paths:
+  /commercialpolicybenchmark/v2.0/company/{id}:
+    get:
+      tags:
+      - Company
+      summary: return company info
+      operationId: Company_GetCompany
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.commercialpolicybenchmark
+        - api.commercialpolicybenchmark:read
+    servers:
+    - url: https://api.zywave.com
+  /commercialpolicybenchmark/v2.0/company:
+    get:
+      tags:
+      - Company
+      summary: return list of companies
+      operationId: Company_SearchCompanies
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 100
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCompany'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.commercialpolicybenchmark
+        - api.commercialpolicybenchmark:read
+    servers:
+    - url: https://api.zywave.com
+  /v3/companies/v1.0/company/{id}:
+    get:
+      tags:
+      - Company
+      summary: Company summary
+      description: Summary information about the company.
+      parameters:
+      - in: path
+        name: id
+        description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+        required: true
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company_2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      security:
+      - bearerAuth: []
+      operationId: getV3CompaniesV10CompanyById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.zywave.com
+  /v3/companies/v1.0/company/{id}/contacts:
+    get:
+      tags:
+      - Company
+      summary: Company contacts
+      description: Get a list of contacts associated with the given company ID
+      parameters:
+      - in: path
+        name: id
+        description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+        required: true
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyContacts'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      security:
+      - bearerAuth: []
+      operationId: getV3CompaniesV10CompanyByIdContacts
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.zywave.com
+  /v3/companies/v1.0/company/{id}/details:
+    get:
+      tags:
+      - Company
+      summary: Company details
+      description: Detailed information about the company including lists of DBA names, locations, phone numbers, eins, and industry classifications (NAICS).
+      parameters:
+      - in: path
+        name: id
+        description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+        required: true
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      security:
+      - bearerAuth: []
+      operationId: getV3CompaniesV10CompanyByIdDetails
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.zywave.com
+  /v3/companies/v1.0/company/match:
+    get:
+      tags:
+      - Company
+      operationId: CompanyMatch_GetCompanyMatches
+      summary: Matches a company given a set of parameters
+      description: 'A minimum set of parameters must be provided to find a match, which are described by the following sets of acceptable minimal match criteria:
+
+        * ein and one of (name, address, or phone)
+
+        * name and address
+
+
+        An address must consist of the following fields to be valid: addressLine1, city and state (abbreviation) or postal code.
+
+
+        Providing phone, email, or website with any of the above minimum criteria sets can significantly improve the likelihood of a match.
+
+
+        If the company you are requesting was acquired, you will get the parent company information.'
+      parameters:
+      - name: ein
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: name
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: addressLine1
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: addressLine2
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: city
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: state
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: postalCode
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: phoneNumber
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: websiteUrl
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: email
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 10
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyMatch'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.zywave.com
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Company:
+      type: object
+      description: Company class.
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: id property.
+          format: int32
+        companyName:
+          type:
+          - string
+          - 'null'
+          description: CompanyName property.
+        organizationType:
+          type:
+          - string
+          - 'null'
+          description: OrganizationType property.
+        naicsCode:
+          type:
+          - string
+          - 'null'
+          description: NaicsCode property
+        naics2:
+          type: integer
+          description: Naics2 property.
+          format: int32
+        naics3:
+          type: integer
+          description: Naics3 property.
+          format: int32
+        revenues:
+          type: number
+          description: Revenues property.
+          format: decimal
+        numberOfEmployees:
+          type: integer
+          description: NumberOfEmployees property.
+          format: int32
+        marketCap:
+          type: number
+          description: MarketCap property.
+          format: decimal
+    PagedResultOfCompany:
+      type: object
+      description: A model containing a collection of Content pieces and metadata about their position in a larger result list.
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type:
+          - boolean
+          - 'null'
+          description: A value indicating whether the larger result set has more results.
+        pageIndex:
+          type:
+          - integer
+          - 'null'
+          description: The index of the page reflected by the collection.
+          format: int32
+        pageSize:
+          type:
+          - integer
+          - 'null'
+          description: The size of the page relfected by the collection.
+          format: int32
+        skip:
+          type:
+          - integer
+          - 'null'
+          description: A value indicating how many of the previous values in the larger result set were omitted.
+          format: int32
+        take:
+          type:
+          - integer
+          - 'null'
+          description: The number of records retrieved from larger result set.
+          format: int32
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          description: The total number of records in the larger result set.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: The records retrieved from the larger result set.
+          items:
+            $ref: '#/components/schemas/Company'
+    ProblemDetails_2:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        exceptionSource:
+          type:
+          - string
+          - 'null'
+        additionalInfo:
+          type:
+          - string
+          - 'null'
+    CompanyDetails:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          type: string
+          description: The normalized company name
+          example: ZYWAVE
+        alternateEins:
+          type: array
+          description: List of known EINs and the date it was last reported
+          items:
+            type: object
+            properties:
+              ein:
+                type: string
+                example: '123123123'
+              asOfDate:
+                type: string
+                example: '2022-09-09'
+        alternateAddresses:
+          type: array
+          description: List of known addresses and the date it was last reported
+          items:
+            type: object
+            properties:
+              address:
+                $ref: '#/components/schemas/Address'
+              asOfDate:
+                type: string
+                example: '2022-09-15'
+        alternateNaicsCodes:
+          type: array
+          description: List of known NAICS for the business and the date it was last reported
+          items:
+            type: object
+            properties:
+              naics:
+                type: string
+                example: '645646456'
+              asOfDate:
+                type: string
+                example: '2022-09-15'
+        alternateNames:
+          type: array
+          description: List of known business names and the date it was last reported
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Zywave
+              asOfDate:
+                type: string
+                example: '2022-09-15'
+        alternatePhoneNumbers:
+          type: array
+          description: List of known phone numbers and the date it was last reported
+          items:
+            type: object
+            properties:
+              phoneNumber:
+                type: string
+                example: '2133456789'
+              asOfDate:
+                type: string
+                example: '2022-09-15'
+    CompanyContacts:
+      type: object
+      description: A list of contacts for the provided company ID.
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        contacts:
+          type: array
+          description: A list of contacts for the given ID.
+          items:
+            properties:
+              companyName:
+                type: string
+                description: The contact's company name. Note it may be different than the parent company name in the case of a merger/acquisition.
+                example: WALMART INC
+              address:
+                type: object
+                properties:
+                  addressLine1:
+                    type: string
+                    description: Standardized and normalized address one
+                    example: 4565 PAYSPHERE CIRCLE
+                  addressLine2:
+                    type: string
+                    description: Standardized and normalized address two
+                    example: null
+                  city:
+                    type: string
+                    description: Standardized and normalized city
+                    example: CHICAGO
+                  state:
+                    type: string
+                    description: Standardized and normalized state (2 letter abbreviation)
+                    example: IL
+                  postalCode:
+                    type: string
+                    description: Standardized address postal code
+                    example: 60674
+              fullName:
+                type: string
+                description: The contact's full name
+                example: MR Christopher Daniel Nicholas
+              namePrefix:
+                type: string
+                description: The name prefix
+                example: Mr
+              firstName:
+                type: string
+                description: The contact's first name
+                example: Christopher
+              middleName:
+                type: string
+                description: The contact's middle name
+                example: Daniel
+              lastName:
+                type: string
+                description: The contact's last name
+                example: Nicholas
+              nameSuffix:
+                type: string
+                description: The name suffix
+                example: null
+              jobTitle:
+                type: string
+                description: The contacts job title
+                example: Chief Operating Officer
+              email:
+                type: string
+                description: The contact's email
+                example: christopher@wal-mar.com
+              phoneNumber:
+                type: string
+                description: The contact's phone number
+                example: '4792734000'
+    Address:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+          description: Standardized and normalized address one
+          example: 4565 PAYSPHERE CIRCLE
+        addressLine2:
+          type: string
+          description: Standardized and normalized address two
+          example: null
+        city:
+          type: string
+          description: Standardized and normalized city
+          example: CHICAGO
+        state:
+          type: string
+          description: Standardized and normalized state (2 letter abbreviation)
+          example: IL
+        postalCode:
+          type: string
+          description: Standardized address postal code
+          example: 60674
+        county:
+          type: string
+          description: The county name of the broker address
+          example: Cook
+    CompanyMatch:
+      allOf:
+      - $ref: '#/components/schemas/Company_2'
+      - type: object
+        properties:
+          score:
+            type: integer
+            description: Score derived from the match algorithm. A score above 8 is considered a adequate match. A score above 12 is considered a exceptional.
+            example: 19
+    Company_2:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type: string
+          description: Description of the company
+          example: Zywave's insurance agency software is used by more than 5,000 insurance agencies, including 95 of the Top 100 U.S. insurance firms. Schedule a demo today.
+        ein:
+          type: string
+          description: Federal employer identification number
+          example: '815126936'
+        employeeCount:
+          type: integer
+          description: Total count of employees
+          example: 1291
+        employeeRange:
+          type: string
+          description: Employees range for the company
+          example: 1,000 - 4,999
+        facebookUrl:
+          type: string
+          description: URL to the company's facebook profile
+          example: http://www.facebook.com/zywave/
+        id:
+          $ref: '#/components/schemas/id'
+        linkedinUrl:
+          type: string
+          description: URL to the company's linkedin profile
+          example: http://www.linkedin.com/company/zywave
+        naicsCode:
+          type: string
+          description: North American Industry Classification System number
+          example: '541990'
+        name:
+          type: string
+          description: The normalized company name
+          example: ZYWAVE
+        phoneNumber:
+          type: string
+          description: The company's phone number
+          example: '14144546100'
+        primaryAddress:
+          type: object
+          properties:
+            addressLine1:
+              type: string
+              description: The first line of the company's physical address
+              example: 10100 W INNOVATION DR STE 300
+            addressLine2:
+              type: string
+              description: Additional address information of the company Ex. apt number, building name, or floor number
+              example: ''
+            city:
+              type: string
+              description: City name
+              example: MILWAUKEE
+            state:
+              type: string
+              description: Abbreviated state name
+              example: WI
+            county:
+              type: string
+              description: County name
+              example: MILWAUKEE
+            postalCode:
+              type: string
+              description: Zip code
+              example: '53226'
+            country:
+              type: string
+              description: Country name
+              example: UNITED STATES
+        revenueRange:
+          type: string
+          description: Revenue range for the company
+          example: 50M - 100M
+        twitterUrl:
+          type: string
+          description: URL to the company's twitter profile
+          example: https://twitter.com/zywave
+        websiteUrl:
+          type: string
+          description: URL to the company's website
+          example: http://zywave.com
+    id:
+      description: The unique identifier of a company. If the response id differs from the requested one, it indicates that the requested company has been acquired, and the data of the parent company is returned instead.
+      type: string
+      example: M84000053215022
+  securitySchemes:
+    oidc:
+      type: oauth2
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.commercialpolicybenchmark: Full access to all api operations
+            api.commercialpolicybenchmark:read: Read-only access to api
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter your token in the text input below
+x-refined-from:
+- zywave-commercial-policy-benchmark-v2-openapi.json
+- zywave-lead-insights-v3-openapi.json
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

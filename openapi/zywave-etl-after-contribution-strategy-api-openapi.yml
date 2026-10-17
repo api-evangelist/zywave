@@ -1,0 +1,195 @@
+openapi: 3.2.0
+info:
+  title: Policies ETL after Contribution Strategy API
+  version: v2.0
+  description: When importing data via the API, these operations should be performed after the referenced policy's contribution strategy has been created.
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: ETL after Contribution Strategy
+  description: When importing data via the API, these operations should be performed after the referenced policy's contribution strategy has been created.
+paths:
+  /policies/v2.0/policies/{id}/contributions/{contributionTier}:
+    put:
+      tags:
+      - ETL after Contribution Strategy
+      summary: Inserts or updates a contribution record
+      description: Contribution is influenced by Contribution Strategy.
+      operationId: Policies_UpsertContribution
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: contributionTier
+        in: path
+        required: true
+        description: The contribution tier.
+        schema:
+          $ref: '#/components/schemas/ContributionTierOption'
+        x-position: 2
+      requestBody:
+        x-name: contributionInfo
+        description: The ContributionInfo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContributionInfo'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: Either a 200 OK (for an update) or a 201 Created (for an insert) with a ContributionRecord payload containing the computed contributions in dollars for employer and employee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContributionRecord'
+        '201':
+          description: Either a 200 OK (for an update) or a 201 Created (for an insert) with a ContributionRecord payload containing the computed contributions in dollars for employer and employee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContributionRecord'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ContributionInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - strategyAmount
+      - rateTotal
+      properties:
+        strategyAmount:
+          type: number
+          description: The eployee/employer percentage/dollars.
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        rateTotal:
+          type: number
+          description: The total for the contribution tier (employer $ + employee $).
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+    ContributionTierOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+      enum:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+    ContributionRecord:
+      type: object
+      description: The contribution record data returned to the caller.
+      additionalProperties: false
+      properties:
+        contributionTier:
+          description: The contribution tier.
+          default: Employee
+          oneOf:
+          - $ref: '#/components/schemas/ContributionTierOption'
+        rateTotal:
+          type: number
+          description: The monthly total for rate tier (Employer $ + Employee $).
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        strategyAmount:
+          type: number
+          description: The percent or dollar amount used in calculations. E.g. 30% (a percentage strategy) or $541.32 (a dollars strategy).
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        employeeDollars:
+          type: number
+          description: Computed. The monthly dollar amount paid by the employee.
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        employerDollars:
+          type: number
+          description: Computed. The monthly dollar amount paid by the employer.
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        employeePercent:
+          type: number
+          description: Computed. The monthly percent contribution paid by the employee.
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+        employerPercent:
+          type: number
+          description: Computed. The monthly percent contribution paid by the employer.
+          format: decimal
+          pattern: ^\d+\.?\d{0,2}$
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

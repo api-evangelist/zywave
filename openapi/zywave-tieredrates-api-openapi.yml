@@ -1,0 +1,402 @@
+openapi: 3.2.0
+info:
+  title: Policies Tiered Rates API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: TieredRates
+paths:
+  /policies/v2.0/policies/{policyId}/tieredrates/{id}:
+    delete:
+      tags:
+      - TieredRates
+      summary: Deletes the tiered rate information associated with the tiered rate id specified
+      description: Tiered rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: TieredRates_DeleteTieredRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The id of the tiered rate to delete.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '204':
+          description: A 204 No Content response.
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - TieredRates
+      summary: Returns the tiered rate information for the tiered rate id specified
+      description: Tiered rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: TieredRates_GetTieredRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The tiered rate id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TieredRate'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    put:
+      tags:
+      - TieredRates
+      summary: Updates the existing tiered rate information for the tiered rate id specified
+      description: Tiered rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: TieredRates_PutTieredRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The id of the tiered rate to update
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: tieredRateInfo
+        description: The information to update on the tiered rate.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TieredRateBaseInfo'
+        required: true
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/tieredrates:
+    get:
+      tags:
+      - TieredRates
+      summary: Returns list of tiered rate information for the policy
+      operationId: TieredRates_SearchTieredRatesFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TieredRate'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    post:
+      tags:
+      - TieredRates
+      summary: Creates a tiered rate for a policy
+      description: Tiered rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: TieredRates_PostTieredRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: tieredRateInfo
+        description: The tiered rate to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TieredRateBaseInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 Created response containing the id of the created tiered rate.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    TieredRateInfo:
+      allOf:
+      - $ref: '#/components/schemas/TieredRateBaseInfo'
+      - type: object
+        description: Tiered rate info
+        additionalProperties: false
+        required:
+        - policyId
+        properties:
+          policyId:
+            type: integer
+            description: The identifier for the policy that is tied to the tiered rate record. Has a dependency on a policy item.  Please use the policy endpoint for reference.
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    TieredRateBaseInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - rateTierType
+      properties:
+        rateTierType:
+          description: 'The identifier for the tier type that is tied to the tiered rate record. '
+          oneOf:
+          - $ref: '#/components/schemas/RateTierTypeOption'
+        memberCount:
+          type:
+          - integer
+          - 'null'
+          description: The number of people included in the tiered rate.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 0.0
+        monthlyRate:
+          type:
+          - number
+          - 'null'
+          description: The monthly rate for the tiered rate.
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    RateTierTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+      enum:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+    TieredRate:
+      allOf:
+      - $ref: '#/components/schemas/TieredRateInfo'
+      - type: object
+        description: Represents a tiered rate
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the tiered rate.
+            format: int32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

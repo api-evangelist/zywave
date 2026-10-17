@@ -1,0 +1,473 @@
+openapi: 3.2.0
+info:
+  title: BKB Commission Statements API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: CommissionStatements
+paths:
+  /bkb/v2.0/commissionstatements/search:
+    post:
+      tags:
+      - CommissionStatements
+      summary: Searches for commission statements based on criteria
+      operationId: CommissionStatements_SearchCommissionStatements
+      requestBody:
+        x-name: commissionStatementSearchModel
+        description: The CommissionStatementSearchModel.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommissionStatementSearchModel'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCommissionStatement'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/commissionstatements/{commissionStatementId}/actualcommissions:
+    get:
+      tags:
+      - CommissionStatements
+      summary: Gets actual commissions for specified commission statement id
+      operationId: CommissionStatements_GetActualCommissionsByStatementId
+      parameters:
+      - name: commissionStatementId
+        in: path
+        required: true
+        description: The commission statement id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActualCommission'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ValueSearchCriteriaOfDecimal:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          rangeEndValue:
+            type:
+            - number
+            - 'null'
+            format: decimal
+          rangeStartValue:
+            type:
+            - number
+            - 'null'
+            format: decimal
+          searchType:
+            $ref: '#/components/schemas/ValueSearchType'
+          value:
+            type:
+            - number
+            - 'null'
+            format: decimal
+    SearchCriteriaBase:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        sort:
+          $ref: '#/components/schemas/SortType'
+        sortOrder:
+          type: integer
+          format: int32
+    ValueSearchCriteriaOfDateTime:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          rangeEndValue:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          rangeStartValue:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          searchType:
+            $ref: '#/components/schemas/ValueSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    StringSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/StringSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+    CommissionStatementSearchModel:
+      type: object
+      additionalProperties: false
+      properties:
+        searchCriteria:
+          oneOf:
+          - $ref: '#/components/schemas/CommissionStatementSearchCriteria'
+        searchOptions:
+          oneOf:
+          - $ref: '#/components/schemas/SearchOptions2'
+    SearchOptions2:
+      type: object
+      additionalProperties: false
+      properties:
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    BooleanSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      enum:
+      - None
+      - Equals
+      - NotEquals
+    StringSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+    IdListSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+    DateTimeSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/ValueSearchCriteriaOfDateTime'
+      - type: object
+        additionalProperties: false
+    CommissionStatement:
+      type: object
+      description: Carrier CommissionStatement
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique ID for this statement.
+          format: int32
+        carrierId:
+          type: integer
+          description: Gets or sets the carrier ID associated with this statement.
+          format: int32
+        checkNumber:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the check number for the payment of the commission.
+        depositDate:
+          type: string
+          description: Gets or sets the date on which the commission dollars were deposited.
+          format: date-time
+        isPosted:
+          type: boolean
+          description: Gets a value indicating whether this instance is posted.
+        postedById:
+          type:
+          - integer
+          - 'null'
+          description: Gets the ID of the user who posted the statement.
+          format: int32
+        postedDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date and time the statement was posted.
+          format: date-time
+        statementDate:
+          type: string
+          description: Gets or sets the statement date.
+          format: date-time
+        statementNumber:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the number from the statement.
+        statementTotal:
+          type: number
+          description: Gets or sets the total commission paid out (amount of the check).
+          format: decimal
+    SortType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Ascending
+      - Descending
+      enum:
+      - None
+      - Ascending
+      - Descending
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    DecimalSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/ValueSearchCriteriaOfDecimal'
+      - type: object
+        additionalProperties: false
+    CommissionStatementSearchCriteria:
+      type: object
+      description: The search criteria to search for commission statement objects
+      additionalProperties: false
+      properties:
+        id:
+          description: Gets or sets the unique ID for this search criteria.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        carrierId:
+          description: Gets or sets the carrier ID.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        checkNumber:
+          description: Gets or sets the check number.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        depositDate:
+          description: Gets or sets the deposit date.
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        isPosted:
+          description: Gets or sets a value indicating whether this instance has been posted.
+          oneOf:
+          - $ref: '#/components/schemas/BooleanSearchCriteria'
+        postedDate:
+          description: Gets or sets the posted date.
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        statementDate:
+          description: Gets or sets the statement date.
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        statementNumber:
+          description: Gets or sets the statement number.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        statementTotal:
+          description: Gets or sets the statement total.
+          oneOf:
+          - $ref: '#/components/schemas/DecimalSearchCriteria'
+    BooleanSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/BooleanSearchType'
+          value:
+            type: boolean
+    ActualCommission:
+      type: object
+      description: Actual Commission Reconciliation
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique ID for this actual commission.
+          format: int32
+        commissionAmount:
+          type: number
+          description: Gets or sets the actual commission amount received.
+          format: decimal
+        commissionStatementId:
+          type: integer
+          description: Gets or sets the ID of the commission statement.
+          format: int32
+        expectedCommissionId:
+          type: integer
+          description: Gets or sets the ID of the expected commission.
+          format: int32
+        premiumAmount:
+          type: number
+          description: Gets or sets the actual premium amount.
+          format: decimal
+        planId:
+          type: integer
+          description: Gets or sets the plan ID for the commission is recorded for.
+          format: int32
+    ValueSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - GreaterThan
+      - GreaterThanEquals
+      - LessThan
+      - LessThanEquals
+      - Between
+      - NotBetween
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - GreaterThan
+      - GreaterThanEquals
+      - LessThan
+      - LessThanEquals
+      - Between
+      - NotBetween
+    IdListSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/IdListSearchType'
+          value:
+            type: integer
+            format: int32
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              type: integer
+              format: int32
+          inclusiveNulls:
+            type: boolean
+    PagedResultOfCommissionStatement:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommissionStatement'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

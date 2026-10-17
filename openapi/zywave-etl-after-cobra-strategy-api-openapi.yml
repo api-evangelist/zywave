@@ -1,0 +1,170 @@
+openapi: 3.2.0
+info:
+  title: Policies ETL after COBRA Strategy API
+  version: v2.0
+  description: When importing data via the API, these operations should be performed after the referenced policy's COBRA strategy has been created.
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: ETL after COBRA Strategy
+  description: When importing data via the API, these operations should be performed after the referenced policy's COBRA strategy has been created.
+paths:
+  /policies/v2.0/policies/{id}/cobra/{contributionTier}:
+    put:
+      tags:
+      - ETL after COBRA Strategy
+      summary: Inserts or updates a COBRA rate record
+      description: 'Cobra Rate is influenced by Cobra Rate Strategy.
+
+
+        **NOTE:** If the `CobraRateStrategy` associated with the policy has `OverrideDefaultRate` = `false`, the value will **NOT** be used. The record for the tier will be created, however, if it does not already exist.'
+      operationId: Policies_UpsertCobraRate
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: contributionTier
+        in: path
+        required: true
+        description: The contribution tier.
+        schema:
+          $ref: '#/components/schemas/RateTierTypeOption'
+        x-position: 2
+      requestBody:
+        x-name: cobraRateInfo
+        description: The CobraRateRecord.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CobraRateRecordInfo'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: Either a 200 OK (for an update) or a 201 Created (for an insert) with a ContributionRecord payload containing the computed contributions in dollars for employer and employee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CobraRateRecord'
+        '201':
+          description: Either a 200 OK (for an update) or a 201 Created (for an insert) with a ContributionRecord payload containing the computed contributions in dollars for employer and employee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CobraRateRecord'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    CobraRateRecord:
+      allOf:
+      - $ref: '#/components/schemas/CobraRateRecordInfo'
+      - type: object
+        description: A COBRA rate record
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the COBRA Rate record
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+          tier:
+            description: The contribution tier for the rate record.
+            oneOf:
+            - $ref: '#/components/schemas/RateTierTypeOption'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CobraRateRecordInfo:
+      type: object
+      description: COBRA rate record info
+      additionalProperties: false
+      properties:
+        cobraRate:
+          type:
+          - number
+          - 'null'
+          description: "The COBRA rate for the contribution tier.\n            \n**NOTE:** If the `CobraRateStrategy` associated with the policy has `OverrideDefaultRate` = `false`, this value will be calculated to follow the default rule."
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+    RateTierTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+      enum:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

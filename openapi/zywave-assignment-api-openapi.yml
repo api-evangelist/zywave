@@ -1,0 +1,461 @@
+openapi: 3.2.0
+info:
+  title: Client Engagement API v1.0 Assignment API
+  version: v1.0
+servers:
+- url: https://api.zywave.com
+tags:
+- name: Assignment
+paths:
+  /v3/clientEngagement/v1.0/org/{organizationId}/agency/{agencyId}/assignment/{id}:
+    get:
+      tags:
+      - Assignment
+      summary: Retrieves an assignment by its unique identifier
+      operationId: Assignment_GetAssignment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Assignment
+      summary: Updates an existing assignment with the provided details
+      operationId: Assignment_UpdateAssignment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 3
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      requestBody:
+        x-name: assignmentInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignmentUpdateInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Assignment
+      summary: Deletes an assignment by its unique identifier
+      operationId: Assignment_DeleteAssignment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v3/clientEngagement/v1.0/org/{organizationId}/agency/{agencyId}/assignment:
+    get:
+      tags:
+      - Assignment
+      summary: Retrieves a paginated list of assignments for the specified organization and…
+      operationId: Assignment_GetAssignments
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: $filter
+        x-originalName: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $skip
+        x-originalName: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 5
+      - name: $top
+        x-originalName: top
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 6
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAssignment'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Assignment
+      summary: Creates a new assignment for the specified employee
+      operationId: Assignment_CreateAssignment
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: reassign
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 4
+      requestBody:
+        x-name: assignmentInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignmentCreateInfo'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Assignment:
+      allOf:
+      - $ref: '#/components/schemas/AssignmentCreateInfo'
+      - type: object
+        description: Employee course assignment.
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            format: int32
+          status:
+            $ref: '#/components/schemas/AssignmentStatus'
+          courseName:
+            type: string
+          startedDateTime:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          completedDateTime:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          createdDateTime:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          createdUserPrincipalId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          updatedDateTime:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          updatedUserPrincipalId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    PagedResultOfAssignment:
+      type: object
+      description: A page of results from a larger result set, along with paging metadata.
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: A value indicating whether the larger result set has more results.
+        skip:
+          type: integer
+          description: A value indicating how many of the previous values in the larger result set were omitted.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        take:
+          type: integer
+          description: The number of records retrieved from the larger result set.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        totalCount:
+          type: integer
+          description: The total number of records in the larger result set.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        items:
+          type: array
+          description: The records retrieved from the larger result set.
+          items:
+            $ref: '#/components/schemas/Assignment'
+    AssignmentCreateInfo:
+      allOf:
+      - $ref: '#/components/schemas/AssignmentUpdateInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - courseId
+        - accountId
+        - employeeId
+        properties:
+          courseId:
+            type: string
+            format: guid
+            minLength: 1
+          accountId:
+            type: integer
+            format: int32
+          employeeId:
+            type: integer
+            format: int32
+    AssignmentUpdateInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    AssignmentStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - NotStarted
+      - Started
+      - Completed
+      enum:
+      - Unknown
+      - NotStarted
+      - Started
+      - Completed

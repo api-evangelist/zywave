@@ -1,0 +1,421 @@
+openapi: 3.2.0
+info:
+  title: Policies Eligibilities API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: Eligibilities
+paths:
+  /policies/v2.0/policies/{policyId}/eligibilities:
+    post:
+      tags:
+      - Eligibilities
+      summary: Creates an eligibility record for the policy
+      operationId: Policies_CreateEligibility
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: info
+        description: The EligibilityInfo used to create a new record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EligibilityInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 CREATED with the id of the new record.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - Eligibilities
+      summary: Gets all of the Eligibility records for a policy
+      operationId: Policies_GetEligibilityRecords
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: A 200 OK response with an array of Eligibility records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eligibility'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+  /policies/v2.0/policies/{policyId}/eligibilities/{id}:
+    delete:
+      tags:
+      - Eligibilities
+      summary: Deletes an eligibility record by id for a policy
+      operationId: Policies_DeleteEligibility
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: the id of the eligibility record.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 No Content response.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - Eligibilities
+      summary: Gets an Eligibility record for a policy by id
+      operationId: Policies_GetEligibility
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The id of the eligibility record.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A 200 OK response with the Eligibility record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eligibility'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    put:
+      tags:
+      - Eligibilities
+      summary: Updates an eligibility record for a policy
+      operationId: Policies_UpdateEligibility
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The id of the eligibility record.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: info
+        description: The EligibilityInfo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EligibilityInfo'
+        required: true
+        x-position: 3
+      responses:
+        '204':
+          description: A 204 No Content response.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CoverageTerminationOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Immediate
+      - LastDayOfMonth
+      - ThirtyDaysAfter
+      - FifteenthOfMonth
+      enum:
+      - Immediate
+      - LastDayOfMonth
+      - ThirtyDaysAfter
+      - FifteenthOfMonth
+    WaitingPeriodOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - DateOfHire
+      - NDaysAfterDateOfHire
+      - NMonthsAfterDateOfHire
+      - FirstOfMonthAfterDateOfHire
+      - FirstOfMonthAfterNDaysAfterDateOfHire
+      - FirstOfMonthAfterNMonthsAfterDateOfHire
+      - FifteenthOfMonthAfterNDaysAfterDateOfHire
+      - FifteenthOfMonthAfterNMonthsAfterDateOfHire
+      enum:
+      - DateOfHire
+      - NDaysAfterDateOfHire
+      - NMonthsAfterDateOfHire
+      - FirstOfMonthAfterDateOfHire
+      - FirstOfMonthAfterNDaysAfterDateOfHire
+      - FirstOfMonthAfterNMonthsAfterDateOfHire
+      - FifteenthOfMonthAfterNDaysAfterDateOfHire
+      - FifteenthOfMonthAfterNMonthsAfterDateOfHire
+    EligibilityInfo:
+      type: object
+      description: Eligibility information for a policy.
+      additionalProperties: false
+      properties:
+        employeeGroup:
+          description: 'The employee group or groups to which this eligibility information applies.
+
+
+            This value can be a bit mask of EmployeeGroupOptions values. '
+          oneOf:
+          - $ref: '#/components/schemas/EmployeeGroupOptions'
+        hours:
+          type:
+          - integer
+          - 'null'
+          description: The minimum weekly hours required for eligibility.
+          format: int32
+          maximum: 40.0
+          minimum: 0.0
+        waitingPeriod:
+          description: The waiting period between hire date and first coverage.
+          oneOf:
+          - $ref: '#/components/schemas/WaitingPeriodOption'
+        waitingPeriodAmount:
+          type:
+          - integer
+          - 'null'
+          description: The waiting period amount (days/months) used as needed with the WaitingPeriod.
+          format: int32
+          maximum: 365.0
+          minimum: 0.0
+        domesticPartnerCoverage:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if domestic partners are covered by the policy.
+        coverageTermination:
+          description: The coverage termination relative to employment termination.
+          oneOf:
+          - $ref: '#/components/schemas/CoverageTerminationOption'
+        description:
+          type:
+          - string
+          - 'null'
+          description: The description of the eligibility coverage information.
+          maxLength: 500
+        spouseCoverage:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if spouse is covered by the policy.
+        dependentCoverage:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if dependent or child is covered by the policy.
+        otherCoverage:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if there is anything other covered by the policy.
+        otherCoverageDescription:
+          type:
+          - string
+          - 'null'
+          description: The description of the other coverage information.
+          maxLength: 100
+    EmployeeGroupOptions:
+      type: string
+      description: ''
+      x-enumFlags: true
+      x-enumNames:
+      - None
+      - Salaried
+      - NonSalaried
+      - Management
+      - Union
+      - FullTime
+      - All
+      enum:
+      - None
+      - Salaried
+      - NonSalaried
+      - Management
+      - Union
+      - FullTime
+      - All
+    Eligibility:
+      allOf:
+      - $ref: '#/components/schemas/EligibilityInfo'
+      - type: object
+        description: The Eligibility for the policy.
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The ID of the eligibility record.
+            format: int32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

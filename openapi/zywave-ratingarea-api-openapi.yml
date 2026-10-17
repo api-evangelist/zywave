@@ -1,0 +1,210 @@
+openapi: 3.2.0
+info:
+  title: Plans Rating Area API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.plans
+  - api.plans:read
+tags:
+- name: RatingArea
+paths:
+  /plans/v2.0/ratingarea:
+    get:
+      tags:
+      - RatingArea
+      summary: Searches for rating areas
+      description: 'For more information on how to work with the Search endpoints within the Zywave API check out OData Search within the Zywave API documentation.
+
+
+        The following properties can be used when filtering and ordering the response:
+
+
+        | Search parameter | Use case |
+
+        | ------- | -------- |
+
+        | cmsRatingAreaId | Retrieve rating areas related to a CMS rating area ID. |
+
+        | county | Retrieve rating areas related to a county. |
+
+        | subdivisionCode | Retrieve rating areas related to a subdivision code. |
+
+        | postalCode | Retrieve rating areas related to a postal code. |'
+      operationId: RatingArea_SearchRatingAreas
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired rating areas
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: The rating areas that fulfill the search criteria on the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultOfRatingArea'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SearchResultOfRatingArea:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: Indicates whether the search has more results than returned in the response.
+        totalCount:
+          type: integer
+          description: The total records that meet the search criteria specified.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: A list of business and personal accounts matching the search criteria.
+          items:
+            $ref: '#/components/schemas/RatingArea'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    RatingArea:
+      type: object
+      additionalProperties: false
+      required:
+      - cmsRatingAreaId
+      - subdivisionCode
+      - postalCode
+      properties:
+        cmsRatingAreaId:
+          type: integer
+          description: The state rating area ID assigned by Centers for Medicare & Medicaid Services.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        county:
+          type:
+          - string
+          - 'null'
+          description: The county the rating area is associated with.
+          maxLength: 45
+        subdivisionCode:
+          type: string
+          description: The subdivision code the rating area is associated with.
+          maxLength: 10
+          minLength: 1
+        postalCode:
+          type: string
+          description: The zip code or postal code the rating area is associated with.
+          maxLength: 10
+          minLength: 1
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.0.0 (NJsonSchema v11.6.0.0 (Newtonsoft.Json v13.0.0.0))

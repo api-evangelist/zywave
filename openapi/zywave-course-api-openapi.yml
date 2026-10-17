@@ -1,0 +1,357 @@
+openapi: 3.2.0
+info:
+  title: Client Engagement API v1.0 Course API
+  version: v1.0
+servers:
+- url: https://api.zywave.com
+tags:
+- name: Course
+paths:
+  /v3/clientEngagement/v1.0/org/{organizationId}/agency/{agencyId}/course/{id}:
+    get:
+      tags:
+      - Course
+      summary: Retrieves a course by its unique identifier
+      description: 'Sample request:
+
+
+        GET /v3/clientEngagement/v1.0/org/11111111-1111-1111-1111-111111111111/agency/123/course/11111111-1111-1111-1111-111111111111'
+      operationId: Course_GetCourse
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the course.
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        description: The organization ID associated with the course.
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: agencyId
+        in: path
+        required: true
+        description: The agency ID associated with the course.
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: Returns the course.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '401':
+          description: Unauthorized access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Course not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v3/clientEngagement/v1.0/org/{organizationId}/agency/{agencyId}/course:
+    get:
+      tags:
+      - Course
+      summary: Retrieves a paginated list of courses for the specified organization and agency
+      description: 'Sample request:
+
+
+        GET /v3/clientEngagement/v1.0/org/11111111-1111-1111-1111-111111111111/agency/123/course'
+      operationId: Course_GetCourses
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        description: The organization ID associated with the courses.
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        description: The agency ID associated with the courses.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: OData filter expression.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: OData orderBy expression.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: Number of records to skip for pagination.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 5
+      - name: $top
+        x-originalName: top
+        in: query
+        description: Maximum number of records to return.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 6
+      - name: includeReadOnly
+        in: query
+        description: Include read only courses.
+        schema:
+          type: boolean
+          default: true
+        x-position: 7
+      responses:
+        '200':
+          description: Returns a paginated list of courses.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCourse'
+        '400':
+          description: Invalid query parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CourseContentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - SCORM
+      - AICC
+      - XAPI
+      - CMI5
+      - PDF
+      - MP4
+      - MP3
+      - YouTube
+      enum:
+      - SCORM
+      - AICC
+      - XAPI
+      - CMI5
+      - PDF
+      - MP4
+      - MP3
+      - YouTube
+    PagedResultOfCourse:
+      type: object
+      description: A page of results from a larger result set, along with paging metadata.
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: A value indicating whether the larger result set has more results.
+        skip:
+          type: integer
+          description: A value indicating how many of the previous values in the larger result set were omitted.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        take:
+          type: integer
+          description: The number of records retrieved from the larger result set.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        totalCount:
+          type: integer
+          description: The total number of records in the larger result set.
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+        items:
+          type: array
+          description: The records retrieved from the larger result set.
+          items:
+            $ref: '#/components/schemas/Course'
+    Course:
+      allOf:
+      - $ref: '#/components/schemas/CourseCreateInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - id
+        - isReadOnly
+        properties:
+          id:
+            type: string
+            format: guid
+          isReadOnly:
+            type: boolean
+          isProcessing:
+            type: boolean
+          categories:
+            type: array
+            items:
+              type: string
+          createdDateTime:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          createdUserPrincipalId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          updatedDateTime:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          updatedUserPrincipalId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    CourseAudience:
+      type: string
+      description: ''
+      x-enumNames:
+      - Employees
+      - Managers
+      enum:
+      - Employees
+      - Managers
+    CourseCreateInfo:
+      allOf:
+      - $ref: '#/components/schemas/CourseUpdateInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          accountId:
+            type:
+            - integer
+            - 'null'
+            format: int32
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    CourseUpdateInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - language
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 1
+        hasClosedCaptions:
+          type: boolean
+        language:
+          type: string
+          maxLength: 10
+          minLength: 1
+        audience:
+          oneOf:
+          - $ref: '#/components/schemas/CourseAudience'
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        durationInMinutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        categoryIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        contentType:
+          oneOf:
+          - $ref: '#/components/schemas/CourseContentType'
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string

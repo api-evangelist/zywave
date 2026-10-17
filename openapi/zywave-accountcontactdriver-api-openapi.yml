@@ -1,0 +1,492 @@
+openapi: 3.2.0
+info:
+  title: Accounts API - 3.0 Account Contact Driver API
+  version: v3.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.accounts
+  - api.accounts:read
+tags:
+- name: AccountContactDriver
+paths:
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountcontact/{accountContactId}/driverinfo:
+    get:
+      tags:
+      - AccountContactDriver
+      summary: Gets driver information for a specific account contact
+      operationId: AccountContactDriver_GetDriver
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: accountContactId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountContactDriver'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - AccountContactDriver
+      summary: Creates driver information for a specific account contact.
+      operationId: AccountContactDriver_CreateDriver
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: accountContactId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      requestBody:
+        x-name: driverInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountContactDriverInfo'
+        required: true
+        x-position: 4
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - AccountContactDriver
+      summary: Updates driver information for a specific account contact
+      operationId: AccountContactDriver_UpdateDriver
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: accountContactId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      requestBody:
+        x-name: driverInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountContactDriverInfo'
+        required: true
+        x-position: 4
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - AccountContactDriver
+      summary: Deletes driver information for a specific account contact
+      operationId: AccountContactDriver_DeleteDriver
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: accountContactId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v3/accounts/v3.0/org/{orgId}/agency/{agencyId}/accountcontact/{accountContactId}/driverinfo/search:
+    get:
+      tags:
+      - AccountContactDriver
+      summary: Search for driver information records
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * accountContactId
+
+        * driverLicenseNumber
+
+        * driverLicenseState
+
+        * dateLicensed
+
+        * licenseExpirationDate
+
+        * licenseStatus
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: AccountContactDriver_SearchDrivers
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agencyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: accountContactId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: $filter
+        x-originalName: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: $skip
+        x-originalName: skip
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      - name: $top
+        x-originalName: top
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 7
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAccountContactDriver'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AccountContactDriverInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        driverLicenseNumber:
+          type:
+          - string
+          - 'null'
+          maxLength: 25
+        driverLicenseState:
+          type:
+          - string
+          - 'null'
+        dateLicensed:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseExpirationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseStatus:
+          oneOf:
+          - $ref: '#/components/schemas/LicenseStatus'
+    LicenseStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Valid
+      - Unlicensed
+      - Permit
+      - Suspended
+      enum:
+      - Valid
+      - Unlicensed
+      - Permit
+      - Suspended
+    AccountContactDriver:
+      allOf:
+      - $ref: '#/components/schemas/AccountContactDriverInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          accountContactId:
+            type: integer
+            format: int32
+          createdDateTimeOffset:
+            type: string
+            format: date-time
+          updatedDateTimeOffset:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    PagedResultOfAccountContactDriver:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountContactDriver'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties: false
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.zywave.com/connect/authorize
+          tokenUrl: https://auth.zywave.com/connect/token
+          scopes:
+            api.accounts: Full access to all operations
+            api.accounts:read: Read-only access
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

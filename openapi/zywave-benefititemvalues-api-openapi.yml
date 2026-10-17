@@ -1,0 +1,421 @@
+openapi: 3.2.0
+info:
+  title: Policies Benefit Item Values API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: BenefitItemValues
+paths:
+  /policies/v2.0/policies/{policyId}/benefititemvalues:
+    delete:
+      tags:
+      - BenefitItemValues
+      summary: Deletes the benefit item values associated with the policy
+      operationId: BenefitItemValues_DeleteBenefitItemValues
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The ID of the policy for which all benefit value items are to be deleted.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '204':
+          description: A 204 No Content response.
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - BenefitItemValues
+      summary: Returns list of benefit item values for the policy
+      operationId: BenefitItemValues_SearchBenefitItemValuesFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BenefitItemValue'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    post:
+      tags:
+      - BenefitItemValues
+      summary: Creates a benefit item value
+      description: Benefit item value has a dependency on other benefit item value items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: BenefitItemValues_PostBenefitItemValueFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: benefitItemValueInfo
+        description: The benefit item value to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BenefitItemValueBaseInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 Created response containing the ID of the created benefit item value.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/benefititemvalues/{id}:
+    delete:
+      tags:
+      - BenefitItemValues
+      summary: Deletes the benefit item value associated with the benefit item value id
+      description: Benefit item value has a dependency on other benefit item value items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: BenefitItemValues_DeleteBenefitItemValueFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The ID of the benefit item value to delete.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '204':
+          description: A 204 No Content response.
+      security:
+      - oidc:
+        - api.policiesFull
+    get:
+      tags:
+      - BenefitItemValues
+      summary: Gets a benefit item value by id
+      operationId: BenefitItemValues_GetBenefitItemValueFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The benefit item value id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BenefitItemValue'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:readFull
+    put:
+      tags:
+      - BenefitItemValues
+      summary: Updates the existing benefit item value information for the benefit item value…
+      description: Benefit item value has a dependency on other benefit item value items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: BenefitItemValues_PutBenefitItemValueFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The ID of the benefit item value to update
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: benefitItemValueInfo
+        description: The information to update on the benefit item value.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BenefitItemValueBaseInfo'
+        required: true
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    BenefitItemValue:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemValueInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the benefit item value.
+            format: int32
+    BenefitItemValueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Percent
+      - Dollar
+      - DollarOrPercent
+      - Boolean
+      - Numeric
+      - Options
+      - Text
+      enum:
+      - Percent
+      - Dollar
+      - DollarOrPercent
+      - Boolean
+      - Numeric
+      - Options
+      - Text
+    BenefitItemValueBaseInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        benefitItemClauseId:
+          type: integer
+          format: int32
+        sortOrder:
+          type: integer
+          format: int32
+        text:
+          type:
+          - string
+          - 'null'
+          description: Additional information about the Benefit Item besides its main Value.
+          maxLength: 255
+        value:
+          type:
+          - string
+          - 'null'
+          description: Value of the Benefit Item. May contain text or number. Should contain integer valid OptionId if BenefitItemValueType is 'Options'
+          maxLength: 255
+        benefitItemValueType:
+          $ref: '#/components/schemas/BenefitItemValueType'
+    BenefitItemValueInfo:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemValueBaseInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          policyId:
+            type: integer
+            format: int32
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

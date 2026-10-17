@@ -1,0 +1,262 @@
+openapi: 3.2.0
+info:
+  title: Carriers Carrier API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.carriers
+  - api.carriers:read
+tags:
+- name: Carrier
+paths:
+  /carriers/v2.0/carrier/{id}:
+    get:
+      tags:
+      - Carrier
+      summary: Returns the carrier information for the carrier id specified
+      operationId: Carrier_GetCarrier
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The Carrier id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Carrier'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - Read
+  /carriers/v2.0/carrier:
+    get:
+      tags:
+      - Carrier
+      summary: Returns list of carrier information for all carriers
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * Id
+
+        * Name
+
+        * DisplayName
+
+        * GroupNumber
+
+        * IsActive
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: Carrier_SearchCarriers
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired carriers
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: The carriers that fulfill the search criteria on the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCarrier'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - Read
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfCarrier:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Carrier'
+    CarrierInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: The name of the carrier.
+          maxLength: 100
+          minLength: 1
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: The display name of the carrier.
+          maxLength: 100
+        groupNumber:
+          type:
+          - integer
+          - 'null'
+          description: NAIC's (National Association of Insurance Commissioners) Group Number. The unique NAIC identifier for the carrier.
+          format: int32
+        isActive:
+          type: boolean
+          description: Indicates whether the carrier is active.
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    Carrier:
+      allOf:
+      - $ref: '#/components/schemas/CarrierInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the carrier.
+            format: int32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.6.3.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

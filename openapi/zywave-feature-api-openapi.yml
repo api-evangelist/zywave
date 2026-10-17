@@ -1,0 +1,274 @@
+openapi: 3.2.0
+info:
+  title: Licenses API v2.0 Feature API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.licenses
+  - api.licenses:read
+tags:
+- name: Feature
+paths:
+  /licenses/v2.0/license/{licenseId}/feature/{id}:
+    get:
+      tags:
+      - Feature
+      summary: Gets a specific feature associated with a license by id
+      operationId: Feature_GetFeature
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The feature id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: licenseId
+        in: path
+        required: true
+        description: The license id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feature'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /licenses/v2.0/license/{licenseId}/feature:
+    get:
+      tags:
+      - Feature
+      summary: Search for features associated with a license
+      description: 'The Zywave API search is implemented using OData Version 4.0.1.
+
+
+        The following OData filter operations are supported by the Zywave API; each is accompanied by an example request.
+
+
+        | Operation | Example Request | Returns |
+
+        | ------- | -------- | -------- |
+
+        | startswith | startswith(Name,''Zyw'') | Returns all features where the name starts with ''Zyw'' |
+
+        | endswith | endswith(Name,''wave'') | Returns all features where the name ends with ''wave'' |
+
+        | contains | contains(Name,''wave'') | Returns all features where the name contains ''wave'' |
+
+        | Equals | Name eq ''Zywave'' | Returns all features named Zywave |
+
+        | Not Equals | Name ne ''Zywave'' | Returns all features not named Zywave |
+
+        | In | Name in (''Zyw'', ''ave'') | Returns all features with the names ''Zyw'' or ''ave''. |
+
+        | Not | not startswith(Name,''Zyw'') | Returns all features with a name that doesn''t start with ‘Zyw’ |
+
+
+        The Zywave API also supports the And operation which will allow for multiple search criteria to be applied to a single request. For example, the following filter will return all enabled features with a name containing "Zywave";
+
+
+        *contains(Name,''Zywave'') and IsEnabled eq true*
+
+
+        The orderby operation also supports multiple levels of ordering. For example, to order the results by name and description, the following can be used;
+
+
+        *Name asc, Description asc*'
+      operationId: Feature_SearchFeatures
+      parameters:
+      - name: licenseId
+        in: path
+        required: true
+        description: The license id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: $filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      - name: $top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 5
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfFeature'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfFeature:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: A value indicating whether the larger result set has more results.
+        skip:
+          type: integer
+          description: A value indicating how many of the previous values in the larger result set were omitted.
+          format: int32
+        take:
+          type: integer
+          description: The number of records retrieved from larger result set.
+          format: int32
+        totalCount:
+          type: integer
+          description: The total number of records in the larger result set.
+          format: int32
+        items:
+          type: array
+          description: The records retrieved from the larger result set.
+          items:
+            $ref: '#/components/schemas/Feature'
+    Feature:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: The feature description.
+        id:
+          type: integer
+          description: The feature identifier.
+          format: int32
+        isEnabled:
+          type: boolean
+          description: Specifies whether the feature is enabled.
+        key:
+          type: string
+          description: The unique feature key.
+          format: guid
+        name:
+          type: string
+          description: The feature name.
+        tags:
+          type: array
+          description: All tags associated with the feature.
+          items:
+            type: string
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,1305 @@
+openapi: 3.2.0
+info:
+  title: Policies ETL after Policy API
+  version: v2.0
+  description: When importing data via the API, these operations should be performed after the referenced policy has been created.
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: ETL after Policy
+  description: When importing data via the API, these operations should be performed after the referenced policy has been created.
+paths:
+  /policies/v2.0/policies/{policyId}/commissionbillings:
+    post:
+      tags:
+      - ETL after Policy
+      summary: Creates a commission billing for a policy
+      description: Commission billing has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and creation order. Please check model for more information on each dependency.
+      operationId: CommissionBillings_PostCommissionBillingFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: commissionBillingInfo
+        description: The commission billing to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommissionBillingBaseInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 Created response containing the ID of the created commission billing.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{policyId}/fixedrates:
+    post:
+      tags:
+      - ETL after Policy
+      summary: Creates a fixed rate for a policy
+      description: Fixed rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: FixedRates_PostFixedRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: fixedRateInfo
+        description: The fixed rate to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FixedRateBaseInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 Created response with the FixedRate with the calculated annual rate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixedRate'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{id}/cobrastrategies:
+    put:
+      tags:
+      - ETL after Policy
+      summary: Inserts or updates a COBRA rate strategy
+      description: 'Cobra Rate is influenced by Cobra Rate Strategy.
+
+
+        **Note:** Changing `OverrideDefaultRate` from `false` to `true` will **OVERWRITE** the saved values.
+
+
+        **Note:** Setting `DefaultRate` will change values in all records _UNLESS_ `OverrideDefaultRate` is `false`.'
+      operationId: Policies_UpsertCobraStrategy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: cobraStrategy
+        description: The CobraRateStrategy.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CobraRateStrategyInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 200 OK result for an update or a 201 Created for an insert.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CobraRatesWithStrategy'
+        '200':
+          description: A 200 OK result for an update or a 201 Created for an insert.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CobraRatesWithStrategy'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/commissionperiods:
+    post:
+      tags:
+      - ETL after Policy
+      summary: Creates, updated, or deletes a Commission Period for a policy based on the…
+      description: 'auditInfo Delta follows the following validation rules
+
+
+        | Action | Id | Info |
+
+        |---------|--------|--------|
+
+        | Create | Never | Always |
+
+        | Update | Always | Always |
+
+        | Delete | Always | Never |'
+      operationId: Policies_PostCommissionPeriod
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: auditInfo
+        description: The info used to create or update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommissionPeriodAuditInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: Either 201 for a CREATE message or a 204 for an UPDATE or DELETE message.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '204':
+          description: Either 201 for a CREATE message or a 204 for an UPDATE or DELETE message.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{id}/contributionstrategies:
+    put:
+      tags:
+      - ETL after Policy
+      summary: Inserts or updates a contribution strategy
+      description: Contribution is influenced by Contribution Strategy.
+      operationId: Policies_UpsertContributionStrategy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: contributionStrategy
+        description: The ContributionStrategyUpdateInfo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContributionStrategyUpdateInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 204 NoContent result for an update or a 201 Created for an insert.
+        '204':
+          description: A 204 NoContent result for an update or a 201 Created for an insert.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/eligibilities:
+    post:
+      tags:
+      - ETL after Policy
+      summary: Creates an eligibility record for the policy
+      operationId: Policies_CreateEligibility
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: info
+        description: The EligibilityInfo used to create a new record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EligibilityInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 CREATED with the id of the new record.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/fees:
+    post:
+      tags:
+      - ETL after Policy
+      summary: Creates a fee for a policy
+      description: Fee has a dependency on fee type.
+      operationId: Policies_PostFee
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: feeInfo
+        description: The fee info used for the creation of a fee record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeeInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 CREATED response with the fee.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/volumerates:
+    post:
+      tags:
+      - ETL after Policy
+      summary: Creates a VolumeRate record for the policy
+      operationId: Policies_CreateVolumeRate
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: info
+        description: The VolumeRateInfo used to create a new record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeRateInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 CREATED with the id of the new record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolumeRates'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+  /policies/v2.0/policies/{policyId}/tieredrates:
+    post:
+      tags:
+      - ETL after Policy
+      summary: Creates a tiered rate for a policy
+      description: Tiered rate has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: TieredRates_PostTieredRateFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: tieredRateInfo
+        description: The tiered rate to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TieredRateBaseInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 Created response containing the id of the created tiered rate.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policiesFull
+components:
+  schemas:
+    VolumeRateInfo:
+      type: object
+      description: Volume rate create/update data
+      additionalProperties: false
+      required:
+      - monthlyRatePerBasisAmount
+      - basisAmount
+      - coverageOrSalaryAmount
+      - amountType
+      - description
+      properties:
+        monthlyRatePerBasisAmount:
+          type: number
+          description: The rate per BasisAmount
+          format: decimal
+          maximum: 99999.9999
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,4}$
+        basisAmount:
+          type: number
+          description: The basis amount used when applying the MonthlyRatePerBasisAmount
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        coverageOrSalaryAmount:
+          type: number
+          description: The total amount of coverage (can also be interpreted as salary when that is used to determine volume coverage).
+          format: decimal
+          maximum: 99999999999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        amountType:
+          description: Indicates whether the BasisAmount represents Salary or Coverage.
+          oneOf:
+          - $ref: '#/components/schemas/VolumeAmountTypeOption'
+        description:
+          type: string
+          description: The description for this record. This should be unique with respect to other VolumeRate records for the policy.
+          maxLength: 255
+          minLength: 1
+        totalMonthlyPremium:
+          type: number
+          readOnly: true
+          description: The calculated total monthly premium for this Volume Rate record. Fractional cents are rounded up.
+          format: decimal
+        totalAnnualPremium:
+          type: number
+          readOnly: true
+          description: The calculated total annual premium for this Volume Rate record.
+          format: decimal
+    ContributionStrategyInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - calculationStrategy
+      - roundingStrategy
+      properties:
+        calculationStrategy:
+          description: The strategy used for calculating monthly contributions.
+          default: EmployerDollars
+          oneOf:
+          - $ref: '#/components/schemas/ContributionCalculationStrategyOption'
+        roundingStrategy:
+          description: The strategy used for rounding.
+          default: RoundDownEmployee
+          oneOf:
+          - $ref: '#/components/schemas/ContributionRoundingStrategyOption'
+    CommissionTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Annual
+      - Unspecified
+      enum:
+      - Annual
+      - Unspecified
+    FixedRateFrequencyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - AnnuallyOrOneTime
+      - SemiAnnually
+      - Quarterly
+      - BiMonthly
+      - Monthly
+      - SemiMonthly
+      - BiWeekly
+      - Weekly
+      - PerEmployeePerMonth
+      - PerEmployeePerYear
+      enum:
+      - AnnuallyOrOneTime
+      - SemiAnnually
+      - Quarterly
+      - BiMonthly
+      - Monthly
+      - SemiMonthly
+      - BiWeekly
+      - Weekly
+      - PerEmployeePerMonth
+      - PerEmployeePerYear
+    CommissionCalculationStrategyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Percentage
+      - Flat
+      enum:
+      - Percentage
+      - Flat
+    FixedRate:
+      allOf:
+      - $ref: '#/components/schemas/FixedRateInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          annualRate:
+            type: number
+            readOnly: true
+            description: "The _calculated_ annual rate.\n            "
+            format: decimal
+          id:
+            type: integer
+            description: "The unique Zywave identifier for the fixed rate.\n            "
+            format: int32
+    CobraRateStrategyInfo:
+      type: object
+      description: A COBRA strategy record
+      additionalProperties: false
+      properties:
+        defaultRate:
+          description: "The default COBRA rate (as a percentage) to apply to `CobraRateRecord` values for the policy.\n            \nThe default value for this property is `102`.\n            \nThis rate is used if `OverrideDefaultRate` is `false`; it is ignored if `true`.\n            \nIf `false`, the `DefaultRate` is multiplied by the policy rate for the rate tier."
+          default: OneHundredTwoPercent
+          oneOf:
+          - $ref: '#/components/schemas/CobraRateOption'
+        overrideDefaultRate:
+          type:
+          - boolean
+          - 'null'
+          description: "If `true`, then the default rate is overriden in the `CobraRateRecord` values for the policy.\n            \nThe default value for this property is `false`.\n            \n**Note:** Changing this value from `false` to `true` will **OVERWRITE** the saved values."
+          default: false
+    FeeInfo:
+      type: object
+      description: Fee info
+      additionalProperties: false
+      required:
+      - feeTypeId
+      - frequency
+      properties:
+        amount:
+          type:
+          - number
+          - 'null'
+          description: The amount
+          format: decimal
+          maximum: 999999999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        count:
+          type:
+          - integer
+          - 'null'
+          description: The count
+          format: int32
+          maximum: 999999.0
+          minimum: 0.0
+        feeTypeId:
+          type: integer
+          description: The unique identifier of the FeeType
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        frequency:
+          description: The FrequencyOption
+          default: Annually
+          oneOf:
+          - $ref: '#/components/schemas/FrequencyOption'
+        policyId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the policy id
+          format: int32
+    CobraRateRecord:
+      allOf:
+      - $ref: '#/components/schemas/CobraRateRecordInfo'
+      - type: object
+        description: A COBRA rate record
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the COBRA Rate record
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+          tier:
+            description: The contribution tier for the rate record.
+            oneOf:
+            - $ref: '#/components/schemas/RateTierTypeOption'
+    EntityActionOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Create
+      - Update
+      - Delete
+      enum:
+      - Create
+      - Update
+      - Delete
+    CobraRateRecordInfo:
+      type: object
+      description: COBRA rate record info
+      additionalProperties: false
+      properties:
+        cobraRate:
+          type:
+          - number
+          - 'null'
+          description: "The COBRA rate for the contribution tier.\n            \n**NOTE:** If the `CobraRateStrategy` associated with the policy has `OverrideDefaultRate` = `false`, this value will be calculated to follow the default rule."
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+    VolumeRate:
+      allOf:
+      - $ref: '#/components/schemas/VolumeRateInfo'
+      - type: object
+        description: Volume Rate data
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The record id.
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    ContributionRoundingStrategyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - RoundDownEmployer
+      - RoundDownEmployee
+      enum:
+      - RoundDownEmployer
+      - RoundDownEmployee
+    FixedRateBaseInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - frequency
+      properties:
+        rate:
+          type:
+          - number
+          - 'null'
+          description: The rate for the fixed rate.
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        frequency:
+          description: The frequency of the `Rate`.
+          default: AnnuallyOrOneTime
+          oneOf:
+          - $ref: '#/components/schemas/FixedRateFrequencyOption'
+        employeeCount:
+          type:
+          - integer
+          - 'null'
+          description: The employee count.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+    ContributionStrategyUpdateInfo:
+      allOf:
+      - $ref: '#/components/schemas/ContributionStrategyInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          shouldKeepContributionRecords:
+            type:
+            - boolean
+            - 'null'
+            description: Indicates if changing the strategy should or should not keep the existing contribution records.
+            default: false
+    TieredRateBaseInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - rateTierType
+      properties:
+        rateTierType:
+          description: 'The identifier for the tier type that is tied to the tiered rate record. '
+          oneOf:
+          - $ref: '#/components/schemas/RateTierTypeOption'
+        memberCount:
+          type:
+          - integer
+          - 'null'
+          description: The number of people included in the tiered rate.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 0.0
+        monthlyRate:
+          type:
+          - number
+          - 'null'
+          description: The monthly rate for the tiered rate.
+          format: decimal
+          maximum: 99999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+    EmployeeGroupOptions:
+      type: string
+      description: ''
+      x-enumFlags: true
+      x-enumNames:
+      - None
+      - Salaried
+      - NonSalaried
+      - Management
+      - Union
+      - FullTime
+      - All
+      enum:
+      - None
+      - Salaried
+      - NonSalaried
+      - Management
+      - Union
+      - FullTime
+      - All
+    ContributionCalculationStrategyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - EmployerPercent
+      - EmployeePercent
+      - EmployerDollars
+      - EmployeeDollars
+      enum:
+      - EmployerPercent
+      - EmployeePercent
+      - EmployerDollars
+      - EmployeeDollars
+    CommissionBillingBaseInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - billingCarrierCompanyId
+      - commissionType
+      - annualPremium
+      properties:
+        billingCarrierCompanyId:
+          type: integer
+          description: The identifier for the carrier company that is being billed. Has a dependency on a carrier company.  Please use the Carrier API for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: -1.0
+        commissionType:
+          description: The type of commission. Ex. Annual
+          oneOf:
+          - $ref: '#/components/schemas/CommissionTypeOption'
+        annualPremium:
+          type: number
+          description: The annual premium for the commission billing.
+          format: decimal
+          maximum: 999999999999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        insuredPaymentScheduleId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the insured payment schedule of the commission billing. Has a dependency on an insured payment schedule.  Please use the insured payment schedule endpoint for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        billingModeId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the billing mode of the commission billing.  Has a dependency on a billing mode item.  Please use the billing mode endpoint for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        currentSubscriberCount:
+          type:
+          - integer
+          - 'null'
+          description: The amount of subscribers for the policy tied to the commission billing.
+          format: int32
+        commissionProducerId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the producer responsible for the commission.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        commissionRate:
+          type:
+          - number
+          - 'null'
+          description: The rate of the commission.
+          format: decimal
+          maximum: 999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        annualCommission:
+          type:
+          - number
+          - 'null'
+          description: The total annual commission for the policy.
+          format: decimal
+          maximum: 999999999999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        isPremiumCalculated:
+          type: boolean
+          description: The flag to toggle calculated premium
+        billingVendorSourceId:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source ID of the billing vendor (requires BillingCarrierCompanyId to be -1).
+          maxLength: 36
+        billingVendorSourceType:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source type of the billing vendor (requires BillingCarrierCompanyId to be -1).
+          maxLength: 32
+        billingVendorSourceEntityName:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source entity name of the billing vendor (requires BillingCarrierCompanyId to be -1).
+          maxLength: 32
+    RateTierTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+      enum:
+      - Employee
+      - EmployeeSpouse
+      - EmployeeChildren
+      - EmployeeFamily
+      - EmployeeChild
+      - EmployeeSpouseChild
+      - EmployeeTwoChildren
+      - EmployeeThreeChildren
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CoverageTerminationOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Immediate
+      - LastDayOfMonth
+      - ThirtyDaysAfter
+      - FifteenthOfMonth
+      enum:
+      - Immediate
+      - LastDayOfMonth
+      - ThirtyDaysAfter
+      - FifteenthOfMonth
+    DeltaOfCommissionPeriodInfo:
+      type: object
+      description: A wrapper for values to be used for updating or creating a record.
+      additionalProperties: false
+      properties:
+        updateOrCreateInformation:
+          description: The information to use for updating or creating.  Null values are ignored.
+          oneOf:
+          - $ref: '#/components/schemas/CommissionPeriodInfo'
+    CobraRateStrategy:
+      allOf:
+      - $ref: '#/components/schemas/CobraRateStrategyInfo'
+      - type: object
+        description: A COBRA rate strategy record
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the COBRA Rate Strategy
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    VolumeAmountTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Salary
+      - Coverage
+      enum:
+      - Salary
+      - Coverage
+    CommissionPeriodInfo:
+      type: object
+      description: 'Information used when creating or updating a CommissionPeriod.
+
+        All values are required when used for creation.'
+      additionalProperties: false
+      properties:
+        commissionCalculationStrategy:
+          description: The commission calculation method (e.g. "Percentage" or "Flat").
+          oneOf:
+          - $ref: '#/components/schemas/CommissionCalculationStrategyOption'
+        commissionRoundingStrategy:
+          description: The rounding method to use.
+          oneOf:
+          - $ref: '#/components/schemas/CommissionRoundingStrategyOption'
+        startDateTimeOffset:
+          type:
+          - string
+          - 'null'
+          description: The start date for the commission period.
+          format: date-time
+    CobraRateOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - OneHundredPercent
+      - OneHundredOnePercent
+      - OneHundredTwoPercent
+      enum:
+      - OneHundredPercent
+      - OneHundredOnePercent
+      - OneHundredTwoPercent
+    CommissionRoundingStrategyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - HouseWins
+      enum:
+      - HouseWins
+    EligibilityInfo:
+      type: object
+      description: Eligibility information for a policy.
+      additionalProperties: false
+      properties:
+        employeeGroup:
+          description: 'The employee group or groups to which this eligibility information applies.
+
+
+            This value can be a bit mask of EmployeeGroupOptions values. '
+          oneOf:
+          - $ref: '#/components/schemas/EmployeeGroupOptions'
+        hours:
+          type:
+          - integer
+          - 'null'
+          description: The minimum weekly hours required for eligibility.
+          format: int32
+          maximum: 40.0
+          minimum: 0.0
+        waitingPeriod:
+          description: The waiting period between hire date and first coverage.
+          oneOf:
+          - $ref: '#/components/schemas/WaitingPeriodOption'
+        waitingPeriodAmount:
+          type:
+          - integer
+          - 'null'
+          description: The waiting period amount (days/months) used as needed with the WaitingPeriod.
+          format: int32
+          maximum: 365.0
+          minimum: 0.0
+        domesticPartnerCoverage:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if domestic partners are covered by the policy.
+        coverageTermination:
+          description: The coverage termination relative to employment termination.
+          oneOf:
+          - $ref: '#/components/schemas/CoverageTerminationOption'
+        description:
+          type:
+          - string
+          - 'null'
+          description: The description of the eligibility coverage information.
+          maxLength: 500
+        spouseCoverage:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if spouse is covered by the policy.
+        dependentCoverage:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if dependent or child is covered by the policy.
+        otherCoverage:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if there is anything other covered by the policy.
+        otherCoverageDescription:
+          type:
+          - string
+          - 'null'
+          description: The description of the other coverage information.
+          maxLength: 100
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    FrequencyOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Annually
+      - Monthly
+      enum:
+      - None
+      - Annually
+      - Monthly
+    WaitingPeriodOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - DateOfHire
+      - NDaysAfterDateOfHire
+      - NMonthsAfterDateOfHire
+      - FirstOfMonthAfterDateOfHire
+      - FirstOfMonthAfterNDaysAfterDateOfHire
+      - FirstOfMonthAfterNMonthsAfterDateOfHire
+      - FifteenthOfMonthAfterNDaysAfterDateOfHire
+      - FifteenthOfMonthAfterNMonthsAfterDateOfHire
+      enum:
+      - DateOfHire
+      - NDaysAfterDateOfHire
+      - NMonthsAfterDateOfHire
+      - FirstOfMonthAfterDateOfHire
+      - FirstOfMonthAfterNDaysAfterDateOfHire
+      - FirstOfMonthAfterNMonthsAfterDateOfHire
+      - FifteenthOfMonthAfterNDaysAfterDateOfHire
+      - FifteenthOfMonthAfterNMonthsAfterDateOfHire
+    AuditInfoOfCommissionPeriodInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - entityAction
+      properties:
+        entityId:
+          type:
+          - integer
+          - 'null'
+          description: Required for Update and Delete. It is invalid to provide an id for a Create.
+          format: int32
+        entityAction:
+          $ref: '#/components/schemas/EntityActionOption'
+        info:
+          description: The information used to create or update an entity. It is invalid to provide this for a Delete.
+          oneOf:
+          - $ref: '#/components/schemas/DeltaOfCommissionPeriodInfo'
+    FixedRateInfo:
+      allOf:
+      - $ref: '#/components/schemas/FixedRateBaseInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - policyId
+        properties:
+          policyId:
+            type: integer
+            description: The identifier for the policy that is tied to the fixed rate record. Has a dependency on a policy item.  Please use the policy endpoint for reference.
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    VolumeRates:
+      type: object
+      description: An array of volume rates with the total premium for all.
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          description: An array of VolumeRate
+          items:
+            $ref: '#/components/schemas/VolumeRate'
+        totalMonthlyPremium:
+          type: number
+          readOnly: true
+          description: The total monthly premium for all Items.
+          format: decimal
+        totalAnnualPremium:
+          type: number
+          readOnly: true
+          description: The total annual premium for all Items.
+          format: decimal
+    CommissionPeriodAuditInfo:
+      allOf:
+      - $ref: '#/components/schemas/AuditInfoOfCommissionPeriodInfo'
+      - type: object
+        description: Audit info for commission period
+        additionalProperties: false
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    CobraRatesWithStrategy:
+      type: object
+      additionalProperties: false
+      properties:
+        strategy:
+          description: The CobraRateStrategy.
+          oneOf:
+          - $ref: '#/components/schemas/CobraRateStrategy'
+        cobraRates:
+          type:
+          - array
+          - 'null'
+          description: An array of CobraRateRecord values.
+          items:
+            $ref: '#/components/schemas/CobraRateRecord'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

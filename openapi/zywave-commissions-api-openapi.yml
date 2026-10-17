@@ -1,0 +1,304 @@
+openapi: 3.2.0
+info:
+  title: BKB Commissions API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.bkb
+  - api.bkb:read
+tags:
+- name: Commissions
+paths:
+  /bkb/v2.0/commissions/compensationtypes:
+    get:
+      tags:
+      - Commissions
+      summary: Gets compensation types for an agency
+      operationId: Commissions_GetCompensationTypes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompensationType'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/commissions/commissionschedules:
+    get:
+      tags:
+      - Commissions
+      summary: Gets commission schedules for an agency
+      operationId: Commissions_GetCommissionSchedules
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommissionSchedule'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /bkb/v2.0/plans/{planId}/commissionsplits:
+    get:
+      tags:
+      - Commissions
+      summary: Gets commission splits for a plan
+      operationId: Plans_GetCommissionSplitsByPlanId
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommissionSplit'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    CompensationType:
+      type: object
+      description: CompensationType
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique ID.
+          format: int32
+        brokerId:
+          type: integer
+          description: Gets or sets the broker ID.
+          format: int32
+        description:
+          type: string
+          description: Gets the description.
+        isDeleted:
+          type: boolean
+          description: Gets or sets a value indicating whether this instance has been deleted.
+    ScheduleRenewalTypes:
+      type: string
+      description: Commission Schedule Renewal Types
+      x-enumNames:
+      - Renewal
+      - New
+      - Both
+      enum:
+      - Renewal
+      - New
+      - Both
+    CommissionSchedule:
+      type: object
+      description: Gets the carrier commission schedule.
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets the unique ID for this commission schedule.
+          format: int32
+        newOrRenewal:
+          description: Gets the renewal type applied to this schedule.
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleRenewalTypes'
+        accountId:
+          type:
+          - integer
+          - 'null'
+          description: Gets the specific account that this commission schedule applies to.
+          format: int32
+        effectiveDate:
+          type: string
+          description: Gets the effective date for this commission schedule.
+          format: date-time
+        expirationDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the expiration date for this commission schedule.
+          format: date-time
+        planTypeId:
+          type: integer
+          description: Gets the plan type that this commission schedule applies to.
+          format: int32
+        scheduleType:
+          description: Gets or sets the schedule type for this commission schedule.
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleTypes'
+        name:
+          type:
+          - string
+          - 'null'
+          description: Gets the name of this commission schedule.
+        carrierId:
+          type: integer
+          description: Gets the ID for the carrier related to this commission schedule.
+          format: int32
+        description:
+          type:
+          - string
+          - 'null'
+          description: Gets the description for this commission schedule.
+        createdById:
+          type: integer
+          description: Gets the ID for the user who created this commission schedule.
+          format: int32
+        createdDate:
+          type: string
+          description: Gets the date and time on which this commission schedule was created.
+          format: date-time
+        lastUpdatedById:
+          type:
+          - integer
+          - 'null'
+          description: Gets the date on which this commission schedule last updated by ID.
+          format: int32
+        lastUpdatedDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date and time on which this commission schedule was last updated.
+          format: date-time
+    ScheduleTypes:
+      type: string
+      description: Commission Schedule Types.
+      x-enumNames:
+      - Flat
+      - Graded
+      - SubscriberBased
+      enum:
+      - Flat
+      - Graded
+      - SubscriberBased
+    CommissionSplit:
+      type: object
+      description: Plan Commission Split
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique ID for this commission split.
+          format: int32
+        effectiveDate:
+          type: string
+          description: Gets or sets the effective date for this commission split.
+          format: date-time
+        percentage:
+          type: number
+          description: Gets or sets the commission percentage for the producer.
+          format: decimal
+        commissionProducerId:
+          type: integer
+          description: Gets or sets the commission producer.
+          format: int32
+        compensationTypeId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the producer compensation type.
+          format: int32
+        planId:
+          type: integer
+          description: Gets or sets the plan the commission split is for.
+          format: int32
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

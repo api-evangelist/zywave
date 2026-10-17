@@ -1,0 +1,2020 @@
+openapi: 3.2.0
+info:
+  title: Zywave Plans API
+  version: v2.0
+  description: 'Operations tagged Plans across 2 of this provider''s published API definitions: zywave-bkb-v2-openapi.json, zywave-plans-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.zywave.com
+tags:
+- name: Plans
+paths:
+  /bkb/v2.0/plans/{planId}:
+    get:
+      tags:
+      - Plans
+      summary: Gets the account plan (planhistory) by id
+      operationId: Plans_GetPlanById
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/update/{planId}:
+    put:
+      tags:
+      - Plans
+      summary: Updates the plan with options
+      operationId: Plans_UpdatePlanWithOptions
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: updatePlanWithOptionsRequestModel
+        description: The PlanWithOptionsRequestModel.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanWithOptionsRequestModel'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/search:
+    post:
+      tags:
+      - Plans
+      summary: Searches for account plans based on the criteria
+      operationId: Plans_SearchPlans
+      requestBody:
+        x-name: planSearchRequestModel
+        description: The search request PlanSearchRequestModel.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanSearchRequestModel'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfPlan'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/baseplantypes:
+    get:
+      tags:
+      - Plans
+      summary: Gets base plan types
+      operationId: Plans_GetBasePlanTypes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BasePlanType'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/plantypes:
+    get:
+      tags:
+      - Plans
+      summary: Gets plan types for an agency
+      operationId: Plans_GetPlanTypes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanType'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/departments:
+    get:
+      tags:
+      - Plans
+      summary: Gets departments an agency
+      operationId: Plans_GetDepartments
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/endingstatuses:
+    get:
+      tags:
+      - Plans
+      summary: Gets plan ending statuses for an agency
+      operationId: Plans_GetEndingStatuses
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EndingStatus2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/beginningstatuses:
+    get:
+      tags:
+      - Plans
+      summary: Gets plan beginning statuses for an agency
+      operationId: Plans_GetBeginningStatuses
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BeginningStatus2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/billingmodes:
+    get:
+      tags:
+      - Plans
+      summary: Gets billing modes for an agency
+      operationId: Plans_GetBillingModes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BillingMode2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/paymodes:
+    get:
+      tags:
+      - Plans
+      summary: Gets pay modes for an agency
+      operationId: Plans_GetPayModes
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PayMode2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/customfielddefinitions:
+    get:
+      tags:
+      - Plans
+      summary: Gets the custom field definitions for an agency
+      operationId: Plans_GetCustomFieldDefinitions
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomField'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /bkb/v2.0/plans/{planId}/newhirewaitingperiods:
+    get:
+      tags:
+      - Plans
+      summary: Gets the new hire waiting periods for plan
+      operationId: Plans_GetNewHireWaitingPeriodsForPlan
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The plan id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanNewHireWaitingPeriod2'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.bkb
+        - api.bkb:read
+    servers:
+    - url: https://api.zywave.com
+  /plans/v2.0/plan/{state}/plan:
+    get:
+      tags:
+      - Plans
+      summary: Searches for plans within a given state
+      description: 'For more information on how to work with the Search endpoints within the Zywave API check out OData Search within the Zywave API documentation.
+
+
+        The following properties can be used when filtering and ordering the response:
+
+
+        | Search parameter | Use case |
+
+        | ------- | -------- |
+
+        | PlanType | (Medical/Dental/Vision) Used to filter by plantype |
+
+        | StartDate | Used to filter by plan StartDate |
+
+        | EndDate | Used to filter by plan EndDate |
+
+        | CarrierCompanyId | Used to filter by CarrierCompanyId |'
+      operationId: Plan_SearchPlans2
+      parameters:
+      - name: state
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The filter used to find the desired plans
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: The properties used to order the search results
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of records in the result set to skip
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The maximum number of records after the first skip records to take from the remaining result set
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      responses:
+        '200':
+          description: The plans that fulfill the search criteria on the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultOfPlan'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+      security:
+      - oidc:
+        - api.plans
+        - api.plans:read
+    servers:
+    - url: https://api.zywave.com
+  /plans/v2.0/plan/{planId}/sbc:
+    get:
+      tags:
+      - Plans
+      summary: Gets the SBC for a plan
+      operationId: Sbc_GetSbc2
+      parameters:
+      - name: planId
+        in: path
+        required: true
+        description: The unique Zywave identifier for a plan.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: The SBC for the plan.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails_2'
+        '502':
+          description: ''
+      security:
+      - oidc:
+        - api.plans
+        - api.plans:read
+    servers:
+    - url: https://api.zywave.com
+components:
+  schemas:
+    ValueSearchCriteriaOfInteger:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          rangeEndValue:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          rangeStartValue:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          searchType:
+            $ref: '#/components/schemas/ValueSearchType'
+          value:
+            type:
+            - integer
+            - 'null'
+            format: int32
+    CommissionTypes:
+      type: string
+      description: CommissionTypes
+      x-enumNames:
+      - Annual
+      - Schedule
+      - EqualPayments
+      - Rate
+      - NoCommission
+      enum:
+      - Annual
+      - Schedule
+      - EqualPayments
+      - Rate
+      - NoCommission
+    PayMode2:
+      allOf:
+      - $ref: '#/components/schemas/Lookup3'
+      - type: object
+        description: The timeline on which commissions are recorded for a plan.
+        additionalProperties: false
+        properties:
+          paymentsPerYear:
+            type: integer
+            description: Gets or sets the number of payments per year.
+            format: int32
+    CustomField:
+      type: object
+      additionalProperties: false
+      properties:
+        brokerId:
+          type: integer
+          format: int32
+        fieldType:
+          $ref: '#/components/schemas/FieldType'
+        id:
+          type: integer
+          format: int32
+        includeOnRfp:
+          type: boolean
+        isDeleted:
+          type: boolean
+        isRequired:
+          type: boolean
+        lookups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Lookup'
+        name:
+          type:
+          - string
+          - 'null'
+        showInAmc:
+          type: boolean
+        showOnAccountHomePage:
+          type: boolean
+        sortOrder:
+          type: integer
+          format: int32
+    FieldType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - AlphaNumeric
+      - Numeric
+      - Date
+      - DropDownList
+      - YesNo
+      - StatesProvinces
+      - Email
+      - Phone
+      - Paragraph
+      - Currency
+      enum:
+      - Unknown
+      - AlphaNumeric
+      - Numeric
+      - Date
+      - DropDownList
+      - YesNo
+      - StatesProvinces
+      - Email
+      - Phone
+      - Paragraph
+      - Currency
+    ValueSearchCriteriaOfDecimal:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          rangeEndValue:
+            type:
+            - number
+            - 'null'
+            format: decimal
+          rangeStartValue:
+            type:
+            - number
+            - 'null'
+            format: decimal
+          searchType:
+            $ref: '#/components/schemas/ValueSearchType'
+          value:
+            type:
+            - number
+            - 'null'
+            format: decimal
+    SearchCriteriaBase:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        sort:
+          $ref: '#/components/schemas/SortType'
+        sortOrder:
+          type: integer
+          format: int32
+    PlanSearchRequestModel:
+      type: object
+      additionalProperties: false
+      properties:
+        searchCriteria:
+          oneOf:
+          - $ref: '#/components/schemas/PlanSearchCriteria'
+        searchOptions:
+          oneOf:
+          - $ref: '#/components/schemas/SearchOptions2'
+    ValueSearchCriteriaOfDateTime:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          rangeEndValue:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          rangeStartValue:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          searchType:
+            $ref: '#/components/schemas/ValueSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    StringSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/StringSearchType'
+          value:
+            type:
+            - string
+            - 'null'
+    SearchOptions2:
+      type: object
+      additionalProperties: false
+      properties:
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    BooleanSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      enum:
+      - None
+      - Equals
+      - NotEquals
+    EnumSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+    PagedResultOfPlan:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Plan'
+    NullableEnumSearchCriteriaOfCommissionType:
+      allOf:
+      - $ref: '#/components/schemas/EnumSearchCriteriaOfCommissionType'
+      - type: object
+        additionalProperties: false
+    StringSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      - IsNullOrEmpty
+      - StartsWith
+      - EndsWith
+    IdListSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - Contains
+    DateTimeSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/ValueSearchCriteriaOfDateTime'
+      - type: object
+        additionalProperties: false
+    PlanSearchCriteria:
+      type: object
+      description: Search criteria used to search for plans.
+      additionalProperties: false
+      properties:
+        accountId:
+          description: Gets or sets the account id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        planCode:
+          description: Gets or sets the ams plan code.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        basePlanTypeId:
+          description: Gets or sets the type of the base plan id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        beginningPolicyStatusId:
+          description: Gets or sets the beginning policy status id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        billingCarrierId:
+          description: Gets or sets the billing carrier id.
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        billingCarrierCodeId:
+          description: Gets or sets the billing carrier code id.
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        billingModeId:
+          description: Gets or sets the billing mode id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        carrierPolicyNumber:
+          description: Gets or sets the carrier policy number.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        commissionProducerId:
+          description: Gets or sets the commission producer id.
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        commissionRate:
+          description: Gets or sets the commission rate.
+          oneOf:
+          - $ref: '#/components/schemas/DecimalSearchCriteria'
+        commissionScheduleId:
+          description: Gets or sets the commission schedule id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        commissionType:
+          description: Gets or sets the type of the commission.
+          oneOf:
+          - $ref: '#/components/schemas/NullableEnumSearchCriteriaOfCommissionType'
+        currentSubscribers:
+          description: Gets or sets the current subscribers.
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        customerServiceRepId:
+          description: Gets or sets the customer service rep id.
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        customFields:
+          type:
+          - array
+          - 'null'
+          description: 'Gets or sets the criteria used to search for plan by custom field.
+
+            Maximum of 5 custom field searches allowed.'
+          items:
+            $ref: '#/components/schemas/CustomFieldSearchValue2'
+        departmentId:
+          description: Gets or sets the department id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        endingPolicyStatusId:
+          description: Gets or sets the ending policy status id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        expectedCommission:
+          description: Gets or sets the expected commission.
+          oneOf:
+          - $ref: '#/components/schemas/DecimalSearchCriteria'
+        expectedPremium:
+          description: Gets or sets the expected premium.
+          oneOf:
+          - $ref: '#/components/schemas/DecimalSearchCriteria'
+        id:
+          description: Gets or sets the id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        issuingCarrierId:
+          description: Gets or sets the issuing carrier id.
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        issuingCarrierCodeId:
+          description: Gets or sets the issuing carrier code id.
+          oneOf:
+          - $ref: '#/components/schemas/IntSearchCriteria'
+        payModeId:
+          description: Gets or sets the pay mode id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        planTypeId:
+          description: Gets or sets the plan type id.
+          oneOf:
+          - $ref: '#/components/schemas/IdListSearchCriteria'
+        planName:
+          description: Gets or sets the name.
+          oneOf:
+          - $ref: '#/components/schemas/StringSearchCriteria'
+        firstWrittenDate:
+          description: Gets or sets the first written date.
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        lastUpdatedDate:
+          description: Gets or sets the last updated date.
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        lostEffectiveDate:
+          description: Gets or sets the lost effective date.
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        planYearStartDate:
+          description: Gets or sets the start date.
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        planYearEndDate:
+          description: Gets or sets the end date.
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeSearchCriteria'
+        rateType:
+          description: Gets or sets the type of the rate.
+          oneOf:
+          - $ref: '#/components/schemas/NullableEnumSearchCriteriaOfRateType'
+        isPlanAtRisk:
+          description: Gets or sets the is plan at risk.
+          oneOf:
+          - $ref: '#/components/schemas/BooleanSearchCriteria'
+        syncPlan:
+          description: Gets or sets the is plan synced.
+          oneOf:
+          - $ref: '#/components/schemas/BooleanSearchCriteria'
+    BasePlanType:
+      type: object
+      description: Base plan type.
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets the unique id.
+          format: int32
+        name:
+          type: string
+          description: Gets the name.
+    BeginningSalesTrackingStatuses:
+      type: string
+      description: Plan BeginningSalesTrackingStatuses
+      x-enumNames:
+      - None
+      - New
+      - Retain
+      - QuotedOnly
+      enum:
+      - None
+      - New
+      - Retain
+      - QuotedOnly
+    EnumSearchCriteriaOfCommissionType:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/CommissionType'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/CommissionType'
+    Department2:
+      allOf:
+      - $ref: '#/components/schemas/Lookup3'
+      - type: object
+        description: Departments within the broker agency.
+        additionalProperties: false
+    RateType:
+      type: string
+      description: ''
+      x-enumNames:
+      - NoRates
+      - Tiered
+      - Fixed
+      - Complex
+      - Volume
+      - SelfFunded
+      enum:
+      - NoRates
+      - Tiered
+      - Fixed
+      - Complex
+      - Volume
+      - SelfFunded
+    PlanWithOptionsRequestModel:
+      type: object
+      additionalProperties: false
+      properties:
+        plan:
+          oneOf:
+          - $ref: '#/components/schemas/PlanInfo'
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/CrudOptions'
+    SortType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Ascending
+      - Descending
+      enum:
+      - None
+      - Ascending
+      - Descending
+    CommissionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Annual
+      - Schedule
+      - EqualPayments
+      - Rate
+      - NoCommission
+      enum:
+      - None
+      - Annual
+      - Schedule
+      - EqualPayments
+      - Rate
+      - NoCommission
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+        extensions:
+          type: object
+          additionalProperties: {}
+    CustomFieldSearchValue2:
+      type: object
+      additionalProperties: false
+      properties:
+        customFieldId:
+          type: integer
+          format: int32
+        searchCriteria: {}
+    Plan:
+      allOf:
+      - $ref: '#/components/schemas/PlanInfo'
+      - type: object
+        description: BrokerageBuilder Plan.
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: Gets or sets the plan's unique id.
+            format: int32
+    DecimalSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/ValueSearchCriteriaOfDecimal'
+      - type: object
+        additionalProperties: false
+    NullableEnumSearchCriteriaOfRateType:
+      allOf:
+      - $ref: '#/components/schemas/EnumSearchCriteriaOfRateType'
+      - type: object
+        additionalProperties: false
+    BooleanSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/BooleanSearchType'
+          value:
+            type: boolean
+    BillingMode2:
+      allOf:
+      - $ref: '#/components/schemas/Lookup3'
+      - type: object
+        description: Billing mode that determines how premiums are paid.
+        additionalProperties: false
+    EndingSalesTrackingStatuses2:
+      type: string
+      description: EndingSalesTrackingStatuses
+      x-enumNames:
+      - None
+      - RetainedSameCarrier
+      - Lost
+      - RetainedDifferentCarrier
+      enum:
+      - None
+      - RetainedSameCarrier
+      - Lost
+      - RetainedDifferentCarrier
+    PlanInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        accountId:
+          type: integer
+          description: Gets or sets the account id.
+          format: int32
+        billingCarrierId:
+          type: integer
+          description: Gets or sets the billing carrier id.
+          format: int32
+        isPlanAtRisk:
+          type: boolean
+          description: Gets or sets a value indicating whether the plan is at risk.
+        isDeleted:
+          type: boolean
+          description: Gets a value indicating whether the plan is deleted.
+        issuingCarrierId:
+          type: integer
+          description: Gets or sets the issuing carrier id.
+          format: int32
+        billingCarrierCodeId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the billing carrier code id.
+          format: int32
+        issuingCarrierCodeId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the issuing carrier code id.
+          format: int32
+        planCode:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the plan's code in a third-party system.
+        planTypeId:
+          type: integer
+          description: Gets or sets the plan type id.
+          format: int32
+        expectedCommission:
+          type: number
+          description: Gets or sets the total expected commission.
+          format: decimal
+        expectedPremium:
+          type: number
+          description: Gets or sets the expected premium.
+          format: decimal
+        basePlanTypeId:
+          type: integer
+          description: Gets the base plan type id.
+          format: int32
+        billingModeId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the billing mode id.
+          format: int32
+        carrierPolicyNumber:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the number that the carrier has assigned to the plan.
+        commissionProducerId:
+          type: integer
+          description: Gets or sets the primary producer for the plan.
+          format: int32
+        commissionRate:
+          type:
+          - number
+          - 'null'
+          description: Gets or sets the commission percentage rate.
+          format: decimal
+        commissionScheduleId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the commission schedule id.
+          format: int32
+        commissionType:
+          description: Gets or sets the type of the plan commission.
+          oneOf:
+          - $ref: '#/components/schemas/CommissionTypes'
+        createdById:
+          type:
+          - integer
+          - 'null'
+          description: Gets the id of the user who created the plan.
+          format: int32
+        currentSubscribers:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the current number of subscribers.
+          format: int32
+        customerServiceRepId:
+          type: integer
+          description: Gets or sets the plan's CSR.
+          format: int32
+        customFields:
+          type:
+          - array
+          - 'null'
+          description: Gets or sets the Custom fields for the plan.
+          items:
+            $ref: '#/components/schemas/CustomFieldValue'
+        departmentId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the department id.
+          format: int32
+        firstWrittenDate:
+          type: string
+          description: Gets or sets the date the sale should be counted.
+          format: date-time
+        lastUpdatedDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the date and time this plan was last updated.
+          format: date-time
+        lostEffectiveDate:
+          type:
+          - string
+          - 'null'
+          description: Gets the effective date this plan was lost.
+          format: date-time
+        notes:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the plan notes.
+        planYearStartDate:
+          type: string
+          description: Gets or sets the plan start date.
+          format: date-time
+        planYearEndDate:
+          type: string
+          description: Gets or sets the plan end date.
+          format: date-time
+        payModeId:
+          type: integer
+          description: Gets or sets the timeline on which commissions are recorded for the plan.
+          format: int32
+        planName:
+          type:
+          - string
+          - 'null'
+          description: Gets or sets the plan name.
+        beginningPolicyStatusId:
+          type: integer
+          description: Gets or sets the status the plan is starting with.
+          format: int32
+        endingPolicyStatusId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the status the plan is ending with.
+          format: int32
+        rateType:
+          description: Gets or sets the type of rates the plan has.
+          oneOf:
+          - $ref: '#/components/schemas/RateTypes'
+        renewedFromPlanId:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the Id of the plan that this plan was renewed from.
+          format: int32
+        syncPlan:
+          type: boolean
+          description: Gets or sets a value indicating whether this plan is synced with a third-party system.
+    BeginningStatus2:
+      allOf:
+      - $ref: '#/components/schemas/Lookup3'
+      - type: object
+        description: Policy status the BrokerageBuilder plan starts with.
+        additionalProperties: false
+        properties:
+          salesTrackingStatus:
+            description: Gets the sales tracking status.
+            oneOf:
+            - $ref: '#/components/schemas/BeginningSalesTrackingStatuses'
+    ValueSearchType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Equals
+      - NotEquals
+      - GreaterThan
+      - GreaterThanEquals
+      - LessThan
+      - LessThanEquals
+      - Between
+      - NotBetween
+      enum:
+      - None
+      - Equals
+      - NotEquals
+      - GreaterThan
+      - GreaterThanEquals
+      - LessThan
+      - LessThanEquals
+      - Between
+      - NotBetween
+    PlanNewHireWaitingPeriod2:
+      type: object
+      description: Plan New Hire Waiting Period
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the waiting period's unique id.
+          format: int32
+        description:
+          type: string
+          description: Gets or sets the waiting period description.
+        planId:
+          type: integer
+          description: Gets or sets the plan id.
+          format: int32
+        waitingPeriodInterval:
+          type:
+          - integer
+          - 'null'
+          description: Gets or sets the waiting period interval.
+          format: int32
+        waitingPeriodRule:
+          description: Gets or sets the waiting period rule.
+          oneOf:
+          - $ref: '#/components/schemas/NewHireWaitingPeriodRules'
+    EndingStatus2:
+      allOf:
+      - $ref: '#/components/schemas/Lookup3'
+      - type: object
+        description: Policy status the plan ends with.
+        additionalProperties: false
+        properties:
+          salesTrackingStatus:
+            description: Gets or sets the sales tracking status.
+            oneOf:
+            - $ref: '#/components/schemas/EndingSalesTrackingStatuses2'
+    NewHireWaitingPeriodRules:
+      type: string
+      description: Available rules for Plan Hew Hire Waiting Periods.
+      x-enumNames:
+      - None
+      - SameAsHireDate
+      - FirstOfMonthByMonthAfterHire
+      - FirstOfMonthByDaysAfterHire
+      - NumberDaysAfterHire
+      - Other
+      - FifteenthOfMonthByDays
+      - NumberMonthsAfterHire
+      - FirstOfMonthAfterHire
+      enum:
+      - None
+      - SameAsHireDate
+      - FirstOfMonthByMonthAfterHire
+      - FirstOfMonthByDaysAfterHire
+      - NumberDaysAfterHire
+      - Other
+      - FifteenthOfMonthByDays
+      - NumberMonthsAfterHire
+      - FirstOfMonthAfterHire
+    Lookup:
+      type: object
+      additionalProperties: false
+      properties:
+        customFieldId:
+          type: integer
+          format: int32
+        description:
+          type:
+          - string
+          - 'null'
+        id:
+          type: integer
+          format: int32
+        sortOrder:
+          type: integer
+          format: int32
+    IdListSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/IdListSearchType'
+          value:
+            type: integer
+            format: int32
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              type: integer
+              format: int32
+          inclusiveNulls:
+            type: boolean
+    CrudOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        force:
+          type: boolean
+        validateOnly:
+          type: boolean
+    CustomFieldValue:
+      type: object
+      additionalProperties: false
+      properties:
+        brokerId:
+          type: integer
+          format: int32
+        customFieldId:
+          type: integer
+          format: int32
+        id:
+          type: integer
+          format: int32
+        itemId:
+          type: integer
+          format: int32
+        value:
+          type:
+          - string
+          - 'null'
+    EnumSearchCriteriaOfRateType:
+      allOf:
+      - $ref: '#/components/schemas/SearchCriteriaBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          searchType:
+            $ref: '#/components/schemas/EnumSearchType'
+          value:
+            $ref: '#/components/schemas/RateType'
+          valueList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/RateType'
+    IntSearchCriteria:
+      allOf:
+      - $ref: '#/components/schemas/ValueSearchCriteriaOfInteger'
+      - type: object
+        additionalProperties: false
+    RateTypes:
+      type: string
+      description: RateTypes
+      x-enumNames:
+      - NoRates
+      - Tiered
+      - Fixed
+      - Complex
+      - Volume
+      - SelfFunded
+      enum:
+      - NoRates
+      - Tiered
+      - Fixed
+      - Complex
+      - Volume
+      - SelfFunded
+    PlanType:
+      type: object
+      description: BrokerageBuilder Plan Type.
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets the unique id.
+          format: int32
+        basePlanTypeId:
+          type: integer
+          description: Gets the type of the base plan id.
+          format: int32
+        name:
+          type: string
+          description: Gets the name.
+        amsCode:
+          type: string
+          description: Gets the plan type's code in a third-party system.
+        showOutOfNetwork:
+          type: boolean
+          description: Gets a value indicating whether Out of Network benefit items are displayed.
+        hrConnectionPlanTypeId:
+          type: integer
+          description: Gets the mapped HrConnection plan type id.
+          format: int32
+        portalBenefitsTitle:
+          type: string
+          description: Gets the plantype's title that displays in Portal Benefits.
+    Lookup3:
+      type: object
+      description: Agency-defined Plan Lookup
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the lookup's unique id.
+          format: int32
+        description:
+          type: string
+          description: Gets or sets the description.
+        amsCode:
+          type: string
+          description: Gets the lookup code - the lookup id in a third-party system.
+        isDeleted:
+          type: boolean
+          description: Gets or sets a value indicating whether this lookup is deleted.
+    ProblemDetails_2:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    BenefitItemInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        parentBenefitItemId:
+          type:
+          - integer
+          - 'null'
+          description: The unique Zywave identifier of the parent of this benefit item (if applicable).
+          format: int32
+        values:
+          type:
+          - array
+          - 'null'
+          description: A list of values related to this benefit item.
+          items:
+            $ref: '#/components/schemas/BenefitItemValue'
+        name:
+          type: string
+          description: The name of the benefit item.
+          maxLength: 150
+          minLength: 1
+    Plan_2:
+      allOf:
+      - $ref: '#/components/schemas/PlanInfo_2'
+      - type: object
+        additionalProperties: false
+        required:
+        - hasSbc
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the plan.
+            format: int32
+          hasSbc:
+            type: boolean
+            description: Whether the plan has a linked SBC file
+          updatedDateTime:
+            type:
+            - string
+            - 'null'
+            description: The date in which the plan was last updated.
+            format: date-time
+          attributes:
+            type:
+            - array
+            - 'null'
+            description: The list of additional attributes for the plan
+            items:
+              $ref: '#/components/schemas/PlanAttribute'
+          benefitItems:
+            type:
+            - array
+            - 'null'
+            description: The list of benefit items for the plan
+            items:
+              $ref: '#/components/schemas/BenefitItem'
+    BenefitItem:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - updatedDateTime
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the benefit item.
+            format: int32
+          updatedDateTime:
+            type: string
+            description: The date in which the benefit item information was last updated.
+            format: date-time
+    PlanAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    BenefitItemValue:
+      allOf:
+      - $ref: '#/components/schemas/BenefitItemValueInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the benefit item value.
+            format: int32
+    BenefitItemValueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Boolean
+      - Numeric
+      - Dollar
+      - Percent
+      - Options
+      - Text
+      enum:
+      - Boolean
+      - Numeric
+      - Dollar
+      - Percent
+      - Options
+      - Text
+    SearchResultOfPlan:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+          description: Indicates whether the search has more results than returned in the response.
+        totalCount:
+          type: integer
+          description: The total records that meet the search criteria specified.
+          format: int32
+        items:
+          type:
+          - array
+          - 'null'
+          description: A list of business and personal accounts matching the search criteria.
+          items:
+            $ref: '#/components/schemas/Plan_2'
+    BenefitItemTier:
+      type: string
+      description: ''
+      x-enumNames:
+      - InNetwork
+      - OutOfNetwork
+      - Managed
+      - Preferred
+      enum:
+      - InNetwork
+      - OutOfNetwork
+      - Managed
+      - Preferred
+    PlanInfo_2:
+      type: object
+      additionalProperties: false
+      required:
+      - carrierCompanyId
+      - carrierPlanIdentifier
+      - planType
+      - state
+      - name
+      - startDate
+      - endDate
+      properties:
+        carrierCompanyId:
+          type: integer
+          description: The unique Zywave identifier for the insurance carrier offering the plan.
+          format: int32
+        carrierPlanIdentifier:
+          type: string
+          description: A plan identifier specified by the carrier offering the plan.
+          maxLength: 75
+          minLength: 1
+        planType:
+          description: The type of insurance coverage being offered by the plan.
+          oneOf:
+          - $ref: '#/components/schemas/PlanType_2'
+        agencyId:
+          type:
+          - integer
+          - 'null'
+          description: Plans within Zywave can be specific to an agency. When that is the case, this field will indicate the unique Zywave identifier for the agency associated with the plan. If a plan isn't agency specific this will be returned as null.
+          format: int32
+        state:
+          type: string
+          description: The state(s) in which the plan is applicable.
+          maxLength: 2
+          minLength: 1
+        name:
+          type: string
+          description: The name of the plan.
+          maxLength: 200
+          minLength: 1
+        startDate:
+          type: string
+          description: The availability of this plan starts on this date.
+          format: date-time
+        endDate:
+          type: string
+          description: The availability of this plan ends on this date.
+          format: date-time
+    BenefitItemValueInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - tier
+      - valueType
+      properties:
+        tier:
+          description: Specifies which medical provider network the specific benefit item value is associated with.
+          oneOf:
+          - $ref: '#/components/schemas/BenefitItemTier'
+        valueType:
+          description: Specifies the format of the benefit item value.
+          oneOf:
+          - $ref: '#/components/schemas/BenefitItemValueType'
+        customText:
+          type:
+          - string
+          - 'null'
+          description: Specifies custom text that will follow the benefit item value in an effort to provide more specific information regarding the benefit item.
+          maxLength: 1000
+        value:
+          type:
+          - string
+          - 'null'
+          description: The specific value associated with the benefit item.
+          maxLength: 1000
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails_2'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    PlanType_2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Medical
+      - Dental
+      - EAP
+      - LifeAndADD
+      - LongTermCare
+      - LongTermDisability
+      - Section125
+      - ShortTermDisability
+      - Vision
+      - PharmacyBenefitManagement
+      - RetirementPlans
+      - OtherBenefits
+      - WorkersCompensation
+      - CommercialAuto
+      - GeneralLiability
+      - Property
+      - BusinessOwnersPolicy
+      - OtherPropertyAndCasualty
+      - PersonalLines
+      - CommercialPackage
+      - UmbrellaExcessLiability
+      - DirectorsAndOfficers
+      - ErrorsAndOmissions
+      - EmploymentPracticesLiability
+      - BuildersRisk
+      - CrimeFidelity
+      - Earthquake
+      - Flood
+      - InlandMarineCargo
+      - OceanMarine
+      - Surety
+      - OtherProperty
+      - OtherLiability
+      - FeeForService
+      - Program
+      enum:
+      - Unknown
+      - Medical
+      - Dental
+      - EAP
+      - LifeAndADD
+      - LongTermCare
+      - LongTermDisability
+      - Section125
+      - ShortTermDisability
+      - Vision
+      - PharmacyBenefitManagement
+      - RetirementPlans
+      - OtherBenefits
+      - WorkersCompensation
+      - CommercialAuto
+      - GeneralLiability
+      - Property
+      - BusinessOwnersPolicy
+      - OtherPropertyAndCasualty
+      - PersonalLines
+      - CommercialPackage
+      - UmbrellaExcessLiability
+      - DirectorsAndOfficers
+      - ErrorsAndOmissions
+      - EmploymentPracticesLiability
+      - BuildersRisk
+      - CrimeFidelity
+      - Earthquake
+      - Flood
+      - InlandMarineCargo
+      - OceanMarine
+      - Surety
+      - OtherProperty
+      - OtherLiability
+      - FeeForService
+      - Program
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com//.well-known/openid-configuration
+    bearer:
+      type: http
+      description: Enter your JWT access token
+      scheme: bearer
+      bearerFormat: JWT
+x-refined-from:
+- zywave-bkb-v2-openapi.json
+- zywave-plans-v2-openapi.json
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

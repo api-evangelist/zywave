@@ -1,0 +1,478 @@
+openapi: 3.2.0
+info:
+  title: Policies Commission Billings API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: CommissionBillings
+paths:
+  /policies/v2.0/policies/{policyId}/commissionbillings/{id}:
+    delete:
+      tags:
+      - CommissionBillings
+      summary: Deletes the commission billing information associated with the commission…
+      description: Commission billing has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: CommissionBillings_DeleteCommissionBillingFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The ID of the commission billing to delete.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '204':
+          description: A 204 No Content response.
+      security:
+      - oidc:
+        - api.policies
+    get:
+      tags:
+      - CommissionBillings
+      summary: Returns the commission billing information for the commission billing id…
+      description: Commission billing has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: CommissionBillings_GetCommissionBillingFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The commission billing id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommissionBilling'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+    put:
+      tags:
+      - CommissionBillings
+      summary: Updates the existing commission billing information for the commission billing…
+      description: Commission billing has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: CommissionBillings_PutCommissionBillingFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        description: The ID of the commission billing to update
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      requestBody:
+        x-name: commissionBillingInfo
+        description: The information to update on the commission billing.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommissionBillingBaseInfo'
+        required: true
+        x-position: 3
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{policyId}/commissionbillings:
+    get:
+      tags:
+      - CommissionBillings
+      summary: Returns list of commission billing information for the policy
+      operationId: CommissionBillings_SearchCommissionBillingsFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommissionBilling'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+    post:
+      tags:
+      - CommissionBillings
+      summary: Creates a commission billing for a policy
+      description: Commission billing has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and creation order. Please check model for more information on each dependency.
+      operationId: CommissionBillings_PostCommissionBillingFromPolicy
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: commissionBillingInfo
+        description: The commission billing to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommissionBillingBaseInfo'
+        required: true
+        x-position: 2
+      responses:
+        '201':
+          description: A 201 Created response containing the ID of the created commission billing.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CommissionTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - Annual
+      - Unspecified
+      enum:
+      - Annual
+      - Unspecified
+    CommissionBilling:
+      allOf:
+      - $ref: '#/components/schemas/CommissionBillingInfo'
+      - type: object
+        description: ' '
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the commission billing.
+            format: int32
+          updatedDateTimeOffSet:
+            type: string
+            description: The record of when the commission billing was last updated.
+            format: date-time
+          updatedUserProfileId:
+            type:
+            - string
+            - 'null'
+            description: The unique Zywave identifier for the user that last updated the commission billing.
+          updatedUserProfileTypeCode:
+            type:
+            - string
+            - 'null'
+            description: The Zywave identifier for the user type that last updated the commission billing.
+          billingVendorId:
+            type:
+            - integer
+            - 'null'
+            readOnly: true
+            description: Denotes the Zywave ID of the billing vendor.
+            format: int32
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    CommissionBillingBaseInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - billingCarrierCompanyId
+      - commissionType
+      - annualPremium
+      properties:
+        billingCarrierCompanyId:
+          type: integer
+          description: The identifier for the carrier company that is being billed. Has a dependency on a carrier company.  Please use the Carrier API for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: -1.0
+        commissionType:
+          description: The type of commission. Ex. Annual
+          oneOf:
+          - $ref: '#/components/schemas/CommissionTypeOption'
+        annualPremium:
+          type: number
+          description: The annual premium for the commission billing.
+          format: decimal
+          maximum: 999999999999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        insuredPaymentScheduleId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the insured payment schedule of the commission billing. Has a dependency on an insured payment schedule.  Please use the insured payment schedule endpoint for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        billingModeId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the billing mode of the commission billing.  Has a dependency on a billing mode item.  Please use the billing mode endpoint for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        currentSubscriberCount:
+          type:
+          - integer
+          - 'null'
+          description: The amount of subscribers for the policy tied to the commission billing.
+          format: int32
+        commissionProducerId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the producer responsible for the commission.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        commissionRate:
+          type:
+          - number
+          - 'null'
+          description: The rate of the commission.
+          format: decimal
+          maximum: 999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        annualCommission:
+          type:
+          - number
+          - 'null'
+          description: The total annual commission for the policy.
+          format: decimal
+          maximum: 999999999999.99
+          minimum: 0.0
+          pattern: ^\d+\.?\d{0,2}$
+        isPremiumCalculated:
+          type: boolean
+          description: The flag to toggle calculated premium
+        billingVendorSourceId:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source ID of the billing vendor (requires BillingCarrierCompanyId to be -1).
+          maxLength: 36
+        billingVendorSourceType:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source type of the billing vendor (requires BillingCarrierCompanyId to be -1).
+          maxLength: 32
+        billingVendorSourceEntityName:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source entity name of the billing vendor (requires BillingCarrierCompanyId to be -1).
+          maxLength: 32
+    CommissionBillingInfo:
+      allOf:
+      - $ref: '#/components/schemas/CommissionBillingBaseInfo'
+      - type: object
+        description: ' '
+        additionalProperties: false
+        required:
+        - policyId
+        properties:
+          policyId:
+            type: integer
+            description: The identifier for the policy that is tied to the commission billing record. Has a dependency on a policy item.  Please use the policy endpoint for reference.
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,693 @@
+openapi: 3.2.0
+info:
+  title: Policies API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: Policies
+paths:
+  /policies/v2.0/policies/{id}:
+    delete:
+      tags:
+      - Policies
+      summary: Deletes the policy associated with the policy id
+      description: Policy has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: Policies_DeletePolicy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the policy to delete.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '204':
+          description: A 204 No Content response.
+      security:
+      - oidc:
+        - api.policies
+    get:
+      tags:
+      - Policies
+      summary: Returns the policy information for the policy id specified
+      description: Policy has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: Policies_GetPolicy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+    put:
+      tags:
+      - Policies
+      summary: Updates the existing policy information for the policy id specified
+      description: Policy has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: Policies_PutPolicy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the policy to update
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: policyInfo
+        description: The information to update on the policy.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies:
+    get:
+      tags:
+      - Policies
+      summary: Returns list of policy information for all policies
+      description: 'Policy has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+
+        The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * Id
+
+        * AccountId
+
+        * PolicyCoverageTypeId
+
+        * CarrierCompanyId
+
+        * BeginningPolicyStatus
+
+        * PolicyName
+
+        * EffectiveDate
+
+        * CreatedDateTimeOffset
+
+        * UpdatedDateTimeOffSet
+
+        * ExpirationDate
+
+        * FirstWrittenDate
+
+        * CancellationDate
+
+        * ReinstatementDate
+
+        * PolicyNumber
+
+        * RateType
+
+        * EndingPolicyStatusId
+
+        * DepartmentId
+
+        * UpdatedUserProfileId
+
+        * IsVoluntary
+
+        * NeedsReview
+
+        * PolicyGroupId
+
+        * VendorId
+
+        * IsEndingStatusRetained
+
+        * IsActive
+
+        * IsCancelled
+
+        * IsExpired
+
+        * IsFuture
+
+        * IsPendingCancellation
+
+        * IsPendingReinstatement
+
+        * IsReinstated
+
+        * IsRenewed
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: Policies_SearchPolicies
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfPolicy'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+    post:
+      tags:
+      - Policies
+      summary: Creates a policy
+      description: Policy has a dependency on other policy items and caller should be able to handle discrepancies, race conditions, and object creation order. Please check model for more information on each dependency.
+      operationId: Policies_PostPolicy
+      requestBody:
+        x-name: policyInfo
+        description: The policy to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: A 201 Created response containing the ID of the created policy.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ProductTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - PPO
+      - HMO
+      - POS
+      - EPO
+      - Indemnity
+      - INO
+      - HDHP
+      - ReferenceBasedPricing
+      enum:
+      - None
+      - PPO
+      - HMO
+      - POS
+      - EPO
+      - Indemnity
+      - INO
+      - HDHP
+      - ReferenceBasedPricing
+    PagedResultOfPolicy:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+    FundingTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - FullyInsured
+      - SelfFunded
+      - LevelFunded
+      enum:
+      - None
+      - FullyInsured
+      - SelfFunded
+      - LevelFunded
+    RateTypeOption:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Tiered
+      - Fixed
+      - Volume
+      - Complex
+      - SelfFunded
+      enum:
+      - None
+      - Tiered
+      - Fixed
+      - Volume
+      - Complex
+      - SelfFunded
+    PolicyInfo:
+      type: object
+      description: "PolicyInfo class.\n            "
+      additionalProperties: false
+      required:
+      - accountId
+      - policyCoverageTypeId
+      - carrierCompanyId
+      - beginningPolicyStatusId
+      - effectiveDate
+      - fundingType
+      - productType
+      - isVoluntary
+      - policyName
+      - firstWrittenDate
+      properties:
+        accountId:
+          type: integer
+          description: The unique Zywave identifier for the account tied to the policy.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        policyCoverageTypeId:
+          type: integer
+          description: The type of coverage for the policy. Ex. Medical, Dental, etc. Has a dependency on a policy coverage type item.  Please use the policy coverage type endpoint for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        carrierCompanyId:
+          type: integer
+          description: The carrier company tied to the policy.  Has a dependency on a carrier company item.  Please use the Carriers API for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: -1.0
+        beginningPolicyStatusId:
+          type: integer
+          description: The identifier for the status of the policy when it is created.  Has a dependency on a policy status item.  Please use the policy status endpoint for reference.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        effectiveDate:
+          type: string
+          description: The date that the policy becomes effective.
+          format: date-time
+        expirationDate:
+          type:
+          - string
+          - 'null'
+          description: The date that the policy expires.
+          format: date-time
+        fundingType:
+          description: The funding type for the policy.
+          oneOf:
+          - $ref: '#/components/schemas/FundingTypeOption'
+        productType:
+          description: The product type for the policy.
+          oneOf:
+          - $ref: '#/components/schemas/ProductTypeOption'
+        isVoluntary:
+          type: boolean
+          description: Denotes if a policy is voluntary.
+        policyName:
+          type: string
+          description: The name of the policy.
+          maxLength: 100
+          minLength: 1
+        firstWrittenDate:
+          type: string
+          description: The date that the policy was first written. Must be less than or equal to ExpirationDate.
+          format: date-time
+        cancellationDate:
+          type:
+          - string
+          - 'null'
+          description: The date that the policy was cancelled.
+          format: date-time
+        reinstatementDate:
+          type:
+          - string
+          - 'null'
+          description: The date that the policy was reinstated.
+          format: date-time
+        policyNumber:
+          type:
+          - string
+          - 'null'
+          description: The carrier's identifier for the policy.
+          maxLength: 75
+        rateType:
+          description: The type of rate for the policy. Ex. Tiered
+          oneOf:
+          - $ref: '#/components/schemas/RateTypeOption'
+        endingPolicyStatusId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the status of the policy at the end of its term.  Has a dependency on a policy status item.  Please use the policy status endpoint for reference.
+          format: int32
+        departmentId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the department related to the policy.
+          format: int32
+        carrierCommissionToAgencyPaymentScheduleId:
+          type:
+          - integer
+          - 'null'
+          description: The identifier for the carrier commission to agency payment schedule related to the policy.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        needsReview:
+          type:
+          - boolean
+          - 'null'
+          description: Denotes if a policy needs to be reviewed.
+        policyGroupId:
+          type:
+          - integer
+          - 'null'
+          description: Denotes the policy group ID that this policy belongs to.
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        vendorSourceId:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source ID of the vendor (requires CarrierCompanyId to be -1).
+          maxLength: 36
+        vendorSourceType:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source type of the vendor (requires CarrierCompanyId to be -1).
+          maxLength: 32
+        vendorSourceEntityName:
+          type:
+          - string
+          - 'null'
+          description: Denotes the source entity name of the vendor (requires CarrierCompanyId to be -1).
+          maxLength: 32
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    Policy:
+      allOf:
+      - $ref: '#/components/schemas/PolicyInfo'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+            description: The unique Zywave identifier for the policy.
+            format: int32
+          updatedUserProfileId:
+            type:
+            - string
+            - 'null'
+            description: The unique Zywave identifier for the user that last updated the policy.
+          updatedUserProfileTypeCode:
+            type:
+            - string
+            - 'null'
+            description: The Zywave identifier for the user type that last updated the policy.
+          createdDateTimeOffset:
+            type: string
+            description: The record of when the policy was created.
+            format: date-time
+          updatedDateTimeOffSet:
+            type: string
+            description: The record of when the policy was last updated.
+            format: date-time
+          renewedByPolicyId:
+            type:
+            - integer
+            - 'null'
+            readOnly: true
+            description: "The id of the Policy that renews this policy.\n            \nIf this property has a value, the Policy is NOT renewable."
+            format: int32
+          renewedFromPolicyId:
+            type:
+            - integer
+            - 'null'
+            readOnly: true
+            description: The id of the Policy that is the predecessor of this policy.
+            format: int32
+          vendorId:
+            type:
+            - integer
+            - 'null'
+            readOnly: true
+            description: Denotes the Zywave ID of the vendor.
+            format: int32
+          isEndingStatusRetained:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the ending status has the base status of Retained.
+          isActive:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the status is active.
+          isCancelled:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the status is cancelled.
+          isExpired:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the status is expired.
+          isFuture:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the status is future.
+          isPendingCancellation:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the status is pending cancellation.
+          isPendingReinstatement:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the status is pending reinstatement.
+          isReinstated:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the status is  reinstated.
+          isRenewed:
+            type: boolean
+            readOnly: true
+            description: Denotes whether or not the status is renewed.
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

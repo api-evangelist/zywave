@@ -1,0 +1,727 @@
+openapi: 3.2.0
+info:
+  title: Policies Policy Groups API
+  version: v2.0
+servers:
+- url: https://api.zywave.com
+security:
+- oidc:
+  - api.policies
+  - api.policies:read
+tags:
+- name: PolicyGroups
+paths:
+  /policies/v2.0/policies/{policyId}/setgroup/{policyGroupId}:
+    put:
+      tags:
+      - PolicyGroups
+      summary: Adds the policy to the corresponding policy group
+      operationId: Policies_SetGroup
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy to add to the policy group.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: policyGroupId
+        in: path
+        required: true
+        description: The policy group ID to add the policy to.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 No Content response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{policyId}/cleargroup:
+    put:
+      tags:
+      - PolicyGroups
+      summary: Removes the policy from any policy group
+      operationId: Policies_ClearGroup
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: A 204 No Content response.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{policyId}/setasgroupparent:
+    put:
+      tags:
+      - PolicyGroups
+      summary: Sets a policy as the parent of the policy group it belongs to
+      operationId: Policies_SetAsGroupParent
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: A 204 No Content response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{policyId}/clearfromgroupparent:
+    put:
+      tags:
+      - PolicyGroups
+      summary: Clears the parent from the policy group
+      operationId: Policies_ClearFromGroupParent
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: A 204 No Content response.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policies/{policyId}/grouping:
+    get:
+      tags:
+      - PolicyGroups
+      summary: Gets policy group details and members for a policy
+      operationId: Policies_GetGrouping
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: A 200 OK response with the policy group details and members.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyGroupWithMembers'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+  /policies/v2.0/policygroups:
+    post:
+      tags:
+      - PolicyGroups
+      summary: Creates a policy group
+      operationId: PolicyGroups_PostPolicyGroup
+      requestBody:
+        x-name: policyGroupCreateInfo
+        description: The policy group info used for the creation of a policy group record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyGroupCreateInfo'
+        required: true
+        x-position: 1
+      responses:
+        '201':
+          description: A 201 Created response with the policy group.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+    get:
+      tags:
+      - PolicyGroups
+      summary: Returns list of policy group information
+      description: 'The Zywave API search is implemented using OData Version 4.0.1. Not all OData operations are available for the Zywave API platform at this time. Not all properties are filterable or sortable.
+
+        The following properties can be used when filtering and ordering the response.
+
+        * Id
+
+        * AccountId
+
+        * Name
+
+
+        See the Zywave API search documentation for more details about using OData search.'
+      operationId: PolicyGroups_SearchPolicyGroup
+      parameters:
+      - name: $filter
+        x-originalName: filter
+        in: query
+        description: The search criteria for the request. To view a list of supported search operations and the properties which can be searched see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: $orderBy
+        x-originalName: orderBy
+        in: query
+        description: Defines the order in which the results are returned. To view a list of properties that can be used in ordering see the documentation above.
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: $skip
+        x-originalName: skip
+        in: query
+        description: The number of total records to skip before displaying the first result. For example, if there are 10 total records and $skip is set to 5 the first record shown in the response will be the 6th record returned. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: $top
+        x-originalName: top
+        in: query
+        description: The total number of records returned in the response. In order to avoid an error please ensure that the $skip is dividable by the $top.
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: A 200 OK response with the list of policy group information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfPolicyGroupWithMembers'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+  /policies/v2.0/policygroups/{id}:
+    put:
+      tags:
+      - PolicyGroups
+      summary: Updates a policy group
+      operationId: PolicyGroups_PutPolicyGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy group id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      requestBody:
+        x-name: policyGroupInfo
+        description: The policy group info used for the update of a policy group record.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyGroupInfo'
+        required: true
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 NoContent response
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+    get:
+      tags:
+      - PolicyGroups
+      summary: Gets a policy group and list of members
+      operationId: PolicyGroups_GetPolicyGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy group id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '200':
+          description: A 200 OK response with the policy group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyGroupWithMembers'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies:read
+    delete:
+      tags:
+      - PolicyGroups
+      summary: Deletes a policy group
+      operationId: PolicyGroups_DeletePolicyGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy group id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      responses:
+        '204':
+          description: A 204 NoContent response.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policygroups/{id}/setparent/{policyId}:
+    put:
+      tags:
+      - PolicyGroups
+      summary: Sets the given policy ID as the parent in the policy group
+      description: The policy must already be part of the group, it will not be added as part of this method.
+      operationId: PolicyGroups_SetParent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy group id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id to set as the parent in the group.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 NoContent response
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+  /policies/v2.0/policygroups/{id}/clearparent/{policyId}:
+    put:
+      tags:
+      - PolicyGroups
+      summary: Clears the given policy ID from being the parent in the policy group
+      description: The policy must already be part of the group, it will not be added as part of this method.
+      operationId: PolicyGroups_ClearParent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The policy group id.
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: policyId
+        in: path
+        required: true
+        description: The policy id to clear from the parent in the group.
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      responses:
+        '204':
+          description: A 204 NoContent response
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - oidc:
+        - api.policies
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PolicyGroupInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          maxLength: 150
+          minLength: 1
+    PolicyGroupWithMembers:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        accountId:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyGroupMembership'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    PolicyGroupCreateInfo:
+      allOf:
+      - $ref: '#/components/schemas/PolicyGroupInfo'
+      - type: object
+        additionalProperties: false
+        required:
+        - accountId
+        properties:
+          accountId:
+            type: integer
+            format: int32
+            maximum: 2147483647.0
+            minimum: 1.0
+    PolicyGroupMembership:
+      type: object
+      additionalProperties: false
+      properties:
+        policyId:
+          type: integer
+          format: int32
+        isParent:
+          type: boolean
+    PagedResultOfPolicyGroupWithMembers:
+      type: object
+      additionalProperties: false
+      properties:
+        hasMoreResults:
+          type: boolean
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyGroupWithMembers'
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.zywave.com/.well-known/openid-configuration
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

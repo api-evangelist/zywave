@@ -28,6 +28,13 @@ tags:
 - Company
 - Insurance
 - Insurance Agencies
+- Brokerage
+- Employee Benefits
+- MCP
+tags_raw:
+- Company
+- Insurance
+- Insurance Agencies
 - Brokers
 - Employee Benefits
 - MCP
@@ -507,6 +514,8 @@ apis:
   humanURL: https://www.zywave.dev/apis/
   baseURL: https://api.zywave.com
   tags:
+  - Account Contacts
+  tags_raw:
   - AccountContacts
   properties:
   - type: OpenAPI
@@ -772,6 +781,8 @@ apis:
   humanURL: https://www.zywave.dev/apis/
   baseURL: https://api.zywave.com
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -1828,6 +1839,8 @@ apis:
   humanURL: https://www.zywave.dev/apis/
   baseURL: https://api.zywave.com
   tags:
+  - Audit
+  tags_raw:
   - Audits
   properties:
   - type: OpenAPI
@@ -3413,6 +3426,8 @@ apis:
   humanURL: https://www.zywave.dev/apis/
   baseURL: https://api.zywave.com
   tags:
+  - Carrier
+  tags_raw:
   - Carriers
   properties:
   - type: OpenAPI
@@ -5393,6 +5408,8 @@ apis:
   humanURL: https://www.zywave.dev/apis/
   baseURL: https://api.zywave.com
   tags:
+  - Downloads
+  tags_raw:
   - Download
   properties:
   - type: OpenAPI
@@ -7119,6 +7136,8 @@ apis:
   humanURL: https://www.zywave.dev/apis/
   baseURL: https://api.zywave.com
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -9364,6 +9383,8 @@ apis:
   humanURL: https://www.zywave.dev/apis/
   baseURL: https://api.zywave.com
   tags:
+  - Profiles
+  tags_raw:
   - Profile
   properties:
   - type: OpenAPI
